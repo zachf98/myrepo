@@ -273,6 +273,25 @@ function computeMethodProbabilities(
   return { fighterA, fighterB };
 }
 
+function buildRoundFinishShares(fighterStats, opponentStats) {
+  const quick = safeNumber(fighterStats.quickFinishWinRate, 0.2);
+  const oppEarlyFragility =
+    0.55 * safeNumber(opponentStats.koLossRate, 0.2) +
+    0.45 * safeNumber(opponentStats.subLossRate, 0.15);
+  const lateStability = clamp(0.5 + normalizeSigned(fighterStats.lateRoundSigDiff, 20), 0, 1);
+
+  const round1 = clamp(0.22 + 0.42 * quick + 0.2 * oppEarlyFragility - 0.1 * lateStability, 0.1, 0.7);
+  const round2 = clamp(0.24 + 0.25 * (1 - quick) + 0.15 * oppEarlyFragility, 0.15, 0.6);
+  const round3Plus = clamp(1 - round1 - round2, 0.1, 0.7);
+  const total = round1 + round2 + round3Plus;
+
+  return {
+    round1: round1 / total,
+    round2: round2 / total,
+    round3_plus: round3Plus / total,
+  };
+}
+
 function computeEdge(modelProbability, marketProbability) {
   if (!Number.isFinite(marketProbability)) return null;
   return modelProbability - marketProbability;
@@ -315,6 +334,8 @@ function simulateFightOutcomes({
     decision:
       safeNumber(baseMethodB.decision, 0) / Math.max(1 - baseWinProbabilityA, 0.001),
   };
+  const baseRoundA = buildRoundFinishShares(fighterAStats, fighterBStats);
+  const baseRoundB = buildRoundFinishShares(fighterBStats, fighterAStats);
 
   function drawMethod(conditionals) {
     const pKo = clamp(conditionals.ko_tko, 0, 1);
@@ -329,10 +350,21 @@ function simulateFightOutcomes({
     return "decision";
   }
 
+  function drawRound(roundShares) {
+    const roll = Math.random();
+    if (roll < roundShares.round1) return "round1";
+    if (roll < roundShares.round1 + roundShares.round2) return "round2";
+    return "round3_plus";
+  }
+
   let aWins = 0;
   const methodTotals = {
     fighterA: { ko_tko: 0, submission: 0, decision: 0 },
     fighterB: { ko_tko: 0, submission: 0, decision: 0 },
+  };
+  const roundTotals = {
+    fighterA: { round1: 0, round2: 0, round3_plus: 0, decision: 0 },
+    fighterB: { round1: 0, round2: 0, round3_plus: 0, decision: 0 },
   };
 
   for (let i = 0; i < simulations; i += 1) {
@@ -343,9 +375,21 @@ function simulateFightOutcomes({
       aWins += 1;
       const method = drawMethod(baseCondA);
       methodTotals.fighterA[method] += 1;
+      if (method === "decision") {
+        roundTotals.fighterA.decision += 1;
+      } else {
+        const round = drawRound(baseRoundA);
+        roundTotals.fighterA[round] += 1;
+      }
     } else {
       const method = drawMethod(baseCondB);
       methodTotals.fighterB[method] += 1;
+      if (method === "decision") {
+        roundTotals.fighterB.decision += 1;
+      } else {
+        const round = drawRound(baseRoundB);
+        roundTotals.fighterB[round] += 1;
+      }
     }
   }
 
@@ -363,6 +407,28 @@ function simulateFightOutcomes({
         ko_tko: methodTotals.fighterB.ko_tko / simulations,
         submission: methodTotals.fighterB.submission / simulations,
         decision: methodTotals.fighterB.decision / simulations,
+      },
+    },
+    roundProbabilities: {
+      fighterA: {
+        round1: roundTotals.fighterA.round1 / simulations,
+        round2: roundTotals.fighterA.round2 / simulations,
+        round3_plus: roundTotals.fighterA.round3_plus / simulations,
+        decision: roundTotals.fighterA.decision / simulations,
+      },
+      fighterB: {
+        round1: roundTotals.fighterB.round1 / simulations,
+        round2: roundTotals.fighterB.round2 / simulations,
+        round3_plus: roundTotals.fighterB.round3_plus / simulations,
+        decision: roundTotals.fighterB.decision / simulations,
+      },
+      fightTotal: {
+        round1: (roundTotals.fighterA.round1 + roundTotals.fighterB.round1) / simulations,
+        round2: (roundTotals.fighterA.round2 + roundTotals.fighterB.round2) / simulations,
+        round3_plus:
+          (roundTotals.fighterA.round3_plus + roundTotals.fighterB.round3_plus) /
+          simulations,
+        decision: (roundTotals.fighterA.decision + roundTotals.fighterB.decision) / simulations,
       },
     },
     uncertaintySigma: sigma,
@@ -485,6 +551,13 @@ function projectFight(fight, marketOdds) {
     blurbEv,
     win.components,
   );
+  const fallbackWinnerName =
+    simulation.fighterAWinProbability >= simulation.fighterBWinProbability
+      ? fight.fighterA.name
+      : fight.fighterB.name;
+  const finalBlurb =
+    blurb ||
+    `${fallbackWinnerName} has a model lean based on aggregate striking, grappling, and experience profile.`;
 
   return {
     model: {
@@ -493,6 +566,7 @@ function projectFight(fight, marketOdds) {
         fighterB: simulation.fighterBWinProbability,
       },
       methodProbabilities: simulation.methodProbabilities,
+      roundProbabilities: simulation.roundProbabilities,
       featureBreakdown: win.components,
       matchupArchetype: win.matchupArchetype,
       monteCarlo: simulation,
@@ -507,7 +581,7 @@ function projectFight(fight, marketOdds) {
       fighterB: fighterBEv,
       bestValue,
     },
-    insightBlurb: blurb,
+    insightBlurb: finalBlurb,
   };
 }
 

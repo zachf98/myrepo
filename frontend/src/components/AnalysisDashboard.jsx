@@ -34,6 +34,19 @@ function methodRows(methods) {
   }));
 }
 
+function roundRows(rounds) {
+  if (!rounds) return [];
+  return [
+    { label: "Round 1 Finish", key: "round1" },
+    { label: "Round 2 Finish", key: "round2" },
+    { label: "Round 3+ Finish", key: "round3_plus" },
+    { label: "Decision", key: "decision" },
+  ].map((entry) => ({
+    ...entry,
+    value: rounds[entry.key],
+  }));
+}
+
 function FightCard({ fight, viewMode }) {
   const fighterAName = fight.fighters?.fighterA?.name || "Fighter A";
   const fighterBName = fight.fighters?.fighterB?.name || "Fighter B";
@@ -50,6 +63,9 @@ function FightCard({ fight, viewMode }) {
 
   const methodA = fight.model?.methodProbabilities?.fighterA;
   const methodB = fight.model?.methodProbabilities?.fighterB;
+  const roundA = fight.model?.roundProbabilities?.fighterA;
+  const roundB = fight.model?.roundProbabilities?.fighterB;
+  const roundFight = fight.model?.roundProbabilities?.fightTotal;
   const breakdown = fight.model?.featureBreakdown || {};
 
   return (
@@ -107,18 +123,46 @@ function FightCard({ fight, viewMode }) {
         </div>
       ) : (
         <div className="grid-two">
-          <div className="metric-block">
-            <h4>{fighterAName} - Method of Victory</h4>
-            {methodRows(methodA).map((row) => (
-              <p key={`${fighterAName}-${row.key}`}>
-                {row.label}: {percent(row.value)}
-              </p>
-            ))}
+          <div className="metric-block stacked-metrics">
+            <div>
+              <h4>{fighterAName} - Method of Victory</h4>
+              {methodRows(methodA).map((row) => (
+                <p key={`${fighterAName}-${row.key}`}>
+                  {row.label}: {percent(row.value)}
+                </p>
+              ))}
+            </div>
+            <div>
+              <h4>{fighterAName} - Round Breakdown</h4>
+              {roundRows(roundA).map((row) => (
+                <p key={`${fighterAName}-round-${row.key}`}>
+                  {row.label}: {percent(row.value)}
+                </p>
+              ))}
+            </div>
+          </div>
+          <div className="metric-block stacked-metrics">
+            <div>
+              <h4>{fighterBName} - Method of Victory</h4>
+              {methodRows(methodB).map((row) => (
+                <p key={`${fighterBName}-${row.key}`}>
+                  {row.label}: {percent(row.value)}
+                </p>
+              ))}
+            </div>
+            <div>
+              <h4>{fighterBName} - Round Breakdown</h4>
+              {roundRows(roundB).map((row) => (
+                <p key={`${fighterBName}-round-${row.key}`}>
+                  {row.label}: {percent(row.value)}
+                </p>
+              ))}
+            </div>
           </div>
           <div className="metric-block">
-            <h4>{fighterBName} - Method of Victory</h4>
-            {methodRows(methodB).map((row) => (
-              <p key={`${fighterBName}-${row.key}`}>
+            <h4>Fight-Level Round Outlook</h4>
+            {roundRows(roundFight).map((row) => (
+              <p key={`fight-round-${row.key}`}>
                 {row.label}: {percent(row.value)}
               </p>
             ))}
@@ -137,6 +181,8 @@ function FightCard({ fight, viewMode }) {
 
 function AnalysisDashboard({ analysis }) {
   const [viewMode, setViewMode] = useState("win");
+  const [browseMode, setBrowseMode] = useState("single");
+  const [selectedFightId, setSelectedFightId] = useState(null);
 
   const fights = useMemo(() => {
     const list = [...(analysis.fights || [])];
@@ -158,6 +204,16 @@ function AnalysisDashboard({ analysis }) {
     return rows.slice(0, 5);
   }, [fights]);
   const topValuePlays = analysis.valuePlays || [];
+  const selectedFight = useMemo(() => {
+    if (!fights.length) return null;
+    if (!selectedFightId) return fights[0];
+    return fights.find((fight) => fight.fightId === selectedFightId) || fights[0];
+  }, [fights, selectedFightId]);
+  const selectedFightIndex = useMemo(
+    () => fights.findIndex((fight) => fight.fightId === selectedFight?.fightId),
+    [fights, selectedFight],
+  );
+  const fightsToRender = browseMode === "single" ? (selectedFight ? [selectedFight] : []) : fights;
 
   return (
     <section className="panel analysis-panel">
@@ -222,8 +278,62 @@ function AnalysisDashboard({ analysis }) {
         )}
       </div>
 
+      <div className="top-edge-strip fight-navigator">
+        <h3>Fight Navigator</h3>
+        <div className="navigator-controls">
+          <div className="view-toggle">
+            <button
+              type="button"
+              className={browseMode === "single" ? "toggle-active" : ""}
+              onClick={() => setBrowseMode("single")}
+            >
+              Single Fight View
+            </button>
+            <button
+              type="button"
+              className={browseMode === "all" ? "toggle-active" : ""}
+              onClick={() => setBrowseMode("all")}
+            >
+              All Fights View
+            </button>
+          </div>
+          <select
+            value={selectedFight?.fightId || ""}
+            onChange={(event) => setSelectedFightId(event.target.value)}
+          >
+            {fights.map((fight, index) => (
+              <option key={fight.fightId} value={fight.fightId}>
+                {index + 1}. {fight.matchup}
+              </option>
+            ))}
+          </select>
+          <div className="nav-buttons">
+            <button
+              type="button"
+              onClick={() => {
+                if (!fights.length) return;
+                const prevIndex = selectedFightIndex <= 0 ? fights.length - 1 : selectedFightIndex - 1;
+                setSelectedFightId(fights[prevIndex].fightId);
+              }}
+            >
+              Previous
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                if (!fights.length) return;
+                const nextIndex = selectedFightIndex >= fights.length - 1 ? 0 : selectedFightIndex + 1;
+                setSelectedFightId(fights[nextIndex].fightId);
+              }}
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="fight-list">
-        {fights.map((fight) => (
+        {fightsToRender.map((fight) => (
           <FightCard key={fight.fightId} fight={fight} viewMode={viewMode} />
         ))}
       </div>

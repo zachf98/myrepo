@@ -201,6 +201,21 @@
   margin: 4px 0;
 }
 
+.stacked-metrics {
+  display: grid;
+  gap: 10px;
+}
+
+.stacked-metrics > div {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 8px;
+}
+
+.stacked-metrics > div:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
 .small-note {
   color: #6b7280;
   font-size: 0.85rem;
@@ -228,6 +243,31 @@
   margin: 4px 0;
   color: #4b5563;
   font-size: 0.9rem;
+}
+
+.fight-navigator .navigator-controls {
+  display: grid;
+  gap: 10px;
+}
+
+.fight-navigator select {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  padding: 8px;
+}
+
+.fight-navigator .nav-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.fight-navigator .nav-buttons button {
+  border: 1px solid #d1d5db;
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
 }
 
 @media (max-width: 860px) {
