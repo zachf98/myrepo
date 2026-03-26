@@ -2,17 +2,33 @@ const { getEventCard, enrichFightsWithFighterStats } = require("./ufcStatsServic
 const { getMarketOddsForFights } = require("./oddsService");
 const { projectFight } = require("../models/probabilityModel");
 
-async function analyzeEvent(eventUrl) {
+function defaultMarket() {
+  return {
+    available: false,
+    source: "Unavailable",
+    note: "Market data was not requested for this analysis.",
+  };
+}
+
+async function analyzeEvent(eventUrl, options = {}) {
+  const includeOdds = options.includeOdds !== false;
   const eventCard = await getEventCard(eventUrl);
-  const fightsWithStats = await enrichFightsWithFighterStats(eventCard.fights);
-  const marketOddsList = await getMarketOddsForFights(eventCard.eventName, fightsWithStats);
+  const asOfDate = options.asOfDate || eventCard.eventDate || null;
+  const fightsWithStats = await enrichFightsWithFighterStats(eventCard.fights, { asOfDate });
+  const marketOddsList = includeOdds
+    ? await getMarketOddsForFights(eventCard.eventName, fightsWithStats)
+    : fightsWithStats.map(() => defaultMarket());
 
   const fightAnalyses = fightsWithStats.map((fight, index) => {
-    const market = marketOddsList[index] || {
-      available: false,
-      source: "Unknown",
-      note: "No market data was found for this fight.",
-    };
+    const market =
+      marketOddsList[index] ||
+      (includeOdds
+        ? {
+            available: false,
+            source: "Unknown",
+            note: "No market data was found for this fight.",
+          }
+        : defaultMarket());
     const projection = projectFight(fight, market);
 
     return {
@@ -30,6 +46,10 @@ async function analyzeEvent(eventUrl) {
           profileUrl: fight.fighterB.url,
           stats: fight.fighterB.stats,
         },
+      },
+      result: {
+        resultFlag: fight.resultFlag || null,
+        winnerName: fight.winnerName || null,
       },
       market,
       model: projection.model,
@@ -59,6 +79,8 @@ async function analyzeEvent(eventUrl) {
     event: {
       name: eventCard.eventName,
       metadata: eventCard.eventMeta,
+      eventDate: eventCard.eventDate,
+      eventDateText: eventCard.eventDateText,
       eventUrl,
     },
     fights: sortedByBestEdge,

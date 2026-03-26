@@ -65,6 +65,20 @@ function ufcExperienceScore(stats) {
   return depth * 0.7 + ufcShare * 0.3 - 0.5 - unknownPreUfcPenalty;
 }
 
+function veteranCraftScore(stats) {
+  const experience = ufcExperienceScore(stats) + 0.5;
+  const decisionIQ =
+    safeNumber(stats.decisionAppearanceRate, 0.3) *
+    safeNumber(stats.decisionWinPctWhenDecision, 0.5);
+  const scheduleQuality = safeNumber(stats.weightedOpponentWinPct, 0.5);
+  const pressure =
+    0.6 * clamp(safeNumber(stats.sigLandedPerMin, 3.2) / 6, 0, 1) +
+    0.4 * safeNumber(stats.koWinRate, 0.2);
+  return (
+    0.4 * experience + 0.25 * decisionIQ + 0.2 * scheduleQuality + 0.15 * pressure - 0.5
+  );
+}
+
 function computeWinProbabilities(fighterAStats, fighterBStats) {
   const a = buildFeatureVector(fighterAStats);
   const b = buildFeatureVector(fighterBStats);
@@ -74,17 +88,21 @@ function computeWinProbabilities(fighterAStats, fighterBStats) {
   const finishDiff = a.finish - b.finish;
   const scheduleDiff = a.schedule - b.schedule;
   const recencyDiff =
-    normalizeSigned(fighterAStats.weightedSigDiffPerFight, 20) -
-    normalizeSigned(fighterBStats.weightedSigDiffPerFight, 20);
+    (normalizeSigned(fighterAStats.weightedSigDiffPerFight, 22) -
+      normalizeSigned(fighterBStats.weightedSigDiffPerFight, 22)) /
+    2;
   const activityDiff = activityScore(fighterAStats) - activityScore(fighterBStats);
-  const agePrimeDiff = agePrimeScore(fighterAStats.ageYears) - agePrimeScore(fighterBStats.ageYears);
+  const agePrimeDiff =
+    (agePrimeScore(fighterAStats.ageYears) - agePrimeScore(fighterBStats.ageYears)) / 2;
   const decisionSkillDiff =
     (safeNumber(fighterAStats.decisionWinPctWhenDecision, 0.5) - 0.5) -
     (safeNumber(fighterBStats.decisionWinPctWhenDecision, 0.5) - 0.5);
   const roundDurabilityDiff =
-    normalizeSigned(fighterAStats.lateRoundSigDiff, 20) -
-    normalizeSigned(fighterBStats.lateRoundSigDiff, 20);
+    (normalizeSigned(fighterAStats.lateRoundSigDiff, 24) -
+      normalizeSigned(fighterBStats.lateRoundSigDiff, 24)) /
+    2;
   const experienceDiff = ufcExperienceScore(fighterAStats) - ufcExperienceScore(fighterBStats);
+  const veteranCraftDiff = veteranCraftScore(fighterAStats) - veteranCraftScore(fighterBStats);
 
   const fighterAUfcFights = safeNumber(fighterAStats.totalFights, 0);
   const fighterBUfcFights = safeNumber(fighterBStats.totalFights, 0);
@@ -95,19 +113,36 @@ function computeWinProbabilities(fighterAStats, fighterBStats) {
   const debutantVsVetSwing = aIsDebutant && bIsVet ? -0.08 : bIsDebutant && aIsVet ? 0.08 : 0;
 
   const linearScore =
-    0.24 * strikingDiff +
-    0.17 * grapplingDiff +
+    0.26 * strikingDiff +
+    0.18 * grapplingDiff +
     0.12 * finishDiff +
-    0.12 * scheduleDiff +
-    0.11 * recencyDiff +
-    0.08 * activityDiff +
+    0.11 * scheduleDiff +
+    0.08 * recencyDiff +
+    0.06 * activityDiff +
     0.06 * decisionSkillDiff +
-    0.05 * agePrimeDiff +
-    0.05 * roundDurabilityDiff +
+    0.03 * agePrimeDiff +
+    0.03 * roundDurabilityDiff +
     0.04 * experienceDiff +
+    0.03 * veteranCraftDiff +
     debutantVsVetSwing;
 
-  const fighterAWinProbability = clamp(logistic(linearScore * 3.1), 0.03, 0.97);
+  const rawProbability = clamp(logistic(linearScore * 2.9), 0.03, 0.97);
+  const minFightSample = Math.min(
+    safeNumber(fighterAStats.totalFights, 0),
+    safeNumber(fighterBStats.totalFights, 0),
+  );
+  const sampleShrink = minFightSample < 4 ? 0.2 : minFightSample < 8 ? 0.12 : 0.06;
+  const inactivityShrink =
+    safeNumber(fighterAStats.daysSinceLastFight, 240) > 430 ||
+    safeNumber(fighterBStats.daysSinceLastFight, 240) > 430
+      ? 0.04
+      : 0;
+  const shrinkage = clamp(sampleShrink + inactivityShrink, 0.04, 0.28);
+  const fighterAWinProbability = clamp(
+    0.5 + (rawProbability - 0.5) * (1 - shrinkage),
+    0.04,
+    0.96,
+  );
   const fighterBWinProbability = 1 - fighterAWinProbability;
 
   return {
@@ -124,7 +159,9 @@ function computeWinProbabilities(fighterAStats, fighterBStats) {
       decisionSkillDiff,
       roundDurabilityDiff,
       experienceDiff,
+      veteranCraftDiff,
       debutantVsVetSwing,
+      shrinkage,
       linearScore,
     },
     matchupArchetype: {
@@ -333,7 +370,7 @@ function simulateFightOutcomes({
 }
 
 function buildValueBlurb(fight, bestValueSide, modelProbability, marketProbability, ev, breakdown) {
-  if (!bestValueSide || !Number.isFinite(ev) || ev < 0.05) return null;
+  if (!bestValueSide || !Number.isFinite(modelProbability)) return null;
 
   const fighterName =
     bestValueSide === "fighterA" ? fight.fighterA.name : fight.fighterB.name;
@@ -368,11 +405,15 @@ function buildValueBlurb(fight, bestValueSide, modelProbability, marketProbabili
     reasons.push("a stronger aggregate profile across striking, grappling, and schedule");
   }
 
-  return `${fighterName} shows +EV: model ${Math.round(
+  const marketSnippet = Number.isFinite(marketProbability)
+    ? ` vs market ${Math.round(marketProbability * 100)}%`
+    : " (no market line available)";
+  const evSnippet = Number.isFinite(ev)
+    ? ` with est. ROI ${(ev * 100).toFixed(1)}%`
+    : "";
+  return `${fighterName} model lean ${Math.round(
     modelProbability * 100,
-  )}% vs market ${Math.round(marketProbability * 100)}% with est. ROI ${(
-    ev * 100
-  ).toFixed(1)}%, driven by ${reasons.slice(0, 2).join(" and ")}.`;
+  )}%${marketSnippet}${evSnippet}, driven by ${reasons.slice(0, 2).join(" and ")}.`;
 }
 
 function projectFight(fight, marketOdds) {
@@ -427,14 +468,21 @@ function projectFight(fight, marketOdds) {
     .filter((entry) => Number.isFinite(entry.ev))
     .sort((left, right) => right.ev - left.ev);
   const bestValue = evRank[0] || null;
+  const fallbackSide =
+    simulation.fighterAWinProbability >= simulation.fighterBWinProbability ? "fighterA" : "fighterB";
+  const blurbSide = bestValue?.side || fallbackSide;
+  const blurbModelProbability =
+    blurbSide === "fighterA"
+      ? simulation.fighterAWinProbability
+      : simulation.fighterBWinProbability;
+  const blurbMarketProbability = blurbSide === "fighterA" ? marketA : marketB;
+  const blurbEv = blurbSide === "fighterA" ? fighterAEv : fighterBEv;
   const blurb = buildValueBlurb(
     fight,
-    bestValue?.side || null,
-    bestValue?.side === "fighterA"
-      ? simulation.fighterAWinProbability
-      : simulation.fighterBWinProbability,
-    bestValue?.side === "fighterA" ? marketA : marketB,
-    bestValue?.ev ?? null,
+    blurbSide,
+    blurbModelProbability,
+    blurbMarketProbability,
+    blurbEv,
     win.components,
   );
 

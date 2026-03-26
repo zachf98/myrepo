@@ -32,6 +32,14 @@ function parseDateText(dateText) {
   return parsed;
 }
 
+function parseAsOfDate(input) {
+  if (!input) return null;
+  if (input instanceof Date) {
+    return Number.isNaN(input.getTime()) ? null : input;
+  }
+  return parseDateText(input);
+}
+
 function daysBetween(dateA, dateB) {
   if (!(dateA instanceof Date) || Number.isNaN(dateA.getTime())) return null;
   if (!(dateB instanceof Date) || Number.isNaN(dateB.getTime())) return null;
@@ -160,10 +168,19 @@ function parseFightRow($, row) {
 
   if (fighterAnchors.length < 2) return null;
 
+  const resultFlag = cols.eq(0).find("a").first().text().trim().toLowerCase();
+  let winnerName = null;
+  if (resultFlag === "win") winnerName = fighterAnchors[0].name;
+  if (resultFlag === "loss") winnerName = fighterAnchors[1].name;
+  if (resultFlag === "draw") winnerName = "draw";
+  if (resultFlag === "nc") winnerName = "no_contest";
+
   return {
     fightUrl,
     weightClass: cols.eq(6).text().replace(/\s+/g, " ").trim(),
     resultMethod: cols.eq(7).text().replace(/\s+/g, " ").trim(),
+    resultFlag,
+    winnerName,
     fighterA: fighterAnchors[0],
     fighterB: fighterAnchors[1],
   };
@@ -178,6 +195,13 @@ async function getEventCard(eventUrl) {
     .map((_, li) => $(li).text().replace(/\s+/g, " ").trim())
     .get()
     .filter(Boolean);
+  const eventDateLine = eventMeta.find((line) =>
+    String(line).toLowerCase().startsWith("date:"),
+  );
+  const eventDateText = eventDateLine
+    ? eventDateLine.split(":").slice(1).join(":").trim()
+    : null;
+  const eventDate = parseDateText(eventDateText);
 
   const fights = $("tbody.b-fight-details__table-body tr.b-fight-details__table-row")
     .map((_, row) => parseFightRow($, row))
@@ -187,6 +211,8 @@ async function getEventCard(eventUrl) {
   return {
     eventName,
     eventMeta,
+    eventDate: eventDate ? eventDate.toISOString() : null,
+    eventDateText,
     fights,
   };
 }
@@ -373,9 +399,11 @@ function buildFighterHistoryRows($, fighterName) {
     .filter(Boolean);
 }
 
-function aggregateHistory(rows) {
+function aggregateHistory(rows, referenceDate = new Date()) {
   const completed = rows.filter((row) => row.result !== "next");
-  const now = new Date();
+  const now = referenceDate instanceof Date && !Number.isNaN(referenceDate.getTime())
+    ? referenceDate
+    : new Date();
 
   let wins = 0;
   let losses = 0;
@@ -562,9 +590,11 @@ async function enrichRowsWithOpponentStrength(rows) {
   });
 }
 
-async function getFighterProfile(fighterUrl) {
-  if (fighterProfileCache.has(fighterUrl)) {
-    return fighterProfileCache.get(fighterUrl);
+async function getFighterProfile(fighterUrl, options = {}) {
+  const asOfDate = parseAsOfDate(options.asOfDate);
+  const cacheKey = `${fighterUrl}::${asOfDate ? asOfDate.toISOString() : "all"}`;
+  if (fighterProfileCache.has(cacheKey)) {
+    return fighterProfileCache.get(cacheKey);
   }
 
   const response = await http.get(fighterUrl);
@@ -582,19 +612,33 @@ async function getFighterProfile(fighterUrl) {
   });
 
   const historyRows = buildFighterHistoryRows($, fighterName);
-  historyRows.forEach((row) => {
+  const allUfcFightCount = historyRows.filter((row) => row.result !== "next").length;
+  const filteredHistoryRows = asOfDate
+    ? historyRows.filter((row) => {
+        if (!row.eventDate || row.result === "next") return row.result !== "next";
+        return row.eventDate < asOfDate;
+      })
+    : historyRows;
+  filteredHistoryRows.forEach((row) => {
     row.fighterNameForRoundStats = fighterName;
   });
-  const enrichedHistoryRows = await enrichRowsWithOpponentStrength(historyRows);
-  const historyAgg = aggregateHistory(enrichedHistoryRows);
+  const enrichedHistoryRows = await enrichRowsWithOpponentStrength(filteredHistoryRows);
+  const historyAgg = aggregateHistory(enrichedHistoryRows, asOfDate || new Date());
   const dob = parseDateText(statPairs.DOB);
+  const referenceDate = asOfDate || new Date();
   const ageYears =
     dob instanceof Date && !Number.isNaN(dob.getTime())
-      ? Number(((Date.now() - dob.getTime()) / (365.25 * 24 * 3600 * 1000)).toFixed(2))
+      ? Number(
+          (
+            (referenceDate.getTime() - dob.getTime()) /
+            (365.25 * 24 * 3600 * 1000)
+          ).toFixed(2),
+        )
       : null;
   const record = parseRecord(recordText);
-  const totalCareerFights = record.wins + record.losses + record.draws;
-  const preUfcFightCount = Math.max(totalCareerFights - historyAgg.totalFights, 0);
+  const currentCareerTotal = record.wins + record.losses + record.draws;
+  const preUfcFightCount = Math.max(currentCareerTotal - allUfcFightCount, 0);
+  const totalCareerFights = preUfcFightCount + historyAgg.totalFights;
 
   const profile = {
     fighterUrl,
@@ -615,19 +659,20 @@ async function getFighterProfile(fighterUrl) {
     ...historyAgg,
   };
 
-  fighterProfileCache.set(fighterUrl, profile);
+  fighterProfileCache.set(cacheKey, profile);
   fighterRecordCache.set(fighterUrl, profile.record);
   return profile;
 }
 
-async function enrichFightsWithFighterStats(fights) {
+async function enrichFightsWithFighterStats(fights, options = {}) {
+  const asOfDate = parseAsOfDate(options.asOfDate);
   const limit = pLimit(5);
   return Promise.all(
     fights.map((fight) =>
       limit(async () => {
         const [fighterAStats, fighterBStats] = await Promise.all([
-          getFighterProfile(fight.fighterA.url),
-          getFighterProfile(fight.fighterB.url),
+          getFighterProfile(fight.fighterA.url, { asOfDate }),
+          getFighterProfile(fight.fighterB.url, { asOfDate }),
         ]);
 
         return {
@@ -644,4 +689,5 @@ module.exports = {
   getEventList,
   getEventCard,
   enrichFightsWithFighterStats,
+  parseDateText,
 };
