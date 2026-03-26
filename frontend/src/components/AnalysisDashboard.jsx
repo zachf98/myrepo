@@ -17,6 +17,11 @@ function edgeLabel(edge) {
   return `${edge >= 0 ? "+" : ""}${(edge * 100).toFixed(1)}%`;
 }
 
+function evLabel(ev) {
+  if (!Number.isFinite(ev)) return "N/A";
+  return `${ev >= 0 ? "+" : ""}${(ev * 100).toFixed(1)}%`;
+}
+
 function methodRows(methods) {
   if (!methods) return [];
   return [
@@ -40,9 +45,12 @@ function FightCard({ fight, viewMode }) {
   const modelWinB = fight.model?.winProbabilities?.fighterB;
   const edgeA = fight.edge?.fighterA;
   const edgeB = fight.edge?.fighterB;
+  const evA = fight.ev?.fighterA;
+  const evB = fight.ev?.fighterB;
 
   const methodA = fight.model?.methodProbabilities?.fighterA;
   const methodB = fight.model?.methodProbabilities?.fighterB;
+  const breakdown = fight.model?.featureBreakdown || {};
 
   return (
     <article className="fight-card">
@@ -78,10 +86,23 @@ function FightCard({ fight, viewMode }) {
             <p className={edgeClass(edgeB)}>{fighterBName}: {edgeLabel(edgeB)}</p>
           </div>
           <div className="metric-block">
+            <h4>Expected Value (ROI per 1u)</h4>
+            <p className={edgeClass(evA)}>{fighterAName}: {evLabel(evA)}</p>
+            <p className={edgeClass(evB)}>{fighterBName}: {evLabel(evB)}</p>
+          </div>
+          <div className="metric-block">
             <h4>Data Notes</h4>
             <p className="small-note">{fight.market?.source || "Unknown source"}</p>
             {fight.market?.note ? <p className="small-note">{fight.market.note}</p> : null}
             {fight.market?.methodPropsNote ? <p className="small-note">{fight.market.methodPropsNote}</p> : null}
+          </div>
+          <div className="metric-block">
+            <h4>Model Drivers</h4>
+            <p className="small-note">Recency: {edgeLabel(breakdown.recencyDiff)}</p>
+            <p className="small-note">Activity: {edgeLabel(breakdown.activityDiff)}</p>
+            <p className="small-note">Age/Prime: {edgeLabel(breakdown.agePrimeDiff)}</p>
+            <p className="small-note">Decision skill: {edgeLabel(breakdown.decisionSkillDiff)}</p>
+            <p className="small-note">Round durability: {edgeLabel(breakdown.roundDurabilityDiff)}</p>
           </div>
         </div>
       ) : (
@@ -104,6 +125,12 @@ function FightCard({ fight, viewMode }) {
           </div>
         </div>
       )}
+      {fight.insightBlurb ? (
+        <div className="metric-block value-blurb">
+          <h4>Value Breakdown</h4>
+          <p>{fight.insightBlurb}</p>
+        </div>
+      ) : null}
     </article>
   );
 }
@@ -130,6 +157,7 @@ function AnalysisDashboard({ analysis }) {
     });
     return rows.slice(0, 5);
   }, [fights]);
+  const topValuePlays = analysis.valuePlays || [];
 
   return (
     <section className="panel analysis-panel">
@@ -173,6 +201,24 @@ function AnalysisDashboard({ analysis }) {
           </ul>
         ) : (
           <p>No market-edge values are currently available.</p>
+        )}
+      </div>
+
+      <div className="top-edge-strip">
+        <h3>Best Estimated EV Plays</h3>
+        {topValuePlays.length ? (
+          <ul>
+            {topValuePlays.map((entry) => (
+              <li key={`${entry.matchup}-${entry.fighter}`}>
+                <span>
+                  {entry.matchup} - {entry.fighter}
+                </span>
+                <strong className={edgeClass(entry.ev)}>{evLabel(entry.ev)}</strong>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No strong positive-EV opportunities found in current data snapshot.</p>
         )}
       </div>
 

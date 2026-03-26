@@ -8,7 +8,9 @@ const UFCSTATS_UPCOMING_EVENTS = "http://ufcstats.com/statistics/events/upcoming
 
 const fighterProfileCache = new Map();
 const fighterRecordCache = new Map();
+const fightRoundMetricsCache = new Map();
 const opponentRecordLimiter = pLimit(5);
+const fightDetailsLimiter = pLimit(4);
 
 function parseNumber(text) {
   const value = Number(String(text || "").replace(/[^0-9.-]/g, ""));
@@ -18,6 +20,39 @@ function parseNumber(text) {
 function parsePercent(text) {
   const raw = parseNumber(text);
   return raw === null ? null : raw / 100;
+}
+
+function parseDateText(dateText) {
+  const cleaned = String(dateText || "")
+    .replace(/\./g, "")
+    .trim();
+  if (!cleaned) return null;
+  const parsed = new Date(cleaned);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return parsed;
+}
+
+function daysBetween(dateA, dateB) {
+  if (!(dateA instanceof Date) || Number.isNaN(dateA.getTime())) return null;
+  if (!(dateB instanceof Date) || Number.isNaN(dateB.getTime())) return null;
+  return Math.max(0, Math.round((dateA.getTime() - dateB.getTime()) / 86400000));
+}
+
+function parseControlTimeToSeconds(text) {
+  const match = String(text || "").trim().match(/^(\d+):(\d{2})$/);
+  if (!match) return null;
+  return Number(match[1]) * 60 + Number(match[2]);
+}
+
+function parseLandedAttempt(text) {
+  const match = String(text || "")
+    .trim()
+    .match(/^(\d+)\s+of\s+(\d+)$/i);
+  if (!match) return null;
+  return {
+    landed: Number(match[1]) || 0,
+    attempted: Number(match[2]) || 0,
+  };
 }
 
 function parseRecord(recordText) {
@@ -164,6 +199,110 @@ function parseMethodGroup(methodText) {
   return "other";
 }
 
+async function getFightRoundMetrics(fightUrl, fighterName) {
+  if (!fightUrl) return null;
+  const cacheKey = `${fightUrl}::${String(fighterName || "").toLowerCase()}`;
+  if (fightRoundMetricsCache.has(cacheKey)) {
+    return fightRoundMetricsCache.get(cacheKey);
+  }
+
+  try {
+    const response = await http.get(fightUrl);
+    const $ = cheerio.load(response.data);
+    const dataRows = $("tr.b-fight-details__table-row")
+      .toArray()
+      .filter((row) => $(row).find("td").length > 0);
+
+    if (!dataRows.length) {
+      fightRoundMetricsCache.set(cacheKey, null);
+      return null;
+    }
+
+    const firstNames = $(dataRows[0])
+      .find("td")
+      .eq(0)
+      .find("p")
+      .map((_, p) => $(p).text().trim())
+      .get();
+    if (firstNames.length < 2) {
+      fightRoundMetricsCache.set(cacheKey, null);
+      return null;
+    }
+
+    const normalizedFighterName = String(fighterName || "").toLowerCase();
+    const fighterIndex = firstNames.findIndex((name) =>
+      name.toLowerCase().includes(normalizedFighterName),
+    );
+    const index = fighterIndex >= 0 ? fighterIndex : 0;
+    const oppIndex = index === 0 ? 1 : 0;
+
+    const rounds = dataRows.map((row, idx) => {
+      const cols = $(row).find("td");
+      const sigTexts = cols
+        .eq(2)
+        .find("p")
+        .map((_, p) => $(p).text().replace(/\s+/g, " ").trim())
+        .get();
+      const ctrlTexts = cols
+        .eq(9)
+        .find("p")
+        .map((_, p) => $(p).text().replace(/\s+/g, " ").trim())
+        .get();
+
+      const fighterSig = parseLandedAttempt(sigTexts[index]);
+      const opponentSig = parseLandedAttempt(sigTexts[oppIndex]);
+
+      const fighterControlSec = parseControlTimeToSeconds(ctrlTexts[index]);
+      const opponentControlSec = parseControlTimeToSeconds(ctrlTexts[oppIndex]);
+      const totalControl = (fighterControlSec || 0) + (opponentControlSec || 0);
+
+      return {
+        round: idx + 1,
+        sigDiff:
+          Number.isFinite(fighterSig?.landed) && Number.isFinite(opponentSig?.landed)
+            ? fighterSig.landed - opponentSig.landed
+            : null,
+        sigAccuracy:
+          Number.isFinite(fighterSig?.attempted) && fighterSig.attempted > 0
+            ? fighterSig.landed / fighterSig.attempted
+            : null,
+        controlShare:
+          Number.isFinite(totalControl) && totalControl > 0
+            ? (fighterControlSec || 0) / totalControl
+            : null,
+      };
+    });
+
+    const earlyRounds = rounds.filter((entry) => entry.round <= 2);
+    const lateRounds = rounds.filter((entry) => entry.round >= 3);
+    const earlySigValues = earlyRounds.map((entry) => entry.sigDiff).filter(Number.isFinite);
+    const lateSigValues = lateRounds.map((entry) => entry.sigDiff).filter(Number.isFinite);
+    const lateControlValues = lateRounds
+      .map((entry) => entry.controlShare)
+      .filter(Number.isFinite);
+
+    const payload = {
+      rounds,
+      earlySigDiffPerRound: earlySigValues.length
+        ? earlySigValues.reduce((sum, value) => sum + value, 0) / earlySigValues.length
+        : null,
+      lateSigDiffPerRound: lateSigValues.length
+        ? lateSigValues.reduce((sum, value) => sum + value, 0) / lateSigValues.length
+        : null,
+      lateControlShare: lateControlValues.length
+        ? lateControlValues.reduce((sum, value) => sum + value, 0) / lateControlValues.length
+        : null,
+      hasLateRoundData: lateRounds.length > 0,
+    };
+
+    fightRoundMetricsCache.set(cacheKey, payload);
+    return payload;
+  } catch (error) {
+    fightRoundMetricsCache.set(cacheKey, null);
+    return null;
+  }
+}
+
 function buildFighterHistoryRows($, fighterName) {
   const normalizedName = String(fighterName || "").toLowerCase().trim();
   return $("tr.b-fight-details__table-row")
@@ -211,9 +350,16 @@ function buildFighterHistoryRows($, fighterName) {
         .get();
 
       const method = columns.eq(7).find("p").first().text().trim();
+      const round = parseNumber(columns.eq(8).find("p").first().text());
+      const eventDateText = columns.eq(6).find("p").eq(1).text().replace(/\s+/g, " ").trim();
+      const eventDate = parseDateText(eventDateText);
 
       return {
         result,
+        fightUrl: (($(row).attr("onclick") || "").match(/'(.*?)'/) || [])[1] || null,
+        eventDate,
+        eventDateText,
+        round: Number.isFinite(round) ? round : null,
         sigFor: strValues[index] ?? null,
         sigAgainst: strValues[oppIndex] ?? null,
         tdFor: tdValues[index] ?? null,
@@ -229,6 +375,7 @@ function buildFighterHistoryRows($, fighterName) {
 
 function aggregateHistory(rows) {
   const completed = rows.filter((row) => row.result !== "next");
+  const now = new Date();
 
   let wins = 0;
   let losses = 0;
@@ -245,12 +392,31 @@ function aggregateHistory(rows) {
   let koLosses = 0;
   let subLosses = 0;
   let decisionLosses = 0;
+  let decisionAppearances = 0;
+  let weightedTotal = 0;
+  let weightedSigDiff = 0;
+  let weightedTdDiff = 0;
+  let weightedSubAttempts = 0;
+  let weightedOppStrength = 0;
+  let quickFinishWins = 0;
+  let fightsLast365 = 0;
+  let fightsLast730 = 0;
+  let roundDataFights = 0;
+  let weightedEarlyRoundSigDiff = 0;
+  let weightedLateRoundSigDiff = 0;
+  let weightedLateControlShare = 0;
+  let lateRoundWeight = 0;
+  let mostRecentFightDate = null;
 
   const opponentWinPcts = completed
     .map((row) => row.opponentWinPct)
     .filter((value) => Number.isFinite(value));
 
   completed.forEach((row) => {
+    const daysAgo = daysBetween(now, row.eventDate);
+    const recencyWeight =
+      Number.isFinite(daysAgo) && daysAgo >= 0 ? Math.exp(-daysAgo / 540) : 0.6;
+
     if (row.result === "win") wins += 1;
     if (row.result === "loss") losses += 1;
     if (row.result === "draw") draws += 1;
@@ -260,6 +426,11 @@ function aggregateHistory(rows) {
     totalTdLanded += row.tdFor || 0;
     totalTdAgainst += row.tdAgainst || 0;
     totalSubs += row.subFor || 0;
+    weightedTotal += recencyWeight;
+    weightedSigDiff += recencyWeight * ((row.sigFor || 0) - (row.sigAgainst || 0));
+    weightedTdDiff += recencyWeight * ((row.tdFor || 0) - (row.tdAgainst || 0));
+    weightedSubAttempts += recencyWeight * (row.subFor || 0);
+    weightedOppStrength += recencyWeight * (row.opponentWinPct || 0.5);
 
     if (row.result === "win") {
       if (row.methodGroup === "ko_tko") {
@@ -271,6 +442,10 @@ function aggregateHistory(rows) {
       } else if (row.methodGroup === "decision") {
         decisionWins += 1;
       }
+
+      if (row.methodGroup !== "decision" && Number.isFinite(row.round) && row.round <= 2) {
+        quickFinishWins += 1;
+      }
     }
 
     if (row.result === "loss") {
@@ -278,12 +453,40 @@ function aggregateHistory(rows) {
       if (row.methodGroup === "submission") subLosses += 1;
       if (row.methodGroup === "decision") decisionLosses += 1;
     }
+
+    if (row.methodGroup === "decision") {
+      decisionAppearances += 1;
+    }
+
+    if (Number.isFinite(daysAgo) && daysAgo <= 365) fightsLast365 += 1;
+    if (Number.isFinite(daysAgo) && daysAgo <= 730) fightsLast730 += 1;
+
+    if (row.eventDate instanceof Date && !Number.isNaN(row.eventDate.getTime())) {
+      if (!mostRecentFightDate || row.eventDate > mostRecentFightDate) {
+        mostRecentFightDate = row.eventDate;
+      }
+    }
+
+    if (row.roundMetrics) {
+      roundDataFights += 1;
+      if (Number.isFinite(row.roundMetrics.earlySigDiffPerRound)) {
+        weightedEarlyRoundSigDiff += recencyWeight * row.roundMetrics.earlySigDiffPerRound;
+      }
+      if (Number.isFinite(row.roundMetrics.lateSigDiffPerRound)) {
+        weightedLateRoundSigDiff += recencyWeight * row.roundMetrics.lateSigDiffPerRound;
+        lateRoundWeight += recencyWeight;
+      }
+      if (Number.isFinite(row.roundMetrics.lateControlShare)) {
+        weightedLateControlShare += recencyWeight * row.roundMetrics.lateControlShare;
+      }
+    }
   });
 
   const finishedFights = wins + losses + draws;
   const opponentWinPct = opponentWinPcts.length
     ? opponentWinPcts.reduce((sum, value) => sum + value, 0) / opponentWinPcts.length
     : 0.5;
+  const daysSinceLastFight = mostRecentFightDate ? daysBetween(now, mostRecentFightDate) : null;
 
   return {
     totalFights: finishedFights,
@@ -301,6 +504,21 @@ function aggregateHistory(rows) {
     subLossRate: safeRatio(subLosses, Math.max(losses, 1), 0.15),
     decisionLossRate: safeRatio(decisionLosses, Math.max(losses, 1), 0.3),
     opponentWinPct,
+    weightedSigDiffPerFight: weightedTotal > 0 ? weightedSigDiff / weightedTotal : 0,
+    weightedTdDiffPerFight: weightedTotal > 0 ? weightedTdDiff / weightedTotal : 0,
+    weightedSubAttemptsPerFight: weightedTotal > 0 ? weightedSubAttempts / weightedTotal : 0,
+    weightedOpponentWinPct: weightedTotal > 0 ? weightedOppStrength / weightedTotal : 0.5,
+    fightsLast365,
+    fightsLast730,
+    daysSinceLastFight,
+    decisionAppearanceRate: safeRatio(decisionAppearances, Math.max(finishedFights, 1), 0.3),
+    decisionWinPctWhenDecision: safeRatio(decisionWins, Math.max(decisionAppearances, 1), 0.5),
+    quickFinishWinRate: safeRatio(quickFinishWins, Math.max(wins, 1), 0.2),
+    earlyRoundSigDiff: weightedTotal > 0 ? weightedEarlyRoundSigDiff / weightedTotal : 0,
+    lateRoundSigDiff: lateRoundWeight > 0 ? weightedLateRoundSigDiff / lateRoundWeight : 0,
+    lateRoundControlShare:
+      lateRoundWeight > 0 ? weightedLateControlShare / lateRoundWeight : null,
+    roundDataFights,
   };
 }
 
@@ -309,6 +527,9 @@ async function enrichRowsWithOpponentStrength(rows) {
     .filter((row) => row.result !== "next" && row.opponent?.url)
     .slice(0, 8);
   const uniqueOpponentUrls = [...new Set(targets.map((row) => row.opponent.url))];
+  const roundTargets = rows
+    .filter((row) => row.result !== "next" && row.fightUrl)
+    .slice(0, 6);
 
   await Promise.all(
     uniqueOpponentUrls.map((url) =>
@@ -317,13 +538,26 @@ async function enrichRowsWithOpponentStrength(rows) {
       }),
     ),
   );
+  await Promise.all(
+    roundTargets.map((row) =>
+      fightDetailsLimiter(async () => {
+        await getFightRoundMetrics(row.fightUrl, row.fighterNameForRoundStats);
+      }),
+    ),
+  );
 
   return rows.map((row) => {
-    if (!row.opponent?.url) return row;
-    const record = fighterRecordCache.get(row.opponent.url);
+    const record = row.opponent?.url ? fighterRecordCache.get(row.opponent.url) : null;
+    const roundMetrics =
+      row.fightUrl && row.fighterNameForRoundStats
+        ? fightRoundMetricsCache.get(
+            `${row.fightUrl}::${String(row.fighterNameForRoundStats).toLowerCase()}`,
+          ) || null
+        : null;
     return {
       ...row,
       opponentWinPct: recordToWinPct(record),
+      roundMetrics,
     };
   });
 }
@@ -348,13 +582,24 @@ async function getFighterProfile(fighterUrl) {
   });
 
   const historyRows = buildFighterHistoryRows($, fighterName);
+  historyRows.forEach((row) => {
+    row.fighterNameForRoundStats = fighterName;
+  });
   const enrichedHistoryRows = await enrichRowsWithOpponentStrength(historyRows);
   const historyAgg = aggregateHistory(enrichedHistoryRows);
+  const dob = parseDateText(statPairs.DOB);
+  const ageYears =
+    dob instanceof Date && !Number.isNaN(dob.getTime())
+      ? Number(((Date.now() - dob.getTime()) / (365.25 * 24 * 3600 * 1000)).toFixed(2))
+      : null;
+  const record = parseRecord(recordText);
+  const totalCareerFights = record.wins + record.losses + record.draws;
+  const preUfcFightCount = Math.max(totalCareerFights - historyAgg.totalFights, 0);
 
   const profile = {
     fighterUrl,
     fighterName,
-    record: parseRecord(recordText),
+    record,
     strikingAccuracy: parsePercent(statPairs["Str. Acc."]),
     strikingDefense: parsePercent(statPairs["Str. Def"]),
     takedownAccuracy: parsePercent(statPairs["TD Acc."]),
@@ -363,6 +608,10 @@ async function getFighterProfile(fighterUrl) {
     sigLandedPerMin: parseNumber(statPairs["SLpM"]),
     sigAbsorbedPerMin: parseNumber(statPairs["SApM"]),
     tdAvgPer15: parseNumber(statPairs["TD Avg."]),
+    dob: dob ? dob.toISOString() : null,
+    ageYears,
+    totalCareerFights,
+    preUfcFightCount,
     ...historyAgg,
   };
 
