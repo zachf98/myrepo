@@ -247,7 +247,7 @@ function expectedValueFromAmericanOdds(winProbability, americanOdds) {
   }
   const profitIfWin = americanOdds > 0 ? americanOdds / 100 : 100 / Math.abs(americanOdds);
   const loseAmount = 1;
-  return winProbability * profitIfWin - (1 - winProbability) * loseAmount;
+  return clamp(winProbability * profitIfWin - (1 - winProbability) * loseAmount, -0.8, 0.8);
 }
 
 function simulateFightOutcomes({
@@ -392,7 +392,7 @@ function projectFight(fight, marketOdds) {
     baseWinProbabilityA: win.fighterAWinProbability,
     baseMethodA: method.fighterA,
     baseMethodB: method.fighterB,
-  );
+  });
 
   const marketA =
     marketOdds?.implied?.noVigFighterA ??
