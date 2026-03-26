@@ -1,5 +1,5 @@
 const cheerio = require("cheerio");
-const pLimit = require("p-limit");
+const pLimit = require("p-limit").default;
 const { http } = require("../utils/http");
 
 const UFCSTATS_COMPLETED_EVENTS =
