@@ -1,0 +1,237 @@
+.app-shell {
+  width: min(1200px, 94vw);
+  margin: 0 auto;
+  padding: 24px 0 40px;
+}
+
+.app-header {
+  margin-bottom: 20px;
+}
+
+.app-header h1 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+}
+
+.app-header p {
+  margin: 0;
+  color: #4b5563;
+}
+
+.panel {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.controls-panel {
+  display: flex;
+  gap: 16px;
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.event-selector {
+  flex: 1;
+  min-width: 280px;
+}
+
+.event-selector label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.event-selector select {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  padding: 10px;
+  font-size: 0.95rem;
+}
+
+.event-meta {
+  margin-top: 10px;
+  color: #374151;
+}
+
+.analyze-btn {
+  border: none;
+  border-radius: 8px;
+  background: #111827;
+  color: #ffffff;
+  padding: 10px 18px;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.analyze-btn:disabled {
+  cursor: not-allowed;
+  background: #9ca3af;
+}
+
+.error-panel {
+  border-color: #fca5a5;
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.analysis-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: end;
+}
+
+.analysis-header h2 {
+  margin: 0;
+}
+
+.event-inline-meta {
+  margin: 4px 0 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 8px;
+}
+
+.view-toggle button {
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #f9fafb;
+  cursor: pointer;
+}
+
+.view-toggle .toggle-active {
+  background: #111827;
+  color: #ffffff;
+  border-color: #111827;
+}
+
+.top-edge-strip {
+  margin-top: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+  background: #fafafa;
+}
+
+.top-edge-strip h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.top-edge-strip ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.top-edge-strip li {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.fight-list {
+  margin-top: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.fight-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.fight-card-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 10px;
+}
+
+.fight-card h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.fight-subtitle {
+  margin: 4px 0 0;
+  color: #6b7280;
+}
+
+.best-edge-pill {
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  border: 1px solid #d1d5db;
+  white-space: nowrap;
+}
+
+.grid-two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metric-block {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.metric-block h4 {
+  margin: 0 0 8px;
+  font-size: 0.95rem;
+}
+
+.metric-block p {
+  margin: 4px 0;
+}
+
+.small-note {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.edge-positive {
+  color: #15803d;
+}
+
+.edge-negative {
+  color: #b91c1c;
+}
+
+.edge-neutral {
+  color: #4b5563;
+}
+
+.analysis-notes {
+  margin-top: 14px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 10px;
+}
+
+.analysis-notes p {
+  margin: 4px 0;
+  color: #4b5563;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 860px) {
+  .grid-two {
+    grid-template-columns: 1fr;
+  }
+}
