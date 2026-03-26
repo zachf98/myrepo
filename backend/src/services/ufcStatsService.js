@@ -9,8 +9,8 @@ const UFCSTATS_UPCOMING_EVENTS = "http://ufcstats.com/statistics/events/upcoming
 const fighterProfileCache = new Map();
 const fighterRecordCache = new Map();
 const fightRoundMetricsCache = new Map();
-const opponentRecordLimiter = pLimit(5);
-const fightDetailsLimiter = pLimit(4);
+const opponentRecordLimiter = pLimit(3);
+const fightDetailsLimiter = pLimit(2);
 
 function parseNumber(text) {
   const value = Number(String(text || "").replace(/[^0-9.-]/g, ""));
@@ -666,7 +666,7 @@ async function getFighterProfile(fighterUrl, options = {}) {
 
 async function enrichFightsWithFighterStats(fights, options = {}) {
   const asOfDate = parseAsOfDate(options.asOfDate);
-  const limit = pLimit(5);
+  const limit = pLimit(3);
   return Promise.all(
     fights.map((fight) =>
       limit(async () => {
