@@ -69,9 +69,17 @@ async function analyzeEvent(eventUrl, options = {}) {
       matchup: fight.matchup,
       fighter: fight.ev?.bestValue?.fighter || null,
       ev: fight.ev?.bestValue?.ev ?? null,
+      modelWinProbability: fight.ev?.bestValueModelProbability ?? null,
+      methodAlignment: fight.model?.methodAlignment || null,
       blurb: fight.insightBlurb,
     }))
-    .filter((entry) => Number.isFinite(entry.ev) && entry.ev > 0.05)
+    .filter(
+      (entry) =>
+        Number.isFinite(entry.ev) &&
+        entry.ev > 0.05 &&
+        Number.isFinite(entry.modelWinProbability) &&
+        entry.modelWinProbability >= 0.4,
+    )
     .sort((left, right) => right.ev - left.ev)
     .slice(0, 6);
 

@@ -47,6 +47,13 @@ function roundRows(rounds) {
   }));
 }
 
+function methodLabel(method) {
+  if (method === "ko_tko") return "KO/TKO";
+  if (method === "submission") return "Submission";
+  if (method === "decision") return "Decision";
+  return method;
+}
+
 function FightCard({ fight, viewMode }) {
   const fighterAName = fight.fighters?.fighterA?.name || "Fighter A";
   const fighterBName = fight.fighters?.fighterB?.name || "Fighter B";
@@ -66,6 +73,7 @@ function FightCard({ fight, viewMode }) {
   const roundA = fight.model?.roundProbabilities?.fighterA;
   const roundB = fight.model?.roundProbabilities?.fighterB;
   const roundFight = fight.model?.roundProbabilities?.fightTotal;
+  const methodAlignment = fight.model?.methodAlignment;
   const breakdown = fight.model?.featureBreakdown || {};
 
   return (
@@ -171,8 +179,29 @@ function FightCard({ fight, viewMode }) {
       )}
       {fight.insightBlurb ? (
         <div className="metric-block value-blurb">
-          <h4>Value Breakdown</h4>
+          <h4>Expected Fight Script</h4>
           <p>{fight.insightBlurb}</p>
+          {methodAlignment?.alignments?.length ? (
+            <div className="alignment-list">
+              <h4>Favorite Win vs Underdog Loss Method Matchup</h4>
+              <p className="small-note">
+                Favorite: {methodAlignment.favoriteName} · Underdog: {methodAlignment.underdogName}
+              </p>
+              <p className="small-note">
+                Source:{" "}
+                {methodAlignment.source === "ufc-primary"
+                  ? "UFC-only method history"
+                  : "UFC-first with pre-UFC fallback where UFC samples are thin"}
+              </p>
+              {methodAlignment.alignments.slice(0, 3).map((entry) => (
+                <p key={`${fight.fightId}-${entry.method}`} className="small-note">
+                  {methodLabel(entry.method)}: favorite win {percent(entry.favoriteWinRate)} ·
+                  underdog loss {percent(entry.underdogLossRate)} · align{" "}
+                  {entry.linesUp ? "Yes" : "No"}
+                </p>
+              ))}
+            </div>
+          ) : null}
         </div>
       ) : null}
     </article>
@@ -269,12 +298,14 @@ function AnalysisDashboard({ analysis }) {
                 <span>
                   {entry.matchup} - {entry.fighter}
                 </span>
-                <strong className={edgeClass(entry.ev)}>{evLabel(entry.ev)}</strong>
+                <strong className={edgeClass(entry.ev)}>
+                  {evLabel(entry.ev)} · Win {percent(entry.modelWinProbability)}
+                </strong>
               </li>
             ))}
           </ul>
         ) : (
-          <p>No strong positive-EV opportunities found in current data snapshot.</p>
+          <p>No positive-EV opportunities with model win probability at or above 40%.</p>
         )}
       </div>
 

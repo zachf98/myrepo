@@ -292,6 +292,165 @@ function buildRoundFinishShares(fighterStats, opponentStats) {
   };
 }
 
+const METHOD_KEYS = ["ko_tko", "submission", "decision"];
+
+function getFighterMethodDistributions(stats) {
+  const ufcWins = Math.max(safeNumber(stats.wins, 0), 0);
+  const ufcLosses = Math.max(safeNumber(stats.losses, 0), 0);
+  const preUfcFights = Math.max(safeNumber(stats.preUfcFightCount, 0), 0);
+  const hasReliableUfcWins = ufcWins >= 3;
+  const hasReliableUfcLosses = ufcLosses >= 3;
+
+  let win = {
+    ko_tko: safeNumber(stats.koWinRate, 0.2),
+    submission: safeNumber(stats.subWinRate, 0.1),
+    decision: safeNumber(stats.decisionWinRate, 0.25),
+  };
+  let loss = {
+    ko_tko: safeNumber(stats.koLossRate, 0.2),
+    submission: safeNumber(stats.subLossRate, 0.15),
+    decision: safeNumber(stats.decisionLossRate, 0.3),
+  };
+
+  if (!hasReliableUfcWins && preUfcFights > 0) {
+    // UFC method sample is thin; use cautious proxy blend.
+    const koProxy =
+      0.55 * clamp(safeNumber(stats.sigLandedPerMin, 3.2) / 6, 0, 1) +
+      0.45 * safeNumber(stats.koWinRate, 0.2);
+    const subProxy =
+      0.6 * clamp(safeNumber(stats.subAttemptsPerFight, 0.4) / 2.4, 0, 1) +
+      0.4 * safeNumber(stats.subWinRate, 0.1);
+    const decisionProxy = clamp(
+      0.4 + 0.35 * safeNumber(stats.decisionAppearanceRate, 0.3) - 0.2 * safeNumber(stats.finishRate, 0.35),
+      0.08,
+      0.7,
+    );
+    win = {
+      ko_tko: 0.6 * win.ko_tko + 0.4 * koProxy,
+      submission: 0.6 * win.submission + 0.4 * subProxy,
+      decision: 0.6 * win.decision + 0.4 * decisionProxy,
+    };
+  }
+
+  if (!hasReliableUfcLosses && preUfcFights > 0) {
+    const koLossProxy = clamp(1 - safeNumber(stats.strikingDefense, 0.52), 0.12, 0.58);
+    const subLossProxy = clamp(1 - safeNumber(stats.takedownDefense, 0.6), 0.1, 0.5);
+    const decisionLossProxy = clamp(0.2 + 0.6 * safeNumber(stats.decisionAppearanceRate, 0.3), 0.1, 0.7);
+    loss = {
+      ko_tko: 0.6 * loss.ko_tko + 0.4 * koLossProxy,
+      submission: 0.6 * loss.submission + 0.4 * subLossProxy,
+      decision: 0.6 * loss.decision + 0.4 * decisionLossProxy,
+    };
+  }
+
+  function normalize(dist) {
+    const total = METHOD_KEYS.reduce((sum, key) => sum + Math.max(safeNumber(dist[key], 0), 0.0001), 0);
+    return {
+      ko_tko: Math.max(safeNumber(dist.ko_tko, 0), 0.0001) / total,
+      submission: Math.max(safeNumber(dist.submission, 0), 0.0001) / total,
+      decision: Math.max(safeNumber(dist.decision, 0), 0.0001) / total,
+    };
+  }
+
+  return {
+    win: normalize(win),
+    loss: normalize(loss),
+    source: hasReliableUfcWins && hasReliableUfcLosses ? "ufc-primary" : "ufc-with-career-fallback",
+  };
+}
+
+function determineFavoriteUnderdog({
+  fighterAName,
+  fighterBName,
+  marketA,
+  marketB,
+  modelA,
+  modelB,
+}) {
+  if (Number.isFinite(marketA) && Number.isFinite(marketB)) {
+    if (marketA >= marketB) {
+      return {
+        favoriteSide: "fighterA",
+        underdogSide: "fighterB",
+        favoriteName: fighterAName,
+        underdogName: fighterBName,
+        source: "market",
+      };
+    }
+    return {
+      favoriteSide: "fighterB",
+      underdogSide: "fighterA",
+      favoriteName: fighterBName,
+      underdogName: fighterAName,
+      source: "market",
+    };
+  }
+
+  if (modelA >= modelB) {
+    return {
+      favoriteSide: "fighterA",
+      underdogSide: "fighterB",
+      favoriteName: fighterAName,
+      underdogName: fighterBName,
+      source: "model",
+    };
+  }
+  return {
+    favoriteSide: "fighterB",
+    underdogSide: "fighterA",
+    favoriteName: fighterBName,
+    underdogName: fighterAName,
+    source: "model",
+  };
+}
+
+function buildMethodAlignment({
+  favoriteStats,
+  underdogStats,
+  favoriteName,
+  underdogName,
+}) {
+  const favoriteDist = getFighterMethodDistributions(favoriteStats);
+  const underdogDist = getFighterMethodDistributions(underdogStats);
+
+  const alignments = METHOD_KEYS.map((method) => {
+    const favoriteWinRate = favoriteDist.win[method];
+    const underdogLossRate = underdogDist.loss[method];
+    const score = favoriteWinRate * underdogLossRate;
+    const linesUp = score >= 0.14 || (favoriteWinRate >= 0.38 && underdogLossRate >= 0.34);
+    return {
+      method,
+      favoriteWinRate,
+      underdogLossRate,
+      alignmentScore: score,
+      linesUp,
+    };
+  }).sort((left, right) => right.alignmentScore - left.alignmentScore);
+
+  return {
+    favoriteName,
+    underdogName,
+    source:
+      favoriteDist.source === "ufc-primary" && underdogDist.source === "ufc-primary"
+        ? "ufc-primary"
+        : "ufc-plus-career-fallback",
+    alignments,
+  };
+}
+
+function methodLabel(method) {
+  if (method === "ko_tko") return "KO/TKO";
+  if (method === "submission") return "submission";
+  if (method === "decision") return "decision";
+  return method;
+}
+
+function roundLabel(roundKey) {
+  if (roundKey === "round1") return "Round 1";
+  if (roundKey === "round2") return "Round 2";
+  return "Round 3+";
+}
+
 function computeEdge(modelProbability, marketProbability) {
   if (!Number.isFinite(marketProbability)) return null;
   return modelProbability - marketProbability;
@@ -435,56 +594,68 @@ function simulateFightOutcomes({
   };
 }
 
-function buildValueBlurb(fight, bestValueSide, modelProbability, marketProbability, ev, breakdown) {
-  if (!bestValueSide || !Number.isFinite(modelProbability)) return null;
+function formatPct(value) {
+  if (!Number.isFinite(value)) return "N/A";
+  return `${(value * 100).toFixed(1)}%`;
+}
 
-  const fighterName =
-    bestValueSide === "fighterA" ? fight.fighterA.name : fight.fighterB.name;
-  const direction = bestValueSide === "fighterA" ? "A" : "B";
-  const reasons = [];
-
-  if (Math.abs(safeNumber(breakdown.recencyDiff, 0)) > 0.12) {
-    const stronger =
-      (direction === "A" && breakdown.recencyDiff > 0) ||
-      (direction === "B" && breakdown.recencyDiff < 0);
-    if (stronger) reasons.push("better recent form and recency-weighted output");
-  }
-  if (Math.abs(safeNumber(breakdown.activityDiff, 0)) > 0.12) {
-    const stronger =
-      (direction === "A" && breakdown.activityDiff > 0) ||
-      (direction === "B" && breakdown.activityDiff < 0);
-    if (stronger) reasons.push("higher recent activity and less layoff risk");
-  }
-  if (Math.abs(safeNumber(breakdown.roundDurabilityDiff, 0)) > 0.1) {
-    const stronger =
-      (direction === "A" && breakdown.roundDurabilityDiff > 0) ||
-      (direction === "B" && breakdown.roundDurabilityDiff < 0);
-    if (stronger) reasons.push("stronger late-round trend from round-level stats");
-  }
-  if (Math.abs(safeNumber(breakdown.decisionSkillDiff, 0)) > 0.1) {
-    const stronger =
-      (direction === "A" && breakdown.decisionSkillDiff > 0) ||
-      (direction === "B" && breakdown.decisionSkillDiff < 0);
-    if (stronger) reasons.push("better decision win profile when fights reach the cards");
-  }
-  if (!reasons.length) {
-    reasons.push("a stronger aggregate profile across striking, grappling, and schedule");
-  }
+function buildValueBlurb({
+  likelyWinnerName,
+  likelyWinnerProbability,
+  likelyMethodKey,
+  likelyMethodGivenWin,
+  likelyRoundKey,
+  likelyRoundShare,
+  marketProbability,
+  ev,
+  methodAlignment,
+}) {
+  if (!likelyWinnerName || !Number.isFinite(likelyWinnerProbability)) return null;
 
   const marketSnippet = Number.isFinite(marketProbability)
-    ? ` vs market ${Math.round(marketProbability * 100)}%`
-    : " (no market line available)";
-  const evSnippet = Number.isFinite(ev)
-    ? ` with est. ROI ${(ev * 100).toFixed(1)}%`
-    : "";
-  return `${fighterName} model lean ${Math.round(
-    modelProbability * 100,
-  )}%${marketSnippet}${evSnippet}, driven by ${reasons.slice(0, 2).join(" and ")}.`;
+    ? `market implies ${formatPct(marketProbability)}`
+    : "market line unavailable";
+  const evSnippet = Number.isFinite(ev) ? `estimated ROI ${formatPct(ev)}` : "ROI not estimated";
+
+  const methodScript = `Most likely path is ${methodLabel(likelyMethodKey)} (${formatPct(
+    likelyMethodGivenWin,
+  )} of ${likelyWinnerName}'s wins).`;
+
+  const roundScript =
+    likelyMethodKey === "decision"
+      ? `Model expects this to hit the cards at a high clip (${formatPct(likelyRoundShare)}).`
+      : `If it ends inside the distance, timing clusters around ${roundLabel(
+          likelyRoundKey,
+        )} (${formatPct(likelyRoundShare)}).`;
+
+  const alignedMethods = (methodAlignment?.alignments || []).filter((entry) => entry.linesUp);
+  const alignmentScript = alignedMethods.length
+    ? `Favorite-to-underdog method overlap lines up on ${alignedMethods
+        .slice(0, 2)
+        .map(
+          (entry) =>
+            `${methodLabel(entry.method)} (fav wins ${formatPct(
+              entry.favoriteWinRate,
+            )}, dog loses ${formatPct(entry.underdogLossRate)})`,
+        )
+        .join(" and ")}.`
+    : "No strong method-overlap flag from favorite-win vs underdog-loss UFC tendencies.";
+
+  const sourceScript =
+    methodAlignment?.source === "ufc-primary"
+      ? "Method matchup source: UFC fights only."
+      : "Method matchup source: UFC-first, with pre-UFC fallback only where UFC method samples are thin.";
+
+  return `${likelyWinnerName} is projected to win ${formatPct(
+    likelyWinnerProbability,
+  )} (${marketSnippet}, ${evSnippet}). ${methodScript} ${roundScript} ${alignmentScript} ${sourceScript}`;
 }
 
 function projectFight(fight, marketOdds) {
   const fighterAStats = fight.fighterA.stats || {};
   const fighterBStats = fight.fighterB.stats || {};
+  const fighterAName = fight.fighterA.name;
+  const fighterBName = fight.fighterB.name;
 
   const win = computeWinProbabilities(fighterAStats, fighterBStats);
   const method = computeMethodProbabilities(
@@ -534,30 +705,85 @@ function projectFight(fight, marketOdds) {
     .filter((entry) => Number.isFinite(entry.ev))
     .sort((left, right) => right.ev - left.ev);
   const bestValue = evRank[0] || null;
+
+  const favoriteContext = determineFavoriteUnderdog({
+    fighterAName,
+    fighterBName,
+    marketA,
+    marketB,
+    modelA: simulation.fighterAWinProbability,
+    modelB: simulation.fighterBWinProbability,
+  });
+  const favoriteStats =
+    favoriteContext.favoriteSide === "fighterA" ? fighterAStats : fighterBStats;
+  const underdogStats =
+    favoriteContext.underdogSide === "fighterA" ? fighterAStats : fighterBStats;
+  const methodAlignment = buildMethodAlignment({
+    favoriteStats,
+    underdogStats,
+    favoriteName: favoriteContext.favoriteName,
+    underdogName: favoriteContext.underdogName,
+  });
+
   const fallbackSide =
     simulation.fighterAWinProbability >= simulation.fighterBWinProbability ? "fighterA" : "fighterB";
   const blurbSide = bestValue?.side || fallbackSide;
-  const blurbModelProbability =
+  const likelyWinnerProbability =
     blurbSide === "fighterA"
       ? simulation.fighterAWinProbability
       : simulation.fighterBWinProbability;
+  const likelyWinnerName = blurbSide === "fighterA" ? fighterAName : fighterBName;
   const blurbMarketProbability = blurbSide === "fighterA" ? marketA : marketB;
   const blurbEv = blurbSide === "fighterA" ? fighterAEv : fighterBEv;
-  const blurb = buildValueBlurb(
-    fight,
-    blurbSide,
-    blurbModelProbability,
-    blurbMarketProbability,
-    blurbEv,
-    win.components,
+  const winnerMethodDistribution =
+    blurbSide === "fighterA"
+      ? simulation.methodProbabilities.fighterA
+      : simulation.methodProbabilities.fighterB;
+  const winnerRoundDistribution =
+    blurbSide === "fighterA"
+      ? simulation.roundProbabilities.fighterA
+      : simulation.roundProbabilities.fighterB;
+  const likelyMethodKey = Object.entries(winnerMethodDistribution).sort(
+    (left, right) => right[1] - left[1],
+  )[0]?.[0] || "decision";
+  const likelyMethodGivenWin = clamp(
+    safeNumber(winnerMethodDistribution[likelyMethodKey], 0) /
+      Math.max(likelyWinnerProbability, 0.0001),
+    0,
+    1,
   );
-  const fallbackWinnerName =
-    simulation.fighterAWinProbability >= simulation.fighterBWinProbability
-      ? fight.fighterA.name
-      : fight.fighterB.name;
+  const finishRoundEntries = [
+    ["round1", safeNumber(winnerRoundDistribution.round1, 0)],
+    ["round2", safeNumber(winnerRoundDistribution.round2, 0)],
+    ["round3_plus", safeNumber(winnerRoundDistribution.round3_plus, 0)],
+  ].sort((left, right) => right[1] - left[1]);
+  const likelyRoundKey = likelyMethodKey === "decision" ? "decision" : finishRoundEntries[0][0];
+  const likelyRoundShare =
+    likelyMethodKey === "decision"
+      ? safeNumber(winnerRoundDistribution.decision, 0)
+      : safeNumber(finishRoundEntries[0][1], 0);
+  const blurb = buildValueBlurb({
+    likelyWinnerName,
+    likelyWinnerProbability,
+    likelyMethodKey,
+    likelyMethodGivenWin,
+    likelyRoundKey,
+    likelyRoundShare,
+    marketProbability: blurbMarketProbability,
+    ev: blurbEv,
+    methodAlignment,
+  });
   const finalBlurb =
     blurb ||
-    `${fallbackWinnerName} has a model lean based on aggregate striking, grappling, and experience profile.`;
+    `${likelyWinnerName} has a model lean based on aggregate striking, grappling, and experience profile.`;
+  const bestValueModelProbability = bestValue
+    ? bestValue.side === "fighterA"
+      ? simulation.fighterAWinProbability
+      : simulation.fighterBWinProbability
+    : null;
+  const bestValueQualified = Number.isFinite(bestValueModelProbability)
+    ? bestValueModelProbability >= 0.4
+    : false;
 
   return {
     model: {
@@ -567,6 +793,7 @@ function projectFight(fight, marketOdds) {
       },
       methodProbabilities: simulation.methodProbabilities,
       roundProbabilities: simulation.roundProbabilities,
+      methodAlignment,
       featureBreakdown: win.components,
       matchupArchetype: win.matchupArchetype,
       monteCarlo: simulation,
@@ -580,6 +807,8 @@ function projectFight(fight, marketOdds) {
       fighterA: fighterAEv,
       fighterB: fighterBEv,
       bestValue,
+      bestValueModelProbability,
+      bestValueQualified,
     },
     insightBlurb: finalBlurb,
   };
