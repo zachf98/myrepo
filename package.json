@@ -1,0 +1,24 @@
+{
+  "name": "workspace",
+  "version": "1.0.0",
+  "description": "UFC betting edge calculator monorepo",
+  "private": true,
+  "scripts": {
+    "dev:backend": "npm run dev --prefix backend",
+    "start:backend": "npm run start --prefix backend",
+    "dev:frontend": "npm run dev --prefix frontend",
+    "build:frontend": "npm run build --prefix frontend",
+    "test": "echo \"No root tests configured\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zachf98/myrepo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zachf98/myrepo/issues"
+  },
+  "homepage": "https://github.com/zachf98/myrepo#readme"
+}
