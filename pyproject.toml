@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ufc-quant-engine"
+version = "0.1.0"
+description = "Quantitative UFC fight prediction engine with ML, Elo, Bayesian updating, simulation, and betting analytics."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Cursor Agent" }]
+dependencies = [
+    "beautifulsoup4",
+    "joblib",
+    "numpy",
+    "pandas",
+    "plotly",
+    "requests",
+    "scikit-learn",
+    "scipy",
+    "streamlit",
+]
+
+[project.optional-dependencies]
+boosting = ["xgboost", "lightgbm"]
+explain = ["shap"]
+clustering = ["hdbscan"]
+dev = ["pytest"]
+
+[project.scripts]
+ufc-quant = "ufc_predictor.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["ufc_predictor*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
