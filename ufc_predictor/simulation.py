@@ -49,7 +49,7 @@ class MonteCarloSimulator:
     ) -> SimulationResult:
         if self.profiles is None:
             raise RuntimeError("MonteCarloSimulator must be fit before simulate().")
-        profiles = self.profiles.set_index("fighter")
+        profiles = self.profiles.set_index("fighter", drop=False)
         red = profiles.loc[red_fighter]
         blue = profiles.loc[blue_fighter]
 
