@@ -136,6 +136,7 @@ class PredictionEngine:
         elo_probability = self._elo_probability(red_fighter, blue_fighter)
         probabilities = self._ensemble(model_prediction, bayes_prediction, simulation, elo_probability)
         probabilities["blue_win_probability"] = 1.0 - probabilities["red_win_probability"]
+        probabilities.update(simulation.over_under_probabilities)
 
         betting_edges = evaluate_fight_odds(probabilities, odds or {})
         comparable = self.models.comparable_fights(row, self.dataset.fights, top_n=20)

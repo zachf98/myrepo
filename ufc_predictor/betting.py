@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 import numpy as np
 import pandas as pd
@@ -83,13 +83,16 @@ def evaluate_fight_odds(probabilities: dict[str, float], odds: dict[str, float])
     edges: list[BettingEdge] = []
     for market, price in odds.items():
         probability_key = market_aliases.get(market, market)
+        if market.startswith(("over_", "under_")):
+            side, line = market.split("_", 1)
+            probability_key = f"{side}_{line.replace('_', '.')}"
         if probability_key in probabilities:
             edges.append(evaluate_market(market, probabilities[probability_key], price))
     return sorted(edges, key=lambda edge: edge.expected_value, reverse=True)
 
 
 def edges_to_frame(edges: list[BettingEdge]) -> pd.DataFrame:
-    return pd.DataFrame([edge.__dict__ for edge in edges])
+    return pd.DataFrame([asdict(edge) for edge in edges])
 
 
 def detect_market_inefficiencies(edges_by_fight: dict[str, list[BettingEdge]]) -> pd.DataFrame:

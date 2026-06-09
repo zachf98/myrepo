@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from dataclasses import asdict
 
 from ufc_predictor.engine import PredictionEngine
 from ufc_predictor.sample_data import build_sample_dataset
@@ -58,7 +59,7 @@ def run_demo(args: argparse.Namespace) -> None:
                     "decision_probability": prediction.decision_probability,
                     "goes_distance_probability": prediction.goes_distance_probability,
                     "finish_round_distribution": prediction.finish_round_distribution,
-                    "betting_edges": [edge.__dict__ for edge in prediction.betting_edges],
+                    "betting_edges": [asdict(edge) for edge in prediction.betting_edges],
                     "top_factors": prediction.top_factors,
                 },
                 indent=2,
