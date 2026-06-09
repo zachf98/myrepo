@@ -137,6 +137,16 @@ class PredictionEngine:
         probabilities = self._ensemble(model_prediction, bayes_prediction, simulation, elo_probability)
         probabilities["blue_win_probability"] = 1.0 - probabilities["red_win_probability"]
         probabilities.update(simulation.over_under_probabilities)
+        confidence_intervals = dict(simulation.confidence_intervals)
+        confidence_intervals.update(
+            {
+                "red_win_probability": _binomial_ci(probabilities["red_win_probability"], simulation.simulations),
+                "blue_win_probability": _binomial_ci(probabilities["blue_win_probability"], simulation.simulations),
+                "ko_tko_probability": _binomial_ci(probabilities["ko_tko_probability"], simulation.simulations),
+                "submission_probability": _binomial_ci(probabilities["submission_probability"], simulation.simulations),
+                "decision_probability": _binomial_ci(probabilities["decision_probability"], simulation.simulations),
+            }
+        )
 
         betting_edges = evaluate_fight_odds(probabilities, odds or {})
         comparable = self.models.comparable_fights(row, self.dataset.fights, top_n=20)
@@ -162,7 +172,7 @@ class PredictionEngine:
             goes_distance_probability=probabilities["goes_distance_probability"],
             finish_round_distribution=simulation.finish_round_distribution,
             over_under_probabilities=simulation.over_under_probabilities,
-            confidence_intervals=simulation.confidence_intervals,
+            confidence_intervals=confidence_intervals,
             betting_edges=betting_edges,
             comparable_fights=comparable,
             model_breakdown=model_breakdown,
@@ -238,3 +248,8 @@ def _weighted(values: dict[str, float], weights: dict[str, float]) -> float:
     if denominator <= 0:
         return float(np.mean(list(values.values())))
     return float(sum(values[key] * weights.get(key, 0.0) for key in values) / denominator)
+
+
+def _binomial_ci(probability: float, n: int, z: float = 1.96) -> tuple[float, float]:
+    spread = z * np.sqrt(max(probability * (1 - probability), 0.0) / max(n, 1))
+    return float(max(0.0, probability - spread)), float(min(1.0, probability + spread))

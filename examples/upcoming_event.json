@@ -1,0 +1,35 @@
+{
+  "event": "Sample UFC Betting Card",
+  "fights": [
+    {
+      "red_fighter": "Dricus Du Plessis",
+      "blue_fighter": "Khamzat Chimaev",
+      "weight_class": "Middleweight",
+      "scheduled_rounds": 5,
+      "red_moneyline": 135,
+      "blue_moneyline": -155,
+      "over_2_5": -120,
+      "under_2_5": 100
+    },
+    {
+      "red_fighter": "Alex Pereira",
+      "blue_fighter": "Magomed Ankalaev",
+      "weight_class": "Light Heavyweight",
+      "scheduled_rounds": 5,
+      "red_moneyline": -115,
+      "blue_moneyline": -105,
+      "ko_tko": 110,
+      "goes_distance": 160
+    },
+    {
+      "red_fighter": "Islam Makhachev",
+      "blue_fighter": "Charles Oliveira",
+      "weight_class": "Lightweight",
+      "scheduled_rounds": 5,
+      "red_moneyline": -240,
+      "blue_moneyline": 200,
+      "submission": 140,
+      "over_3_5": -105
+    }
+  ]
+}

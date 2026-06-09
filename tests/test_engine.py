@@ -1,6 +1,7 @@
 import pandas as pd
 
 from ufc_predictor.betting import evaluate_market
+from ufc_predictor.card import generate_betting_card, load_upcoming_event
 from ufc_predictor.engine import PredictionEngine
 from ufc_predictor.sample_data import build_sample_dataset
 from ufc_predictor.validation import calibration_table, classification_metrics
@@ -55,3 +56,20 @@ def test_betting_math_and_validation_tables():
         bins=4,
     )
     assert not table.empty
+
+
+def test_betting_card_for_upcoming_event_template():
+    dataset = build_sample_dataset()
+    engine = PredictionEngine(random_state=321).fit(dataset)
+    event_name, fights = load_upcoming_event("examples/upcoming_event.json")
+
+    card = generate_betting_card(engine, event_name, fights[:2], simulations=200)
+
+    assert card.event_name == "Sample UFC Betting Card"
+    assert card.summary_metrics["fights_analyzed"] == 2
+    assert card.summary_metrics["markets_analyzed"] > 0
+    assert not card.recommendations.empty
+    assert {"fight", "market", "edge", "expected_value", "recommendation"}.issubset(card.recommendations.columns)
+    assert card.fights[0]["top_factors"]
+    assert "Betting Card" in card.to_markdown()
+    assert card.to_dict()["recommendations"]

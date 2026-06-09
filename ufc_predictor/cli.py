@@ -5,7 +5,9 @@ from __future__ import annotations
 import argparse
 import json
 from dataclasses import asdict
+from pathlib import Path
 
+from ufc_predictor.card import generate_betting_card, load_upcoming_event
 from ufc_predictor.engine import PredictionEngine
 from ufc_predictor.sample_data import build_sample_dataset
 
@@ -25,9 +27,21 @@ def main() -> None:
     demo.add_argument("--over-2-5", type=float, default=-120)
     demo.add_argument("--json", action="store_true", help="Emit a JSON summary")
 
+    card = subparsers.add_parser("card", help="Generate a betting card for an upcoming event file")
+    card.add_argument(
+        "--event-file",
+        default="examples/upcoming_event.json",
+        help="JSON or CSV with red_fighter, blue_fighter, weight_class, scheduled_rounds, and odds columns",
+    )
+    card.add_argument("--simulations", type=int, default=5000)
+    card.add_argument("--json", action="store_true", help="Emit JSON instead of Markdown")
+    card.add_argument("--output", help="Optional path to save the betting card")
+
     args = parser.parse_args()
     if args.command == "demo":
         run_demo(args)
+    elif args.command == "card":
+        run_card(args)
 
 
 def run_demo(args: argparse.Namespace) -> None:
@@ -81,6 +95,23 @@ def run_demo(args: argparse.Namespace) -> None:
     print("\nTop comparable fights")
     for row in prediction.comparable_fights.head(5).itertuples(index=False):
         print(f"  {row.red_fighter} vs {row.blue_fighter}: {row.winner} by {row.method} (similarity={row.similarity:.2f})")
+
+
+def run_card(args: argparse.Namespace) -> None:
+    dataset = build_sample_dataset()
+    engine = PredictionEngine()
+    engine.fit(dataset)
+    event_name, fights = load_upcoming_event(args.event_file)
+    card = generate_betting_card(engine, event_name, fights, simulations=args.simulations)
+    if args.json:
+        rendered = json.dumps(card.to_dict(), indent=2, default=str)
+    else:
+        rendered = card.to_markdown()
+
+    if args.output:
+        Path(args.output).write_text(rendered + "\n", encoding="utf-8")
+    else:
+        print(rendered)
 
 
 if __name__ == "__main__":

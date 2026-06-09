@@ -47,6 +47,47 @@ The demo trains on bundled historical sample fights, predicts a fictional
 upcoming matchup, runs a Monte Carlo simulation, and prints betting edges for
 example odds.
 
+## Generate a betting card for an upcoming event
+
+Edit `examples/upcoming_event.json` with the fights and sportsbook odds for the
+event you want to analyze, then run:
+
+```bash
+ufc-quant card --event-file examples/upcoming_event.json --simulations 10000
+```
+
+Save the report:
+
+```bash
+ufc-quant card --event-file examples/upcoming_event.json --output betting-card.md
+```
+
+Machine-readable output:
+
+```bash
+ufc-quant card --event-file examples/upcoming_event.json --json
+```
+
+Event files can be JSON or CSV. Each fight should include:
+
+- `red_fighter`
+- `blue_fighter`
+- `weight_class`
+- `scheduled_rounds`
+- optional odds columns such as `red_moneyline`, `blue_moneyline`, `ko_tko`,
+  `submission`, `decision`, `goes_distance`, `over_2_5`, or `under_2_5`
+
+The output includes:
+
+- ranked betting recommendations
+- model probability vs implied probability
+- edge, EV, and Kelly sizing
+- projected winner and method probabilities
+- confidence intervals
+- top predictive factors
+- card-level summary metrics
+- market inefficiency labels
+
 ## Streamlit dashboard
 
 ```bash
