@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Power Rankings | League Portal</title>
+    <meta name="description" content="Weekly fantasy football power rankings written by our leaguemates, with tier breakdowns and full write ups." />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+            },
+            keyframes: {
+              'fade-up': {
+                '0%': { opacity: '0', transform: 'translateY(8px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' }
+              }
+            },
+            animation: {
+              'fade-up': 'fade-up 0.4s ease-out both'
+            }
+          }
+        }
+      };
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background-image: radial-gradient(60rem 40rem at 50% -10rem, rgba(16, 185, 129, 0.13), transparent 70%);
+      }
+
+      .nav-link {
+        border-radius: 0.625rem;
+        padding: 0.5rem 0.875rem;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #94a3b8;
+        transition: color 0.15s ease, background-color 0.15s ease;
+      }
+      .nav-link:hover {
+        color: #ffffff;
+        background-color: rgba(30, 41, 59, 0.8);
+      }
+      .nav-link-active {
+        color: #ffffff;
+        background-color: rgba(16, 185, 129, 0.14);
+        box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.3);
+      }
+
+      .card-hover {
+        transition: transform 0.2s ease, border-color 0.2s ease;
+      }
+      .card-hover:hover {
+        transform: translateY(-2px);
+        border-color: rgba(52, 211, 153, 0.35);
+      }
+
+      .filter-chip {
+        border-radius: 9999px;
+        border: 1px solid #1e293b;
+        background-color: rgba(15, 23, 42, 0.6);
+        padding: 0.375rem 0.875rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #94a3b8;
+        transition: all 0.15s ease;
+      }
+      .filter-chip:hover {
+        color: #ffffff;
+        border-color: #334155;
+      }
+      .filter-chip-active {
+        background-color: rgba(16, 185, 129, 0.15);
+        border-color: rgba(52, 211, 153, 0.4);
+        color: #6ee7b7;
+      }
+
+      /* Drop cap on the opening paragraph of each write up */
+      .first-letter-drop > p:first-of-type::first-letter {
+        float: left;
+        margin-right: 0.5rem;
+        font-size: 3rem;
+        line-height: 0.85;
+        font-weight: 900;
+        color: #6ee7b7;
+      }
+
+      .skeleton {
+        background: linear-gradient(90deg, #0f172a 25%, #1e293b 37%, #0f172a 63%);
+        background-size: 400% 100%;
+        animation: shimmer 1.4s ease infinite;
+      }
+      @keyframes shimmer {
+        0% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0 50%;
+        }
+      }
+    </style>
+  </head>
+
+  <body data-page="rankings" class="min-h-screen bg-slate-950 font-sans text-slate-200 antialiased">
+    <!-- ============================================================
+         Persistent top navigation (identical on every page)
+         ============================================================ -->
+    <header class="sticky top-0 z-50 border-b border-slate-800/80 bg-slate-950/85 backdrop-blur">
+      <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+        <a href="index.html" class="flex items-center gap-3">
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-lg shadow-emerald-500/20">
+            <svg class="h-5 w-5 text-slate-950" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 3c-3.9 0-7 .6-8.6 1.1C2.6 6.6 2 9.2 2 12s.6 5.4 1.4 7.9C5 20.4 8.1 21 12 21s7-.6 8.6-1.1c.8-2.5 1.4-5.1 1.4-7.9s-.6-5.4-1.4-7.9C19 3.6 15.9 3 12 3Zm4.3 6.3-1.1 1.1 1.1 1.1-1.4 1.4-1.1-1.1-1.1 1.1 1.1 1.1-1.4 1.4-1.1-1.1-1.1 1.1L8.8 15l1.1-1.1-1.1-1.1 1.4-1.4 1.1 1.1 1.1-1.1-1.1-1.1 1.4-1.4 1.1 1.1 1.1-1.1 1.4 1.4Z" />
+            </svg>
+          </span>
+          <span class="leading-tight">
+            <span data-league-name class="block text-base font-extrabold tracking-tight text-white">League Portal</span>
+            <span class="block text-[11px] font-semibold uppercase tracking-[0.18em] text-emerald-400">
+              Season <span data-league-season>2026</span>
+            </span>
+          </span>
+        </a>
+
+        <nav class="hidden items-center gap-1 md:flex" aria-label="Main">
+          <a href="index.html" data-nav="dashboard" class="nav-link">Dashboard</a>
+          <a href="rankings.html" data-nav="rankings" class="nav-link">Power Rankings</a>
+          <a href="history.html" data-nav="history" class="nav-link">History Vault</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <a
+            data-espn-link
+            href="https://fantasy.espn.com/football/league?leagueId=REPLACE_WITH_YOUR_LEAGUE_ID"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-3 py-2 text-xs font-bold uppercase tracking-wide text-white shadow-lg shadow-red-900/30 transition hover:from-red-500 hover:to-red-400 sm:px-4 sm:text-sm"
+          >
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <path d="M15 3h6v6" />
+              <path d="M10 14 21 3" />
+            </svg>
+            <span class="hidden sm:inline">ESPN League Page</span>
+            <span class="sm:hidden">ESPN</span>
+          </a>
+
+          <button
+            id="nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="nav-menu"
+            class="grid h-10 w-10 place-items-center rounded-xl border border-slate-800 text-slate-300 transition hover:text-white md:hidden"
+          >
+            <span class="sr-only">Toggle navigation</span>
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="nav-menu" class="hidden border-t border-slate-800 bg-slate-950 px-4 py-3 md:hidden">
+        <nav class="flex flex-col gap-1" aria-label="Mobile">
+          <a href="index.html" data-nav="dashboard" class="nav-link">Dashboard</a>
+          <a href="rankings.html" data-nav="rankings" class="nav-link">Power Rankings</a>
+          <a href="history.html" data-nav="history" class="nav-link">History Vault</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 lg:py-12">
+      <!-- Data load failure banner -->
+      <div id="error-banner" class="mb-8 hidden rounded-2xl border border-rose-500/40 bg-rose-500/10 p-5" role="alert">
+        <p class="flex items-center gap-2 text-sm font-bold text-rose-200">
+          <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 8v4M12 16h.01" />
+          </svg>
+          We could not load the league data
+        </p>
+        <p id="error-message" class="mt-1 text-sm text-rose-200/80"></p>
+      </div>
+
+      <!-- Page header -->
+      <section class="animate-fade-up">
+        <p class="text-xs font-bold uppercase tracking-[0.25em] text-emerald-400">Written by the league, for the league</p>
+        <h1 class="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-5xl">Power Rankings</h1>
+        <p class="mt-3 max-w-3xl text-base text-slate-400 sm:text-lg">
+          Every week a different manager takes the keyboard, ranks all <span data-league-teams>14</span> teams into tiers,
+          and defends the list in writing. No editing, no mercy.
+        </p>
+
+        <dl class="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+            <dt class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Editions published</dt>
+            <dd data-rankings-count class="mt-1 text-2xl font-extrabold text-white">0</dd>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+            <dt class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Latest edition</dt>
+            <dd data-latest-week class="mt-1 text-2xl font-extrabold text-emerald-300">--</dd>
+          </div>
+          <div class="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+            <dt class="text-[10px] font-bold uppercase tracking-widest text-slate-500">On the clock</dt>
+            <dd data-latest-author class="mt-1 text-2xl font-extrabold text-white">--</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- Week filter chips (built from data.json) -->
+      <div id="rankings-filter" class="mt-10 flex flex-wrap items-center gap-2" aria-label="Filter rankings by week"></div>
+
+      <!-- Loading skeleton -->
+      <div id="rankings-loading" data-loading class="mt-6 space-y-6">
+        <div class="skeleton h-96 rounded-3xl"></div>
+        <div class="skeleton h-96 rounded-3xl"></div>
+      </div>
+
+      <!-- Empty state -->
+      <div id="rankings-empty" class="mt-6 hidden rounded-3xl border border-dashed border-slate-800 p-12 text-center">
+        <p class="text-lg font-bold text-white">No rankings have been submitted yet</p>
+        <p class="mx-auto mt-2 max-w-md text-sm text-slate-500">
+          Add an object to the <code class="rounded bg-slate-800 px-1.5 py-0.5 text-emerald-300">powerRankings</code> array in
+          <code class="rounded bg-slate-800 px-1.5 py-0.5 text-emerald-300">data.json</code> with a week, author, tier list, and
+          write up. It renders here automatically.
+        </p>
+      </div>
+
+      <div id="rankings-list" class="mt-6 space-y-8"></div>
+    </main>
+
+    <footer class="mt-16 border-t border-slate-800 bg-slate-950">
+      <div class="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-8 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <p>
+          &copy; <span data-current-year>2026</span> <span data-league-name>League Portal</span>. Content managed in
+          <code class="rounded bg-slate-800 px-1.5 py-0.5 text-emerald-300">data.json</code>.
+        </p>
+        <p>Built for a 14-team ESPN fantasy football league.</p>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
