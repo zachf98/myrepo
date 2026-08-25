@@ -501,6 +501,7 @@ function movementBadge(movement) {
 function renderHistory(history) {
   const list = document.getElementById('history-list');
   const empty = document.getElementById('history-empty');
+  const footnote = document.getElementById('history-footnote');
   if (!list) return;
 
   /* The locked-vault card ships visible in the HTML so the page is
@@ -508,11 +509,13 @@ function renderHistory(history) {
   if (!history.length) {
     show(empty);
     hide(list);
+    hide(footnote);
     return;
   }
 
   hide(empty);
   show(list);
+  show(footnote);
 
   const ordered = [...history].sort((a, b) => numberOr(b.season, 0) - numberOr(a.season, 0));
   setText('[data-seasons-count]', ordered.length);
