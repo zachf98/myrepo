@@ -1,0 +1,364 @@
+{
+  "league": {
+    "name": "The Sunday Syndicate",
+    "tagline": "14-team, 0.5 PPR keeper league on ESPN",
+    "season": 2026,
+    "teamCount": 14,
+    "playoffTeams": 6,
+    "commissioner": "Marcus Webb",
+    "espnLeagueUrl": "https://fantasy.espn.com/football/league?leagueId=REPLACE_WITH_YOUR_LEAGUE_ID"
+  },
+
+  "announcements": [
+    {
+      "id": 1,
+      "title": "Draft night is locked in: Saturday, September 5",
+      "content": "We are live and in person at Marcus's place, 6:00 PM kickoff on the clock. Doors open at 5:00 PM so everyone has time to set up laptops and get a plate before the first pick. Remote managers will join over the ESPN app with a video call on the projector, so make sure your app is updated and you have tested your login before draft day.\n\nTwo minute pick timer, snake order drawn live at 5:45 PM. If you cannot attend, set your queue and turn on autodraft as a backup. There will be no rescheduling this year.",
+      "date": "2026-08-24",
+      "isPinned": true
+    },
+    {
+      "id": 2,
+      "title": "2026 rule changes passed by league vote",
+      "content": "Three changes cleared the two thirds threshold and are already applied in the ESPN settings.\n\nFirst, we moved from full PPR to 0.5 PPR to bring running back and receiver values closer together. Second, the playoff field expands from four teams to six, with the top two seeds earning a first round bye. Third, waivers now run on a continuous rolling basis with a 24 hour claim window instead of clearing only on Wednesdays.\n\nThe FAAB budget stays at $100 for the season with a $1 minimum bid.",
+      "date": "2026-08-18",
+      "isPinned": true
+    },
+    {
+      "id": 3,
+      "title": "Dues must be paid before you touch the draft board",
+      "content": "Buy in stays at $75 per team, unchanged for the third year running. Payment goes through the league account and is due by September 1 so the pot is verified before we draft.\n\nPayouts this season: $600 to the champion, $250 to the runner up, $150 to the regular season points leader. Anyone unpaid on draft night gives up their draft slot to the waiting list.",
+      "date": "2026-08-12",
+      "isPinned": false
+    },
+    {
+      "id": 4,
+      "title": "Two new managers join for 2026",
+      "content": "Please welcome Emily Sato and Chad Feldman, who take over the two orphan rosters that opened up after last season. Both franchises were reset to empty rosters by unanimous vote, so Emily and Chad enter the draft with a full slate of picks and no inherited contracts.\n\nThey each drew into the top four of the draft order lottery, which should keep the rebuild short.",
+      "date": "2026-08-05",
+      "isPinned": false
+    },
+    {
+      "id": 5,
+      "title": "Trade review committee is officially retired",
+      "content": "After three seasons of arguing in the group chat about vetoes, the committee is gone. Trades now process automatically after a 24 hour review window unless the commissioner finds clear evidence of collusion or a hacked account.\n\nTrade freely, negotiate hard, and stop asking me to referee your bad decisions.",
+      "date": "2026-07-28",
+      "isPinned": false
+    },
+    {
+      "id": 6,
+      "title": "Claim your week to write the power rankings",
+      "content": "The rankings rotation sheet is open and every manager needs to claim one week between Week 1 and Week 14. Write ups are due by Tuesday at 11:59 PM so they post before Wednesday waivers run.\n\nMinimum requirement is a full 1 through 14 ranking with tiers and a paragraph on each tier. Roast responsibly. Send your finished write up to the commissioner and it gets added to the rankings page.",
+      "date": "2026-07-15",
+      "isPinned": false
+    }
+  ],
+
+  "deadlines": [
+    {
+      "id": 1,
+      "event": "Keeper declarations due to commissioner",
+      "date": "2026-08-29",
+      "importance": "high"
+    },
+    {
+      "id": 2,
+      "event": "League dues ($75) submitted in full",
+      "date": "2026-09-01",
+      "importance": "high"
+    },
+    {
+      "id": 3,
+      "event": "Live draft night at Marcus's place",
+      "date": "2026-09-05",
+      "importance": "high"
+    },
+    {
+      "id": 4,
+      "event": "Week 1 rosters lock at first kickoff",
+      "date": "2026-09-10",
+      "importance": "high"
+    },
+    {
+      "id": 5,
+      "event": "First power rankings write up due",
+      "date": "2026-09-15",
+      "importance": "medium"
+    },
+    {
+      "id": 6,
+      "event": "FAAB budget resets for the second half",
+      "date": "2026-10-27",
+      "importance": "medium"
+    },
+    {
+      "id": 7,
+      "event": "Trade deadline, no deals after 11:59 PM",
+      "date": "2026-11-24",
+      "importance": "high"
+    },
+    {
+      "id": 8,
+      "event": "Playoffs begin, six teams in, top two on bye",
+      "date": "2026-12-08",
+      "importance": "medium"
+    },
+    {
+      "id": 9,
+      "event": "Championship week and last place punishment reveal",
+      "date": "2026-12-22",
+      "importance": "low"
+    }
+  ],
+
+  "powerRankings": [
+    {
+      "id": 2,
+      "week": "Preseason",
+      "title": "Draft Week Preseason Rankings",
+      "author": "Renee Colton",
+      "authorTeam": "Puka Matata",
+      "publishedDate": "2026-08-24",
+      "rankingsList": [
+        {
+          "rank": 1,
+          "team": "Gridiron Gamblers",
+          "manager": "Marcus Webb",
+          "tier": "Title Favorites",
+          "movement": 1,
+          "note": "Three keepers under market value and the best draft capital in the league. The commissioner is not supposed to be this well positioned."
+        },
+        {
+          "rank": 2,
+          "team": "Bijan Mustard",
+          "manager": "Owen Kessler",
+          "tier": "Title Favorites",
+          "movement": -1,
+          "note": "Still the deepest backfield on paper, but the receiver room is one hamstring away from becoming a problem."
+        },
+        {
+          "rank": 3,
+          "team": "Kelce Grammer",
+          "manager": "Sam Whitfield",
+          "tier": "Title Favorites",
+          "movement": 2,
+          "note": "Won the offseason quietly. Turned a fading tight end into two second rounders and never told the group chat."
+        },
+        {
+          "rank": 4,
+          "team": "McCaffrey Cartel",
+          "manager": "Lauren Pike",
+          "tier": "Playoff Locks",
+          "movement": 0,
+          "note": "The most stable roster here. No holes, no ceiling either, and that has been the story for three straight seasons."
+        },
+        {
+          "rank": 5,
+          "team": "Jefferson Airplane",
+          "manager": "Victor Ozuna",
+          "tier": "Playoff Locks",
+          "movement": 3,
+          "note": "Biggest riser of the summer. Two elite receivers plus the fifth pick is a very fast path back to contention."
+        },
+        {
+          "rank": 6,
+          "team": "The Lamar Express",
+          "manager": "Nadia Farrell",
+          "tier": "Playoff Locks",
+          "movement": -3,
+          "note": "The quarterback carries this team every year, and every year the flex spots need a miracle by Week 9."
+        },
+        {
+          "rank": 7,
+          "team": "Purdy Good Team",
+          "manager": "Tasha Brooks",
+          "tier": "Playoff Locks",
+          "movement": 0,
+          "note": "Consistently underrated because the roster is boring. Boring wins seven games before you notice."
+        },
+        {
+          "rank": 8,
+          "team": "Hurts So Good",
+          "manager": "Priya Nair",
+          "tier": "Bubble Watch",
+          "movement": -2,
+          "note": "Lost a keeper to an ill advised August trade and has not replaced the production. The picks better hit."
+        },
+        {
+          "rank": 9,
+          "team": "Puka Matata",
+          "manager": "Renee Colton",
+          "tier": "Bubble Watch",
+          "movement": 0,
+          "note": "I write the rankings, so I am legally obligated to be humble. Ninth feels two spots too low and you cannot prove otherwise."
+        },
+        {
+          "rank": 10,
+          "team": "Chubb Rub",
+          "manager": "Danny Alvarez",
+          "tier": "Bubble Watch",
+          "movement": 0,
+          "note": "All in on volume running backs in a half point league. Bold strategy, questionable timing."
+        },
+        {
+          "rank": 11,
+          "team": "Saquon of Potatoes",
+          "manager": "Ibrahim Diallo",
+          "tier": "Bubble Watch",
+          "movement": 0,
+          "note": "Enough talent to make a run and enough chaos in the lineup decisions to miss the playoffs by a game."
+        },
+        {
+          "rank": 12,
+          "team": "Nix Pistol Offense",
+          "manager": "Chad Feldman",
+          "tier": "Rebuild Row",
+          "movement": 1,
+          "note": "Brand new manager holding the second pick and a clean slate. The rebuild starts with a real cornerstone."
+        },
+        {
+          "rank": 13,
+          "team": "Tuas Company",
+          "manager": "Greg Halloran",
+          "tier": "Rebuild Row",
+          "movement": -1,
+          "note": "Traded next year's first to chase a playoff spot last season and finished eleventh. That bill comes due now."
+        },
+        {
+          "rank": 14,
+          "team": "Waddle Til Next Year",
+          "manager": "Emily Sato",
+          "tier": "Rebuild Row",
+          "movement": 0,
+          "note": "Empty roster, top four pick, zero bad contracts. Last place today, dangerous by 2027."
+        }
+      ],
+      "writeup": "Draft week is the only time of year when every manager in this league is undefeated, so let me ruin the mood early. There is a real gap at the top of the 2026 Sunday Syndicate, and it is not the gap most of you think it is. The top three teams are separated from the field not by raw talent but by draft capital, and in a fourteen team league that extra pick in the third round is worth more than whatever your favorite sleeper does in September.\n\nStart with the Gridiron Gamblers. Marcus kept three players who would each be top thirty picks in this draft, and he did it while sitting on the most flexible pick collection in the league. Bijan Mustard is right there with him on talent, but Owen's roster is a receiver injury away from starting a waiver wire flex every week, and history says that injury happens in October. Kelce Grammer is the team nobody wants to talk about because Sam quietly turned a declining asset into real picks and never once bragged about it in the chat, which in this league is basically stealth mode.\n\nThe playoff lock tier is where the season actually gets decided. Four teams, four very different problems. McCaffrey Cartel is the definition of stable and has still never made a championship game. Jefferson Airplane made the biggest jump of the summer and is the one team in this tier with a path to the top three by Thanksgiving. The Lamar Express keeps betting that one elite quarterback covers three empty roster spots, and Purdy Good Team keeps winning games while everyone forgets they exist. With six playoff spots now instead of four, three of these four are getting in, and the fourth is going to spend December telling us about strength of schedule.\n\nBubble Watch is the largest tier for a reason. Hurts So Good, Puka Matata, Chubb Rub, and Saquon of Potatoes are all one aggressive trade away from the playoff tier and one bad month away from the bottom. Danny's commitment to volume running backs in a half point league is the single most interesting bet of the offseason, and if it works he moves up five spots by Week 6. If it does not, we are going to hear about it every Sunday.\n\nDown in Rebuild Row, the two new managers are in better shape than the veteran they are ranked alongside. Chad and Emily both hold top four picks with completely clean rosters, while Tuas Company is paying off a first round pick that was spent chasing an eleventh place finish. That is the cost of going all in without a plan, and it is the best argument I can make for patience before you trade a future first on draft night. See you Saturday. Bring cash, not excuses."
+    },
+    {
+      "id": 1,
+      "week": "Offseason",
+      "title": "Post Keeper Deadline Temperature Check",
+      "author": "Ibrahim Diallo",
+      "authorTeam": "Saquon of Potatoes",
+      "publishedDate": "2026-07-19",
+      "rankingsList": [
+        {
+          "rank": 1,
+          "team": "Bijan Mustard",
+          "manager": "Owen Kessler",
+          "tier": "Title Favorites",
+          "movement": null,
+          "note": "Kept the best pure runner in the league plus a top twelve receiver. Nobody else kept two starters that good."
+        },
+        {
+          "rank": 2,
+          "team": "Gridiron Gamblers",
+          "manager": "Marcus Webb",
+          "tier": "Title Favorites",
+          "movement": null,
+          "note": "Three strong keepers and a pick war chest. Only reason he is not first is the tight end hole."
+        },
+        {
+          "rank": 3,
+          "team": "The Lamar Express",
+          "manager": "Nadia Farrell",
+          "tier": "Title Favorites",
+          "movement": null,
+          "note": "The most valuable keeper in the league at the most important position. The rest of the roster is a rumor."
+        },
+        {
+          "rank": 4,
+          "team": "McCaffrey Cartel",
+          "manager": "Lauren Pike",
+          "tier": "Playoff Locks",
+          "movement": null,
+          "note": "Kept the safest three players available. No risk taken, no upside gained."
+        },
+        {
+          "rank": 5,
+          "team": "Kelce Grammer",
+          "manager": "Sam Whitfield",
+          "tier": "Playoff Locks",
+          "movement": null,
+          "note": "Let a name brand keeper walk to bank picks. It looked like a mistake in June and looks smarter every week."
+        },
+        {
+          "rank": 6,
+          "team": "Hurts So Good",
+          "manager": "Priya Nair",
+          "tier": "Playoff Locks",
+          "movement": null,
+          "note": "Solid keeper class, but the trade rumors around her best receiver are getting louder."
+        },
+        {
+          "rank": 7,
+          "team": "Purdy Good Team",
+          "manager": "Tasha Brooks",
+          "tier": "Playoff Locks",
+          "movement": null,
+          "note": "Every keeper is a floor play. That is a seven win roster before the draft even starts."
+        },
+        {
+          "rank": 8,
+          "team": "Jefferson Airplane",
+          "manager": "Victor Ozuna",
+          "tier": "Bubble Watch",
+          "movement": null,
+          "note": "Two elite receivers and nothing at running back. The draft can fix that faster than people think."
+        },
+        {
+          "rank": 9,
+          "team": "Puka Matata",
+          "manager": "Renee Colton",
+          "tier": "Bubble Watch",
+          "movement": null,
+          "note": "Middle of the pack in keepers, middle of the pack in picks, middle of the pack in everything."
+        },
+        {
+          "rank": 10,
+          "team": "Chubb Rub",
+          "manager": "Danny Alvarez",
+          "tier": "Bubble Watch",
+          "movement": null,
+          "note": "Kept three running backs in a league that just cut reception scoring in half. We will see."
+        },
+        {
+          "rank": 11,
+          "team": "Saquon of Potatoes",
+          "manager": "Ibrahim Diallo",
+          "tier": "Bubble Watch",
+          "movement": null,
+          "note": "Writing your own team into eleventh is the only way to keep the group chat off your back. It is also accurate."
+        },
+        {
+          "rank": 12,
+          "team": "Tuas Company",
+          "manager": "Greg Halloran",
+          "tier": "Rebuild Row",
+          "movement": null,
+          "note": "No first round pick and no keeper worth building around. This is the toughest spot in the league."
+        },
+        {
+          "rank": 13,
+          "team": "Nix Pistol Offense",
+          "manager": "Chad Feldman",
+          "tier": "Rebuild Row",
+          "movement": null,
+          "note": "Inherited an orphan roster that was reset to zero. The second pick makes this a short rebuild."
+        },
+        {
+          "rank": 14,
+          "team": "Waddle Til Next Year",
+          "manager": "Emily Sato",
+          "tier": "Rebuild Row",
+          "movement": null,
+          "note": "Starting from nothing with a top four pick. Last place on paper, unlimited flexibility in practice."
+        }
+      ],
+      "writeup": "The keeper deadline passed at midnight on Friday and it told us more about this league than the entire draft will. Keeper decisions are the only time managers have to publicly commit to a plan, and about half of you just admitted you do not have one.\n\nBijan Mustard sits at the top because Owen kept the two best players any single manager retained, full stop. Gridiron Gamblers is a very close second on total value, and the only thing separating them is a tight end situation Marcus has been ignoring since 2024. The Lamar Express is the most top heavy roster in the league by a wide margin. Nadia kept the best quarterback in the Syndicate and then filled the rest of her keeper slots with players who will not start for her in November.\n\nThe most interesting decision of the offseason was Kelce Grammer letting a household name walk in order to bank picks. That got roasted in the chat for a week straight, and I think Sam is going to look extremely smart by October. The move that has aged worst is Chubb Rub keeping three running backs the same summer we voted reception scoring down to half a point. Danny is going to need volume and touchdowns to bail him out.\n\nAt the bottom, note the difference between rebuilding by choice and rebuilding by accident. Nix Pistol Offense and Waddle Til Next Year both inherited clean orphan rosters and hold top four picks, so their floor is high and their timeline is short. Tuas Company has no first rounder and no cornerstone keeper, which is what happens when you mortgage a future first to chase a playoff spot you do not get. That is the whole lesson of this offseason, and the draft is going to make it obvious."
+    }
+  ],
+
+  "history": []
+}
