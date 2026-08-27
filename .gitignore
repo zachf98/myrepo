@@ -1,0 +1,19 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+
+.env
+.cache/
+screenshots/
+
+# reports/ is deliberately tracked: the daily scan output is the product, and
+# keeping the history makes it possible to see how a shortlist changed.
+
+.pytest_cache/
+.coverage
+htmlcov/
+.ruff_cache/

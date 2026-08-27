@@ -1,0 +1,11 @@
+rank,listing_id,location,price,acres,price_per_acre,composite,natural_capital,confidence,noi,cap_rate,irr,streams,url
+1,FX-AR-0020,"De Queen, AR",158000.0,165.0,957.5757575757576,85.21,78.6,0.898,19748,0.125,0.1261,timber|row_crop_lease|hunting_lease,
+2,FX-ME-0014,"Presque Isle, ME",88000.0,150.0,586.6666666666666,76.86,57.3,0.898,10662,0.1212,0.1227,timber|row_crop_lease|hunting_lease,
+3,FX-KS-0006,"Dodge City, KS",232000.0,155.0,1496.774193548387,75.05,70.4,0.898,21013,0.0906,0.0954,row_crop_lease|wind_lease,
+4,FX-MI-0003,"L'Anse, MI",72500.0,80.0,906.25,72.34,58.1,0.898,5988,0.0826,0.0883,timber|hunting_lease,
+5,FX-MS-0009,"Dekalb, MS",134000.0,110.0,1218.1818181818182,68.37,67.8,0.898,7921,0.0591,0.0675,timber|grazing|hunting_lease,
+6,FX-OH-0019,"Piketon, OH",124000.0,71.0,1746.4788732394366,67.72,66.5,0.898,8844,0.0713,0.0783,timber|row_crop_lease|hunting_lease,
+7,FX-WI-0004,"Hurley, WI",119000.0,120.0,991.6666666666666,64.42,59.3,0.898,6521,0.0548,0.0637,timber|grazing|hunting_lease,
+8,FX-WA-0011,"Goldendale, WA",198000.0,140.0,1414.2857142857142,64.01,56.2,0.898,13130,0.0663,0.0739,row_crop_lease,
+9,FX-GA-0008,"Baxley, GA",189000.0,94.0,2010.6382978723404,61.28,71.6,0.898,9379,0.0496,0.0592,timber|hunting_lease,
+10,FX-AR-0002,"Jasper, AR",96000.0,48.5,1979.381443298969,57.31,60.7,0.898,5048,0.0526,0.0618,timber|hunting_lease|recreation,
