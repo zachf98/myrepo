@@ -185,6 +185,12 @@ def _render_detail(opportunity: ScoredOpportunity) -> list[str]:
         f"- Net operating income: **{_money(business.net_operating_income)}/yr** "
         f"(after {_money(business.annual_carrying_cost)} carrying cost)"
     )
+    if any(s.speculative for s in business.streams):
+        lines.append(
+            f"- Excluding speculative streams: "
+            f"**{_money(business.contracted_noi)}/yr** "
+            f"({_pct(business.contracted_cap_rate)} cap rate)"
+        )
     lines.append(f"- Cap rate: **{_pct(business.cap_rate)}**")
     if business.payback_years:
         lines.append(f"- Simple payback: {business.payback_years:.0f} years")

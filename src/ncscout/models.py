@@ -163,7 +163,10 @@ class BusinessCase(BaseModel):
     annual_operating_expense: float = 0.0
     annual_carrying_cost: float = 0.0
     net_operating_income: float = 0.0
+    # NOI counting only streams that do not depend on a third party acting.
+    contracted_noi: float = 0.0
     cap_rate: float = 0.0
+    contracted_cap_rate: float = 0.0
     payback_years: float | None = None
     npv: float = 0.0
     irr: float | None = None

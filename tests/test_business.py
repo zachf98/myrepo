@@ -7,6 +7,8 @@ failure modes that would make the whole report untrustworthy.
 
 from __future__ import annotations
 
+import pytest
+
 from ncscout.models import DataQuality, Listing, Measurement, ParcelEnvironment
 from ncscout.scoring.business import AcreAllocation, BusinessModeler
 
@@ -227,3 +229,49 @@ class TestSceneryScore:
 
     def test_no_data_scores_zero(self):
         assert BusinessModeler.scenery_score(ParcelEnvironment()) == 0.0
+
+
+class TestSpeculativeRiskWeighting:
+    """Expected value alone would rate a 5%-chance lease as certain income."""
+
+    def test_contracted_noi_excludes_speculative_streams(self, rich_env):
+        case = BusinessModeler().model(_listing(acres=300.0), rich_env)
+        expected = sum(
+            s.annual_net for s in case.streams if not s.speculative
+        ) - case.annual_carrying_cost
+        assert case.contracted_noi == pytest.approx(expected)
+
+    def test_carrying_cost_is_charged_against_contracted_income_too(self):
+        """The tax bill arrives whether or not a developer ever calls."""
+        env = ParcelEnvironment(
+            solar_ghi=Measurement(value=6.0, source="t", quality=DataQuality.MODELED),
+            slope_pct=Measurement(value=2.0, source="t", quality=DataQuality.MEASURED),
+            land_cover={"grassland": 100.0},
+        )
+        case = BusinessModeler().model(_listing(acres=300.0), env)
+        assert all(s.speculative for s in case.streams)
+        assert case.contracted_noi == pytest.approx(-case.annual_carrying_cost)
+        assert case.contracted_noi < 0
+
+    def test_contracted_income_scores_better_than_equal_speculative_income(self):
+        """Two parcels, similar total cap rate, different quality of income."""
+        modeler = BusinessModeler()
+
+        speculative = ParcelEnvironment(
+            solar_ghi=Measurement(value=6.0, source="t", quality=DataQuality.MODELED),
+            slope_pct=Measurement(value=2.0, source="t", quality=DataQuality.MEASURED),
+            land_cover={"grassland": 100.0},
+        )
+        contracted = ParcelEnvironment(
+            nccpi=Measurement(value=0.85, source="t", quality=DataQuality.MEASURED),
+            slope_pct=Measurement(value=2.0, source="t", quality=DataQuality.MEASURED),
+            land_cover={"cultivated_crops": 100.0},
+        )
+
+        spec_case = modeler.model(_listing(acres=300.0), speculative)
+        firm_case = modeler.model(_listing(acres=300.0), contracted)
+
+        # The speculative parcel must not win on score while carrying no
+        # income that does not depend on someone else acting.
+        assert firm_case.contracted_cap_rate > spec_case.contracted_cap_rate
+        assert firm_case.score > spec_case.score

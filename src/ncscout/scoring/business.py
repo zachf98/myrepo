@@ -447,13 +447,27 @@ class BusinessModeler:
         )
         noi = net_revenue - carrying
 
+        # Carrying cost falls due whether or not the speculative income ever
+        # arrives, so it is charged in full against the contracted figure too.
+        contracted_noi = (
+            sum(s.annual_net for s in streams if not s.speculative) - carrying
+        )
+
         cap_rate = noi / price if price else 0.0
+        contracted_cap_rate = contracted_noi / price if price else 0.0
         payback = price / noi if noi > 0 else None
 
         npv = self._npv(price, noi, fin)
         irr = self._irr(price, noi, fin)
 
-        score = interpolate(self.config.section("cap_rate_normalisation"), cap_rate)
+        curve = self.config.section("cap_rate_normalisation")
+        risk = self.config.section("return_risk_weighting") or {
+            "contracted": 0.65,
+            "total": 0.35,
+        }
+        score = risk["contracted"] * interpolate(curve, contracted_cap_rate) + risk[
+            "total"
+        ] * interpolate(curve, cap_rate)
 
         return BusinessCase(
             streams=streams,
@@ -461,7 +475,9 @@ class BusinessModeler:
             annual_operating_expense=opex,
             annual_carrying_cost=carrying,
             net_operating_income=noi,
+            contracted_noi=contracted_noi,
             cap_rate=cap_rate,
+            contracted_cap_rate=contracted_cap_rate,
             payback_years=payback,
             npv=npv,
             irr=irr,

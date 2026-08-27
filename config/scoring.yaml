@@ -210,6 +210,15 @@ finance:
   annual_appreciation: 0.03
   transaction_cost_rate: 0.07   # closing plus eventual disposition
 
+# How the business-return score treats speculative income. Probability-weighting
+# the dollars gives an expected value, but expected value alone rates a 5%-chance
+# lease as equal to certain rent of the same size, which is not how anyone would
+# actually underwrite it. The score is therefore taken on a blend that leans on
+# income already achievable from the resource base.
+return_risk_weighting:
+  contracted: 0.65
+  total: 0.35
+
 # Cap-rate to score mapping for the business-return component.
 cap_rate_normalisation:
   - [0.00, 0]

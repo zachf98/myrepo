@@ -149,7 +149,11 @@ TEMPLATE = """<!DOCTYPE html>
     <div class="meta" style="margin-top:1rem">
       NOI <strong>{{ money(o.business.net_operating_income) }}/yr</strong> after
       {{ money(o.business.annual_carrying_cost) }} carrying cost &middot;
-      cap rate <strong>{{ pct(o.business.cap_rate) }}</strong> &middot;
+      cap rate <strong>{{ pct(o.business.cap_rate) }}</strong>
+      {%- if o.business.streams|selectattr('speculative')|list %} &middot;
+        excluding speculative
+        {{ money(o.business.contracted_noi) }}/yr
+        ({{ pct(o.business.contracted_cap_rate) }}){% endif %} &middot;
       10-yr NPV {{ money(o.business.npv) }} &middot; IRR {{ pct(o.business.irr) }}
       {%- if o.business.payback_years %} &middot;
         payback {{ '%.0f'|format(o.business.payback_years) }} yrs{% endif %}
