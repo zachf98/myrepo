@@ -21,7 +21,7 @@ from .enrich import EnrichmentPipeline
 from .enrich.climate import NasaPowerEnricher
 from .enrich.geocode import Geocoder
 from .http import CachedClient
-from .models import Listing, ScanReport, ScoredOpportunity
+from .models import Listing, ParcelEnvironment, ScanReport, ScoredOpportunity
 from .scoring import BusinessModeler, CompositeScorer, NaturalCapitalScorer
 from .sources import ListingSource, SearchCriteria, SourceUnavailable
 
@@ -157,8 +157,6 @@ class ScanPipeline:
 
         geocoder = Geocoder(self.client)
         climate = NasaPowerEnricher(self.client)
-        from .models import ParcelEnvironment
-
         ranked: list[tuple[float, Listing]] = []
         median_ppa = self._median_price_per_acre(listings)
 

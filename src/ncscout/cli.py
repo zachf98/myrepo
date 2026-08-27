@@ -203,16 +203,63 @@ def sources() -> None:
         console.print(table)
 
 
+def _parse_coordinates(text: str) -> tuple[float, float]:
+    """Parse "lat,lon" as a single token.
+
+    Taking the pair as one argument rather than two positionals is deliberate:
+    every US longitude is negative, and a bare -93.6 is indistinguishable from
+    an option flag. This also matches what copying a pin out of a map gives you.
+    """
+    parts = [p.strip() for p in text.replace(";", ",").split(",") if p.strip()]
+    if len(parts) != 2:
+        raise typer.BadParameter(
+            f"expected 'lat,lon' (for example '41.8,-93.6'), got {text!r}"
+        )
+    try:
+        latitude, longitude = float(parts[0]), float(parts[1])
+    except ValueError as exc:
+        raise typer.BadParameter(f"could not read coordinates from {text!r}") from exc
+
+    def in_lat_range(value: float) -> bool:
+        return -90 <= value <= 90
+
+    def in_lon_range(value: float) -> bool:
+        return -180 <= value <= 180
+
+    # Transposition is the most common paste error, so it is checked before the
+    # range complaint: telling someone their latitude is out of range is far
+    # less useful than telling them the pair is the wrong way round.
+    if not in_lat_range(latitude) and in_lat_range(longitude) and in_lon_range(latitude):
+        raise typer.BadParameter(
+            f"coordinates look transposed; try '{longitude},{latitude}'"
+        )
+    if not in_lat_range(latitude):
+        raise typer.BadParameter(f"latitude {latitude} is out of range")
+    if not in_lon_range(longitude):
+        raise typer.BadParameter(f"longitude {longitude} is out of range")
+    return latitude, longitude
+
+
 @app.command()
 def explain(
-    latitude: Annotated[float, typer.Argument(help="Parcel latitude")],
-    longitude: Annotated[float, typer.Argument(help="Parcel longitude")],
+    coordinates: Annotated[
+        str,
+        typer.Argument(
+            metavar="LAT,LON",
+            help=(
+                "Parcel coordinates as a single pair, e.g. 41.8,-93.6. "
+                "If the pair begins with a minus sign, prefix it with '--' so "
+                "it is not read as an option."
+            ),
+        ),
+    ],
     price: Annotated[float, typer.Option("--price", help="Asking price")] = 150000,
     acres: Annotated[float, typer.Option("--acres", help="Parcel acreage")] = 100,
     verbose: Annotated[bool, typer.Option("--verbose", "-v")] = False,
 ) -> None:
     """Score a single parcel by coordinate. Useful for spot-checking the model."""
     _setup_logging(verbose)
+    latitude, longitude = _parse_coordinates(coordinates)
     from .enrich import EnrichmentPipeline
     from .models import Listing
     from .scoring import BusinessModeler, CompositeScorer, NaturalCapitalScorer

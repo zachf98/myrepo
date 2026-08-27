@@ -111,7 +111,7 @@ TEMPLATE = """<!DOCTYPE html>
       natural capital {{ '%.0f'|format(o.natural_capital.total) }}/100
       (confidence {{ '%.0f'|format(o.natural_capital.confidence * 100) }}%)
       {%- if o.listing.url %} &middot; <a href="{{ o.listing.url }}">listing</a>{% endif %}
-      {%- if o.environment.soil_description %}<br>{{ o.environment.soil_description }}{% endif %}
+      {%- if o.listing.description %}<br>{{ o.listing.description }}{% endif %}
     </div>
 
     <div class="bars">

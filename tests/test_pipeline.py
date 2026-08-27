@@ -376,3 +376,34 @@ def test_models_accept_partial_data():
     nc = NaturalCapitalScore(total=50.0)
     assert nc.by_name("water") is None
     assert BusinessCase().contracted_streams == []
+
+
+class TestPropertyTypeFiltering:
+    def test_matches_across_inconsistent_provider_spellings(self):
+        criteria = SearchCriteria(
+            max_price=10**9, property_types=("Land", "Farm", "Ranch")
+        )
+        for spelling in ("Land", "Unimproved Land", "FARM", "Ranch"):
+            listing = Listing(
+                listing_id="a", source="t", price=1000, property_type=spelling
+            )
+            assert criteria.matches(listing), spelling
+
+    def test_rejects_dwellings(self):
+        criteria = SearchCriteria(max_price=10**9, property_types=("Land", "Farm"))
+        listing = Listing(
+            listing_id="a", source="t", price=1000, property_type="Residential"
+        )
+        assert not criteria.matches(listing)
+
+    def test_absent_property_type_is_not_filtered_out(self):
+        """A missing field should not silently drop an otherwise good listing."""
+        criteria = SearchCriteria(max_price=10**9, property_types=("Land",))
+        assert criteria.matches(Listing(listing_id="a", source="t", price=1000))
+
+    def test_no_configured_types_means_no_filtering(self):
+        criteria = SearchCriteria(max_price=10**9)
+        listing = Listing(
+            listing_id="a", source="t", price=1000, property_type="Residential"
+        )
+        assert criteria.matches(listing)

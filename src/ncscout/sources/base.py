@@ -40,6 +40,13 @@ class SearchCriteria:
                 return False
         if self.states and (listing.state or "") not in self.states:
             return False
+        if self.property_types and listing.property_type:
+            # Providers spell these inconsistently ("Unimproved Land" vs "Land"),
+            # so match on substring in either direction rather than equality.
+            wanted = [t.casefold() for t in self.property_types]
+            actual = listing.property_type.casefold()
+            if not any(w in actual or actual in w for w in wanted):
+                return False
         return True
 
 

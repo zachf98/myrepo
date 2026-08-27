@@ -10,6 +10,7 @@ venv/
 .cache/
 reports/
 !reports/.gitkeep
+screenshots/
 
 .pytest_cache/
 .coverage

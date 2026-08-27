@@ -123,8 +123,10 @@ ncscout scan --source fixtures --top 10
 # Real feed, once credentials are set
 ncscout scan --source bridge --top 10 --limit 800
 
-# Score a single parcel by coordinate: the fastest way to sanity-check the model
-ncscout explain 38.301 -80.098 --price 148000 --acres 62
+# Score a single parcel by coordinate: the fastest way to sanity-check the model.
+# Coordinates go in as one "lat,lon" pair, since a bare negative longitude would
+# be read as an option flag.
+ncscout explain 38.301,-80.098 --price 148000 --acres 62
 
 # Which sources are configured
 ncscout sources
