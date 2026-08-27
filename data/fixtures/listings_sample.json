@@ -1,0 +1,251 @@
+{
+  "_comment": [
+    "Synthetic land listings placed at REAL US coordinates. Prices and acreages are",
+    "plausible but invented; the coordinates are genuine, so every enrichment call",
+    "(soil, water, climate, flood, wildfire) returns real federal data for these",
+    "parcels. This lets the whole pipeline be tested and demonstrated without a",
+    "licensed listing feed. Replace with a real source for production use."
+  ],
+  "listings": [
+    {
+      "listing_id": "FX-WV-0001",
+      "price": 148000,
+      "acres": 62.0,
+      "address": "Rural Route, Marlinton",
+      "city": "Marlinton", "state": "WV", "zip_code": "24954",
+      "latitude": 38.301, "longitude": -80.098,
+      "property_type": "Land",
+      "description": "Mixed hardwood timber tract with spring-fed creek frontage, borders national forest."
+    },
+    {
+      "listing_id": "FX-AR-0002",
+      "price": 96000,
+      "acres": 48.5,
+      "address": "County Road 12, Jasper",
+      "city": "Jasper", "state": "AR", "zip_code": "72641",
+      "latitude": 36.004, "longitude": -93.221,
+      "property_type": "Land",
+      "description": "Ozark hill country, oak-hickory cover, seasonal drainage, off-grid access."
+    },
+    {
+      "listing_id": "FX-MI-0003",
+      "price": 72500,
+      "acres": 80.0,
+      "address": "Off Herman Rd, L'Anse",
+      "city": "L'Anse", "state": "MI", "zip_code": "49946",
+      "latitude": 46.702, "longitude": -88.451,
+      "property_type": "Land",
+      "description": "Northern hardwood and pine, two ponds, heavy snowfall region, sugar maple potential."
+    },
+    {
+      "listing_id": "FX-WI-0004",
+      "price": 119000,
+      "acres": 120.0,
+      "address": "Hwy 77 frontage, Hurley",
+      "city": "Hurley", "state": "WI", "zip_code": "54534",
+      "latitude": 46.301, "longitude": -90.198,
+      "property_type": "Land",
+      "description": "Large forested block with river frontage, established logging roads."
+    },
+    {
+      "listing_id": "FX-TX-0005",
+      "price": 168000,
+      "acres": 640.0,
+      "address": "FM 2185, Van Horn",
+      "city": "Van Horn", "state": "TX", "zip_code": "79855",
+      "latitude": 31.402, "longitude": -104.503,
+      "property_type": "Ranch",
+      "description": "Chihuahuan desert section, exceptional solar exposure, transmission line nearby."
+    },
+    {
+      "listing_id": "FX-KS-0006",
+      "price": 232000,
+      "acres": 155.0,
+      "address": "Rural Dodge City",
+      "city": "Dodge City", "state": "KS", "zip_code": "67801",
+      "latitude": 37.702, "longitude": -100.004,
+      "property_type": "Farm",
+      "description": "Level dryland wheat ground, strong wind regime, irrigation well permit history."
+    },
+    {
+      "listing_id": "FX-NM-0007",
+      "price": 145000,
+      "acres": 520.0,
+      "address": "Off US-64, Clayton",
+      "city": "Clayton", "state": "NM", "zip_code": "88415",
+      "latitude": 36.501, "longitude": -103.402,
+      "property_type": "Ranch",
+      "description": "High plains grazing, windmill and stock tank, strong sustained wind."
+    },
+    {
+      "listing_id": "FX-GA-0008",
+      "price": 189000,
+      "acres": 94.0,
+      "address": "Baxley area tract",
+      "city": "Baxley", "state": "GA", "zip_code": "31513",
+      "latitude": 31.752, "longitude": -82.301,
+      "property_type": "Land",
+      "description": "Planted loblolly pine, 14 years old, county road frontage, mill within 30 miles."
+    },
+    {
+      "listing_id": "FX-MS-0009",
+      "price": 134000,
+      "acres": 110.0,
+      "address": "Dekalb rural tract",
+      "city": "Dekalb", "state": "MS", "zip_code": "39328",
+      "latitude": 32.751, "longitude": -88.601,
+      "property_type": "Land",
+      "description": "Pine plantation with hardwood bottoms, creek, excellent deer and turkey habitat."
+    },
+    {
+      "listing_id": "FX-ID-0010",
+      "price": 210000,
+      "acres": 78.0,
+      "address": "Orofino backcountry",
+      "city": "Orofino", "state": "ID", "zip_code": "83544",
+      "latitude": 46.602, "longitude": -115.901,
+      "property_type": "Land",
+      "description": "Steep mixed conifer, elk winter range, seasonal access only."
+    },
+    {
+      "listing_id": "FX-WA-0011",
+      "price": 198000,
+      "acres": 140.0,
+      "address": "Goldendale plateau",
+      "city": "Goldendale", "state": "WA", "zip_code": "98620",
+      "latitude": 45.852, "longitude": -120.703,
+      "property_type": "Land",
+      "description": "Open plateau ground, existing wind development in the area, dryland hay."
+    },
+    {
+      "listing_id": "FX-OR-0012",
+      "price": 225000,
+      "acres": 55.0,
+      "address": "Roseburg foothills",
+      "city": "Roseburg", "state": "OR", "zip_code": "97470",
+      "latitude": 43.302, "longitude": -123.301,
+      "property_type": "Land",
+      "description": "Douglas fir stand, year-round creek, gentle south-facing benches."
+    },
+    {
+      "listing_id": "FX-FL-0013",
+      "price": 149000,
+      "acres": 22.0,
+      "address": "Umatilla rural",
+      "city": "Umatilla", "state": "FL", "zip_code": "32784",
+      "latitude": 28.802, "longitude": -81.701,
+      "property_type": "Land",
+      "description": "Sandy flatwoods near lake chain, wetland portions, close to Orlando growth corridor."
+    },
+    {
+      "listing_id": "FX-ME-0014",
+      "price": 88000,
+      "acres": 150.0,
+      "address": "Presque Isle outskirts",
+      "city": "Presque Isle", "state": "ME", "zip_code": "04769",
+      "latitude": 46.702, "longitude": -68.003,
+      "property_type": "Land",
+      "description": "Spruce-fir and mixed growth, former potato ground on the south end."
+    },
+    {
+      "listing_id": "FX-SD-0015",
+      "price": 240000,
+      "acres": 46.0,
+      "address": "Custer Black Hills parcel",
+      "city": "Custer", "state": "SD", "zip_code": "57730",
+      "latitude": 43.702, "longitude": -103.601,
+      "property_type": "Land",
+      "description": "Ponderosa pine, meadow opening, strong tourism corridor for cabin or glamping use."
+    },
+    {
+      "listing_id": "FX-NV-0016",
+      "price": 76000,
+      "acres": 320.0,
+      "address": "Panaca valley floor",
+      "city": "Panaca", "state": "NV", "zip_code": "89042",
+      "latitude": 37.802, "longitude": -114.601,
+      "property_type": "Land",
+      "description": "Great Basin valley floor, very high irradiance, extremely limited water."
+    },
+    {
+      "listing_id": "FX-TN-0017",
+      "price": 178000,
+      "acres": 88.0,
+      "address": "Bolivar rural route",
+      "city": "Bolivar", "state": "TN", "zip_code": "38008",
+      "latitude": 35.202, "longitude": -89.003,
+      "property_type": "Farm",
+      "description": "Row crop bottomland with hardwood ridge, good soils, established cash lease."
+    },
+    {
+      "listing_id": "FX-MS-0018",
+      "price": 205000,
+      "acres": 130.0,
+      "address": "Yazoo Delta tract",
+      "city": "Yazoo City", "state": "MS", "zip_code": "39194",
+      "latitude": 32.852, "longitude": -90.401,
+      "property_type": "Farm",
+      "description": "Delta alluvial soils, highly productive, portions in the mapped floodplain."
+    },
+    {
+      "listing_id": "FX-OH-0019",
+      "price": 124000,
+      "acres": 71.0,
+      "address": "Piketon hill tract",
+      "city": "Piketon", "state": "OH", "zip_code": "45661",
+      "latitude": 39.072, "longitude": -83.021,
+      "property_type": "Land",
+      "description": "Appalachian hardwood, mature white oak, gas royalty history in the area."
+    },
+    {
+      "listing_id": "FX-AR-0020",
+      "price": 158000,
+      "acres": 165.0,
+      "address": "De Queen area",
+      "city": "De Queen", "state": "AR", "zip_code": "71832",
+      "latitude": 33.902, "longitude": -94.201,
+      "property_type": "Land",
+      "description": "Pine and mixed hardwood, multiple drainages, poultry and timber region."
+    },
+    {
+      "listing_id": "FX-MI-0021",
+      "price": 65000,
+      "acres": 40.0,
+      "address": "Cheboygan county forty",
+      "city": "Cheboygan", "state": "MI", "zip_code": "49721",
+      "latitude": 45.452, "longitude": -84.501,
+      "property_type": "Land",
+      "description": "Level mixed forest, two-track access, near inland lakes and state land."
+    },
+    {
+      "listing_id": "FX-NM-0022",
+      "price": 54000,
+      "acres": 240.0,
+      "address": "Estancia basin",
+      "city": "Estancia", "state": "NM", "zip_code": "87016",
+      "latitude": 34.702, "longitude": -106.001,
+      "property_type": "Land",
+      "description": "High desert grassland, excellent solar, thin soils, deep groundwater."
+    },
+    {
+      "listing_id": "FX-MO-0023",
+      "price": 112000,
+      "acres": 76.0,
+      "address": "Van Buren ridge",
+      "city": "Van Buren", "state": "MO", "zip_code": "63965",
+      "latitude": 36.995, "longitude": -91.014,
+      "property_type": "Land",
+      "description": "Current River region, oak-pine, springs and karst features, float-trip tourism."
+    },
+    {
+      "listing_id": "FX-KY-0024",
+      "price": 143000,
+      "acres": 92.0,
+      "address": "Monticello area farm",
+      "city": "Monticello", "state": "KY", "zip_code": "42633",
+      "latitude": 36.829, "longitude": -84.849,
+      "property_type": "Farm",
+      "description": "Rolling pasture and woodlot, barn, creek, near Lake Cumberland recreation."
+    }
+  ]
+}

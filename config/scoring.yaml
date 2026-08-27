@@ -1,0 +1,210 @@
+# Natural capital scoring and land-economics assumptions.
+#
+# Every number here is an assumption you should tune to your own thesis. They are
+# kept in config rather than code so a change of view does not require a code change.
+# Dollar figures are USD and, unless noted, are per acre per year.
+
+search:
+  max_price: 250000
+  min_price: 5000          # filters out data-entry errors and non-arms-length listings
+  min_acres: 1.0
+  max_acres: 5000.0
+  # Listings priced far above the regional norm rarely score well after the
+  # price-efficiency step, so they are dropped early to save enrichment calls.
+  max_price_per_acre: 40000
+  property_types: ["Land", "Lot", "Farm", "Ranch", "Unimproved Land"]
+  states: []               # empty means all US states
+
+# Weights for the natural capital composite. Must sum to 1.0.
+natural_capital_weights:
+  water: 0.22             # precipitation, surface water, drought exposure
+  soil: 0.20             # SSURGO productivity, water storage, slope
+  timber: 0.13           # standing forest and regrowth potential
+  climate: 0.10          # growing degree days, frost-free window
+  solar: 0.12            # irradiance, the most reliably monetizable resource
+  wind: 0.08             # 50m wind speed vs utility-scale thresholds
+  resilience: 0.15       # flood, wildfire and drought hazard (deductive)
+
+# Final ranking blend. Must sum to 1.0.
+composite_weights:
+  natural_capital: 0.45
+  business_return: 0.40
+  price_efficiency: 0.15
+
+# Score normalisation breakpoints. Each entry maps a raw physical measurement to
+# the 0-100 scale by linear interpolation between (value, score) points.
+normalisation:
+  # Annual precipitation, mm/yr. Arid land is cheap but capital-poor.
+  precipitation_mm:
+    - [150, 0]
+    - [350, 25]
+    - [600, 55]
+    - [900, 80]
+    - [1300, 100]
+    - [2200, 90]     # very high rainfall brings drainage and access costs
+  # Distance to mapped perennial surface water, metres.
+  water_distance_m:
+    - [0, 100]
+    - [500, 85]
+    - [1500, 65]
+    - [5000, 35]
+    - [15000, 10]
+  # USDA NCCPI (National Commodity Crop Productivity Index), 0-1.
+  nccpi:
+    - [0.0, 0]
+    - [0.2, 20]
+    - [0.4, 45]
+    - [0.6, 70]
+    - [0.8, 90]
+    - [1.0, 100]
+  # Soil available water storage to 100cm, cm.
+  water_storage_cm:
+    - [0, 0]
+    - [5, 30]
+    - [12, 60]
+    - [20, 85]
+    - [30, 100]
+  # Mean slope, percent. Steep ground limits every use except timber.
+  slope_pct:
+    - [0, 100]
+    - [8, 85]
+    - [15, 60]
+    - [30, 30]
+    - [50, 5]
+  # Global horizontal irradiance, kWh/m2/day.
+  solar_ghi:
+    - [3.0, 0]
+    - [4.0, 30]
+    - [4.8, 60]
+    - [5.5, 85]
+    - [6.5, 100]
+  # Wind speed at 50m, m/s. Utility-scale interest starts around 6.5.
+  wind_ws50m:
+    - [3.0, 0]
+    - [5.0, 25]
+    - [6.5, 60]
+    - [7.5, 85]
+    - [9.0, 100]
+  # Growing degree days, base 10C.
+  growing_degree_days:
+    - [500, 10]
+    - [1200, 40]
+    - [2000, 70]
+    - [3000, 95]
+    - [4500, 100]
+  # Forest canopy cover, percent of parcel.
+  forest_cover_pct:
+    - [0, 0]
+    - [15, 25]
+    - [40, 60]
+    - [70, 90]
+    - [95, 100]
+
+# Hazard penalties, applied to the resilience subscore (starts at 100).
+hazard_penalties:
+  flood_zone:
+    A: 45
+    AE: 45
+    AH: 40
+    AO: 40
+    AR: 30
+    A99: 30
+    V: 60
+    VE: 60
+    D: 15          # undetermined risk
+    X: 0           # minimal risk
+    UNKNOWN: 5
+  wildfire_hazard:   # USFS Wildfire Hazard Potential class 1-5
+    1: 0
+    2: 5
+    3: 15
+    4: 30
+    5: 45
+  # Applied when annual precipitation is below the aridity threshold.
+  aridity:
+    threshold_mm: 350
+    penalty: 20
+
+# Revenue models. Each is gated on the physical preconditions being met.
+revenue_models:
+  timber:
+    enabled: true
+    # Sustainable annual yield, thousand board feet per acre per year, scaled by
+    # canopy cover and site productivity.
+    max_mbf_per_acre_year: 0.45
+    stumpage_price_per_mbf: 350
+    min_forest_cover_pct: 20
+    opex_ratio: 0.15
+  row_crop_lease:
+    enabled: true
+    # Cash rent scales with NCCPI; this is the top-of-market figure.
+    max_rent_per_acre: 275
+    min_nccpi: 0.35
+    max_slope_pct: 12
+    opex_ratio: 0.05     # landlord retains most of a cash lease
+  grazing:
+    enabled: true
+    # Animal unit months per acre per year, derived from forage productivity.
+    max_aum_per_acre: 1.2
+    price_per_aum: 24
+    min_precipitation_mm: 250
+    max_slope_pct: 40
+    opex_ratio: 0.20
+  solar_lease:
+    enabled: true
+    rent_per_acre: 900
+    min_ghi: 4.5
+    max_slope_pct: 8
+    max_grid_distance_km: 5
+    # Utility-scale developers need contiguous acreage.
+    min_acres: 20
+    # Probability-weighted: most qualifying parcels never sign a lease.
+    probability: 0.10
+  wind_lease:
+    enabled: true
+    royalty_per_turbine_year: 8000
+    acres_per_turbine: 60
+    min_ws50m: 6.5
+    probability: 0.08
+  hunting_lease:
+    enabled: true
+    max_rent_per_acre: 22
+    min_forest_cover_pct: 25
+    min_acres: 40
+    opex_ratio: 0.10
+  carbon:
+    enabled: true
+    # Improved forest management / afforestation credits.
+    tonnes_co2_per_acre_year: 2.5
+    price_per_tonne: 18
+    min_forest_cover_pct: 15
+    # Verification, registry and monitoring overhead is heavy.
+    opex_ratio: 0.45
+    probability: 0.25
+  recreation:
+    enabled: true
+    # Glamping / agritourism, expressed per acre to stay comparable.
+    max_revenue_per_acre: 120
+    min_scenery_score: 60
+    max_town_distance_km: 60
+    opex_ratio: 0.55
+    probability: 0.15
+
+finance:
+  # Annual carrying costs as a fraction of purchase price.
+  property_tax_rate: 0.011
+  insurance_and_admin_rate: 0.003
+  discount_rate: 0.08
+  hold_years: 10
+  # Baseline real appreciation for rural land, used in the NPV exit value.
+  annual_appreciation: 0.03
+  transaction_cost_rate: 0.07   # closing plus eventual disposition
+
+# Cap-rate to score mapping for the business-return component.
+cap_rate_normalisation:
+  - [0.00, 0]
+  - [0.02, 25]
+  - [0.04, 50]
+  - [0.06, 70]
+  - [0.09, 90]
+  - [0.15, 100]
