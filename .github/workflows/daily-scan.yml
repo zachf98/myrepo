@@ -1,0 +1,88 @@
+name: Daily land scan
+
+on:
+  schedule:
+    # 11:00 UTC is early morning across the US, so the report is waiting.
+    - cron: "0 11 * * *"
+  workflow_dispatch:
+    inputs:
+      source:
+        description: "Listing source"
+        required: false
+        default: "fixtures"
+      top:
+        description: "How many opportunities to report"
+        required: false
+        default: "10"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-scan
+  cancel-in-progress: false
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -e .
+
+      # Physical parcel attributes do not change day to day, so a persistent
+      # cache keeps repeat load off the public federal services.
+      - name: Restore enrichment cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/http
+          key: ncscout-http-${{ github.run_id }}
+          restore-keys: ncscout-http-
+
+      - name: Run scan
+        env:
+          BRIDGE_API_TOKEN: ${{ secrets.BRIDGE_API_TOKEN }}
+          BRIDGE_DATASET: ${{ secrets.BRIDGE_DATASET }}
+          RESO_BASE_URL: ${{ secrets.RESO_BASE_URL }}
+          RESO_ACCESS_TOKEN: ${{ secrets.RESO_ACCESS_TOKEN }}
+        run: |
+          SOURCE="${{ github.event.inputs.source || vars.NCSCOUT_SOURCE || 'fixtures' }}"
+          TOP="${{ github.event.inputs.top || '10' }}"
+          ncscout scan --source "$SOURCE" --top "$TOP" --formats md,html,json,csv
+
+      - name: Publish report to the job summary
+        if: always()
+        run: |
+          if [ -f reports/latest.md ]; then
+            cat reports/latest.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No report was produced." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload report artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: land-scan-${{ github.run_number }}
+          path: reports/
+          retention-days: 90
+
+      - name: Commit the report history
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f reports/
+          if git diff --staged --quiet; then
+            echo "Report unchanged; nothing to commit."
+          else
+            git commit -m "Daily land scan $(date -u +%Y-%m-%d)"
+            git push
+          fi

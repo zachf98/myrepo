@@ -115,6 +115,14 @@ class CompositeScorer:
             flags.append(
                 f"in FEMA special flood hazard area (zone {env.flood_zone})"
             )
+        if (env.soil_flood_frequency or "").strip().lower() in (
+            "occasional",
+            "frequent",
+            "very frequent",
+        ):
+            flags.append(
+                f"SSURGO records {env.soil_flood_frequency.lower()} flooding"
+            )
         if env.wildfire_hazard_class and env.wildfire_hazard_class >= 4:
             flags.append(f"high modelled wildfire hazard (class {env.wildfire_hazard_class})")
         if env.slope_pct.is_usable and env.slope_pct.value > 30:

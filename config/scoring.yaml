@@ -114,6 +114,16 @@ hazard_penalties:
     D: 15          # undetermined risk
     X: 0           # minimal risk
     UNKNOWN: 5
+  # SSURGO observed flooding frequency, used where FEMA has not mapped the area.
+  # Lower than the FEMA penalties: flooding recorded by a soil survey carries no
+  # insurance or regulatory consequence on its own.
+  soil_flood_frequency:
+    none: 0
+    "very rare": 3
+    rare: 8
+    occasional: 20
+    frequent: 35
+    "very frequent": 45
   wildfire_hazard:   # USFS Wildfire Hazard Potential class 1-5
     1: 0
     2: 5

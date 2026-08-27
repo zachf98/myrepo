@@ -28,6 +28,7 @@ SELECT
     mag.aws0100wta,
     mag.slopegraddcp,
     mag.drclassdcd,
+    mag.flodfreqdcd,
     co.comppct_r,
     co.slope_r,
     ci.interphr
@@ -94,6 +95,12 @@ class SsurgoSoilEnricher(Enricher):
                 quality=DataQuality.MEASURED,
                 note="available water storage, 0-100cm",
             )
+
+        # SSURGO records observed flooding frequency, which covers much of the
+        # rural land FEMA has never mapped.
+        flooding = rows[0].get("flodfreqdcd")
+        if flooding and str(flooding).strip().lower() not in ("", "null"):
+            env.soil_flood_frequency = str(flooding).strip()
 
         muname = rows[0].get("muname")
         drainage = rows[0].get("drclassdcd")

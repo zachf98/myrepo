@@ -91,6 +91,9 @@ class ParcelEnvironment(BaseModel):
     town_distance_km: Measurement = Measurement(unit="km")
     grid_distance_km: Measurement = Measurement(unit="km")
 
+    # SSURGO observed flooding frequency. Covers rural land FEMA never mapped.
+    soil_flood_frequency: str | None = None
+
     # Descriptive context carried into reports so a score can be explained.
     soil_description: str | None = None
     land_cover: dict[str, float] = Field(default_factory=dict)

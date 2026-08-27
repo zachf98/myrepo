@@ -64,14 +64,22 @@ class NaturalCapitalScorer:
         if not usable:
             return NaturalCapitalScore(total=0.0, subscores=subscores, confidence=0.0)
 
-        total_weight = sum(s.weight for s in usable)
-        total = sum(s.weighted for s in usable) / total_weight
-        confidence = sum(s.confidence * s.weight for s in usable) / total_weight
+        resolved_weight = sum(s.weight for s in usable)
+        total = sum(s.weighted for s in usable) / resolved_weight
+
+        # Confidence has to answer two separate questions: how good is the data
+        # behind the subscores that resolved, and how much of the intended
+        # weight resolved at all. Averaging only over what resolved would report
+        # high confidence for a parcel where five of seven subscores are blank,
+        # so the quality average is scaled by the share of weight covered.
+        quality = sum(s.confidence * s.weight for s in usable) / resolved_weight
+        all_weight = sum(s.weight for s in subscores)
+        coverage = resolved_weight / all_weight if all_weight else 0.0
 
         return NaturalCapitalScore(
             total=clamp(total),
             subscores=subscores,
-            confidence=round(confidence, 3),
+            confidence=round(quality * coverage, 3),
         )
 
     def _curve(self, name: str, value: float) -> float:
@@ -230,6 +238,9 @@ class NaturalCapitalScorer:
         resolved = 0
 
         flood_table = penalties.get("flood_zone", {})
+        soil_flood_table = penalties.get("soil_flood_frequency", {})
+        soil_flood = (env.soil_flood_frequency or "").strip().lower()
+
         if env.flood_zone:
             key = env.flood_zone if env.flood_zone in flood_table else "UNKNOWN"
             deduction = flood_table.get(key, flood_table.get("UNKNOWN", 5))
@@ -239,6 +250,15 @@ class NaturalCapitalScorer:
                 drivers.append(f"FEMA flood zone {env.flood_zone} (-{deduction})")
             else:
                 drivers.append(f"FEMA flood zone {env.flood_zone} (minimal risk)")
+        elif soil_flood in soil_flood_table:
+            # FEMA has not mapped this area, but the soil survey has observed it.
+            deduction = soil_flood_table[soil_flood]
+            score -= deduction
+            resolved += 1
+            suffix = f" (-{deduction})" if deduction else ""
+            drivers.append(
+                f"FEMA unmapped; SSURGO flooding {soil_flood}{suffix}"
+            )
         elif env.flood_zone_source and "unmapped" in env.flood_zone_source:
             deduction = flood_table.get("UNKNOWN", 5)
             score -= deduction
