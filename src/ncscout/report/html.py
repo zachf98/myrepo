@@ -67,9 +67,8 @@ TEMPLATE = """<!DOCTYPE html>
   <!-- The date leads: these reports are read one per day and filed by date. -->
   {# Day comes from the attribute because the unpadded strftime form is
      glibc-only and would break this report on Windows. #}
-  <div class="date">{{ report.generated_at.strftime('%A') }}
-    {{ report.generated_at.day }}
-    {{ report.generated_at.strftime('%B %Y') }}</div>
+  {%- set d = report.generated_at %}
+  <div class="date">{{ d.strftime('%A') }} {{ d.day }} {{ d.strftime('%B %Y') }}</div>
   <div class="sub">
     Generated {{ report.generated_at.strftime('%H:%M UTC') }} &middot;
     top {{ report.opportunities|length }} of {{ report.listings_considered }}
