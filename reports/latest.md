@@ -2,7 +2,7 @@
 
 Top 10 of 24 listings screened. 24 received full enrichment.
 
-- Generated: 2026-08-27 18:31 UTC
+- Generated: 2026-08-27 18:35 UTC
 - Sources: fixtures
 
 ## Summary

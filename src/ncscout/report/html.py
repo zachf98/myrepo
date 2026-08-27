@@ -23,10 +23,12 @@ TEMPLATE = """<!DOCTYPE html>
     font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
   .wrap { max-width: 1040px; margin: 0 auto; }
-  h1 { font-size: 1.65rem; margin: 0 0 .35rem; letter-spacing: -.02em; }
+  h1 { font-size: 1.65rem; margin: 0 0 .2rem; letter-spacing: -.02em; }
+  .date { font-size: 1.05rem; color: var(--accent); font-weight: 600;
+          margin-bottom: .3rem; }
   h2 { font-size: 1.15rem; margin: 2.5rem 0 1rem; color: var(--accent);
        border-bottom: 1px solid var(--line); padding-bottom: .4rem; }
-  .sub { color: var(--muted); margin-bottom: 2rem; font-size: .9rem; }
+  .sub { color: var(--muted); margin-bottom: 2rem; font-size: .85rem; }
   table { width: 100%; border-collapse: collapse; font-size: .88rem; }
   th, td { padding: .55rem .6rem; text-align: left; border-bottom: 1px solid var(--line); }
   th { color: var(--muted); font-weight: 600; text-transform: uppercase;
@@ -62,8 +64,14 @@ TEMPLATE = """<!DOCTYPE html>
 <body>
 <div class="wrap">
   <h1>Land Opportunity Scan</h1>
+  <!-- The date leads: these reports are read one per day and filed by date. -->
+  {# Day comes from the attribute because the unpadded strftime form is
+     glibc-only and would break this report on Windows. #}
+  <div class="date">{{ report.generated_at.strftime('%A') }}
+    {{ report.generated_at.day }}
+    {{ report.generated_at.strftime('%B %Y') }}</div>
   <div class="sub">
-    {{ report.generated_at.strftime('%A %d %B %Y, %H:%M UTC') }} &middot;
+    Generated {{ report.generated_at.strftime('%H:%M UTC') }} &middot;
     top {{ report.opportunities|length }} of {{ report.listings_considered }}
     listings screened &middot; {{ report.listings_enriched }} fully enriched &middot;
     sources: {{ report.sources_used|join(', ') or 'none' }}

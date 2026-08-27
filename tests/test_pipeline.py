@@ -425,3 +425,35 @@ class TestPrescreenDeterminism:
         pipeline = ScanPipeline(StubClient(), [FixtureSource()], prescreen_keep=100)
         report = pipeline.run(top_n=10, limit=100)
         assert not any("prescreened" in w for w in report.warnings)
+
+
+class TestReportDate:
+    """The date identifies the report; these are read one per day."""
+
+    def test_html_shows_the_date_prominently(self, sample_report):
+        html = render_html(sample_report)
+        assert '<div class="date">' in html
+        # Spelled out, not just the ISO stamp buried in the title.
+        assert sample_report.generated_at.strftime("%B") in html
+        assert str(sample_report.generated_at.day) in html
+
+    def test_html_title_carries_the_iso_date_for_filing(self, sample_report):
+        stamp = sample_report.generated_at.strftime("%Y-%m-%d")
+        assert f"<title>Land Opportunity Scan {stamp}</title>" in render_html(
+            sample_report
+        )
+
+    def test_markdown_heading_carries_the_date(self, sample_report):
+        stamp = sample_report.generated_at.strftime("%Y-%m-%d")
+        assert f"# Land Opportunity Scan - {stamp}" in render_markdown(sample_report)
+
+    def test_date_formatting_avoids_platform_specific_directives(self):
+        """Padding-suppression directives are glibc-only and break on Windows."""
+        import re
+
+        from ncscout.report import html as html_module
+
+        # Matches strftime forms like %-d or %-H, but not Jinja's {%- ... -%}
+        # whitespace control, where the dash is followed by whitespace.
+        offenders = re.findall(r"%-[a-zA-Z]", html_module.TEMPLATE)
+        assert not offenders, f"non-portable strftime directives: {offenders}"
