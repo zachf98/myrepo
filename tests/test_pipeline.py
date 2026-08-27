@@ -407,3 +407,21 @@ class TestPropertyTypeFiltering:
             listing_id="a", source="t", price=1000, property_type="Residential"
         )
         assert criteria.matches(listing)
+
+
+class TestPrescreenDeterminism:
+    def test_survivor_set_is_reproducible_across_runs(self):
+        """Parallel prescreening must not make the shortlist order-dependent."""
+        runs = []
+        for _ in range(3):
+            pipeline = ScanPipeline(
+                StubClient(), [FixtureSource()], prescreen_keep=6
+            )
+            report = pipeline.run(top_n=6, limit=100)
+            runs.append([o.listing.listing_id for o in report.opportunities])
+        assert runs[0] == runs[1] == runs[2]
+
+    def test_prescreen_is_skipped_when_the_cohort_is_small(self):
+        pipeline = ScanPipeline(StubClient(), [FixtureSource()], prescreen_keep=100)
+        report = pipeline.run(top_n=10, limit=100)
+        assert not any("prescreened" in w for w in report.warnings)

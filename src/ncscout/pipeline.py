@@ -14,6 +14,8 @@ flood and terrain treatment.
 from __future__ import annotations
 
 import logging
+import statistics
+from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime
 
 from .config import Config, default_config
@@ -151,18 +153,23 @@ class ScanPipeline:
     def _prescreen(
         self, listings: list[Listing], warnings: list[str]
     ) -> list[Listing]:
-        """Cheap ranking pass to decide who earns full enrichment."""
+        """Cheap ranking pass to decide who earns full enrichment.
+
+        This is one request per listing, but there can be hundreds of listings,
+        so it runs in parallel. Left sequential it dominated total runtime: a
+        500-listing scan spent longer here than on the full enrichment of the
+        60 parcels that actually mattered.
+        """
         if len(listings) <= self.prescreen_keep:
             return listings
 
         geocoder = Geocoder(self.client)
         climate = NasaPowerEnricher(self.client)
-        ranked: list[tuple[float, Listing]] = []
         median_ppa = self._median_price_per_acre(listings)
 
-        for listing in listings:
+        def rate(listing: Listing) -> tuple[float, Listing] | None:
             if not listing.has_coordinates and not geocoder.locate(listing):
-                continue
+                return None
 
             env = ParcelEnvironment()
             climate.run(listing, env)
@@ -172,9 +179,17 @@ class ScanPipeline:
             # Cheaper than the cohort median is a positive signal; the ratio is
             # clamped so a near-free outlier cannot dominate the prescreen.
             value_signal = max(0.0, min(2.0, median_ppa / ppa)) * 25.0
-            ranked.append((nc.total + value_signal, listing))
+            return nc.total + value_signal, listing
 
-        ranked.sort(key=lambda pair: pair[0], reverse=True)
+        ranked: list[tuple[float, Listing]] = []
+        with ThreadPoolExecutor(max_workers=self.enrichment.max_workers) as pool:
+            for result in pool.map(rate, listings):
+                if result is not None:
+                    ranked.append(result)
+
+        # Ties are common when climate is the only signal, so the listing id
+        # breaks them to keep the choice of survivors reproducible.
+        ranked.sort(key=lambda pair: (-pair[0], pair[1].listing_id))
         kept = [listing for _, listing in ranked[: self.prescreen_keep]]
         warnings.append(
             f"prescreened {len(listings)} listings down to {len(kept)} "
@@ -184,8 +199,6 @@ class ScanPipeline:
 
     @staticmethod
     def _median_price_per_acre(listings: list[Listing]) -> float:
-        import statistics
-
         values = [
             item.price_per_acre for item in listings if item.price_per_acre
         ]
