@@ -8,9 +8,10 @@ venv/
 
 .env
 .cache/
-reports/
-!reports/.gitkeep
 screenshots/
+
+# reports/ is deliberately tracked: the daily scan output is the product, and
+# keeping the history makes it possible to see how a shortlist changed.
 
 .pytest_cache/
 .coverage

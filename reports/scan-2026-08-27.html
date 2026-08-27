@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Land Opportunity Scan 2026-08-27</title>
+<style>
+  :root {
+    --bg: #0f1211; --card: #181d1b; --line: #2a322e;
+    --text: #e8ede9; --muted: #93a09a; --accent: #7fc99a; --warn: #e0a458;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 2rem 1rem; background: var(--bg); color: var(--text);
+    font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+  h1 { font-size: 1.65rem; margin: 0 0 .35rem; letter-spacing: -.02em; }
+  h2 { font-size: 1.15rem; margin: 2.5rem 0 1rem; color: var(--accent);
+       border-bottom: 1px solid var(--line); padding-bottom: .4rem; }
+  .sub { color: var(--muted); margin-bottom: 2rem; font-size: .9rem; }
+  table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  th, td { padding: .55rem .6rem; text-align: left; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; text-transform: uppercase;
+       font-size: .72rem; letter-spacing: .06em; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .card { background: var(--card); border: 1px solid var(--line);
+          border-radius: 10px; padding: 1.25rem 1.4rem; margin-bottom: 1.25rem; }
+  .card-head { display: flex; justify-content: space-between;
+               align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .card-head h3 { margin: 0; font-size: 1.1rem; }
+  .score { font-size: 1.55rem; font-weight: 700; color: var(--accent);
+           font-variant-numeric: tabular-nums; }
+  .meta { color: var(--muted); font-size: .87rem; margin: .35rem 0 1rem; }
+  .bars { margin: 1rem 0; }
+  .bar-row { display: grid; grid-template-columns: 5.5rem 1fr 2.6rem;
+             align-items: center; gap: .6rem; margin-bottom: .3rem;
+             font-size: .82rem; }
+  .bar { background: #232a26; border-radius: 3px; height: 9px; overflow: hidden; }
+  .bar span { display: block; height: 100%; background: var(--accent); }
+  .bar-label { color: var(--muted); }
+  .bar-val { text-align: right; font-variant-numeric: tabular-nums; }
+  .evidence { color: var(--muted); font-size: .82rem; margin: .1rem 0 .8rem 5.5rem; }
+  .flags { background: #241f18; border-left: 3px solid var(--warn);
+           padding: .7rem .9rem; border-radius: 4px; margin-top: 1rem; }
+  .flags ul { margin: 0; padding-left: 1.1rem; }
+  .flags li { color: #f0d5b0; font-size: .85rem; }
+  .spec { color: var(--warn); font-size: .78rem; }
+  .method { color: var(--muted); font-size: .84rem; }
+  .method p { margin: .6rem 0; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Land Opportunity Scan</h1>
+  <div class="sub">
+    Thursday 27 August 2026, 18:31 UTC &middot;
+    top 10 of 24
+    listings screened &middot; 24 fully enriched &middot;
+    sources: fixtures
+  </div>
+
+  
+  <h2>Summary</h2>
+  <table>
+    <thead><tr>
+      <th class="num">#</th><th>Location</th><th class="num">Price</th>
+      <th class="num">Acres</th><th class="num">$/acre</th>
+      <th class="num">Score</th><th class="num">Nat cap</th>
+      <th class="num">Cap rate</th><th class="num">IRR</th>
+    </tr></thead>
+    <tbody>
+    
+      <tr>
+        <td class="num">1</td>
+        <td>De Queen, AR</td>
+        <td class="num">$158,000</td>
+        <td class="num">165</td>
+        <td class="num">$958</td>
+        <td class="num"><strong>85.2</strong></td>
+        <td class="num">79</td>
+        <td class="num">12.5%</td>
+        <td class="num">12.6%</td>
+      </tr>
+    
+      <tr>
+        <td class="num">2</td>
+        <td>Presque Isle, ME</td>
+        <td class="num">$88,000</td>
+        <td class="num">150</td>
+        <td class="num">$587</td>
+        <td class="num"><strong>76.9</strong></td>
+        <td class="num">57</td>
+        <td class="num">12.1%</td>
+        <td class="num">12.3%</td>
+      </tr>
+    
+      <tr>
+        <td class="num">3</td>
+        <td>Dodge City, KS</td>
+        <td class="num">$232,000</td>
+        <td class="num">155</td>
+        <td class="num">$1,497</td>
+        <td class="num"><strong>75.0</strong></td>
+        <td class="num">70</td>
+        <td class="num">9.1%</td>
+        <td class="num">9.5%</td>
+      </tr>
+    
+      <tr>
+        <td class="num">4</td>
+        <td>L&#39;Anse, MI</td>
+        <td class="num">$72,500</td>
+        <td class="num">80</td>
+        <td class="num">$906</td>
+        <td class="num"><strong>72.3</strong></td>
+        <td class="num">58</td>
+        <td class="num">8.3%</td>
+        <td class="num">8.8%</td>
+      </tr>
+    
+      <tr>
+        <td class="num">5</td>
+        <td>Dekalb, MS</td>
+        <td class="num">$134,000</td>
+        <td class="num">110</td>
+        <td class="num">$1,218</td>
+        <td class="num"><strong>68.4</strong></td>
+        <td class="num">68</td>
+        <td class="num">5.9%</td>
+        <td class="num">6.8%</td>
+      </tr>
+    
+      <tr>
+        <td class="num">6</td>
+        <td>Piketon, OH</td>
+        <td class="num">$124,000</td>
+        <td class="num">71</td>
+        <td class="num">$1,746</td>
+        <td class="num"><strong>67.7</strong></td>
+        <td class="num">66</td>
+        <td class="num">7.1%</td>
+        <td class="num">7.8%</td>
+      </tr>
+    
+      <tr>
+        <td class="num">7</td>
+        <td>Hurley, WI</td>
+        <td class="num">$119,000</td>
+        <td class="num">120</td>
+        <td class="num">$992</td>
+        <td class="num"><strong>64.4</strong></td>
+        <td class="num">59</td>
+        <td class="num">5.5%</td>
+        <td class="num">6.4%</td>
+      </tr>
+    
+      <tr>
+        <td class="num">8</td>
+        <td>Goldendale, WA</td>
+        <td class="num">$198,000</td>
+        <td class="num">140</td>
+        <td class="num">$1,414</td>
+        <td class="num"><strong>64.0</strong></td>
+        <td class="num">56</td>
+        <td class="num">6.6%</td>
+        <td class="num">7.4%</td>
+      </tr>
+    
+      <tr>
+        <td class="num">9</td>
+        <td>Baxley, GA</td>
+        <td class="num">$189,000</td>
+        <td class="num">94</td>
+        <td class="num">$2,011</td>
+        <td class="num"><strong>61.3</strong></td>
+        <td class="num">72</td>
+        <td class="num">5.0%</td>
+        <td class="num">5.9%</td>
+      </tr>
+    
+      <tr>
+        <td class="num">10</td>
+        <td>Jasper, AR</td>
+        <td class="num">$96,000</td>
+        <td class="num">48</td>
+        <td class="num">$1,979</td>
+        <td class="num"><strong>57.3</strong></td>
+        <td class="num">61</td>
+        <td class="num">5.3%</td>
+        <td class="num">6.2%</td>
+      </tr>
+    
+    </tbody>
+  </table>
+
+  <h2>Detail</h2>
+  
+  <div class="card">
+    <div class="card-head">
+      <h3>1. De Queen, AR
+        &mdash; $158,000</h3>
+      <div class="score">85.2</div>
+    </div>
+    <div class="meta">
+      165.0 acres at
+      $958/acre &middot;
+      natural capital 79/100
+      (confidence 90%)<br>Pine and mixed hardwood, multiple drainages, poultry and timber region.
+    </div>
+
+    <div class="bars">
+    
+      <div class="bar-row">
+        <div class="bar-label">water</div>
+        
+        <div class="bar"><span style="width: 96%"></span></div>
+        <div class="bar-val">96</div>
+      </div>
+      <div class="evidence">1332 mm/yr precipitation; Johns Branch within 230 m; 20.2 cm soil water storage</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">soil</div>
+        
+        <div class="bar"><span style="width: 91%"></span></div>
+        <div class="bar-val">91</div>
+      </div>
+      <div class="evidence">NCCPI 0.80; 2% mean slope; Sardis silt loam, 0 to 3 percent slopes, occasionally flooded; Somewhat poorly drained</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">timber</div>
+        
+        <div class="bar"><span style="width: 88%"></span></div>
+        <div class="bar-val">88</div>
+      </div>
+      <div class="evidence">62% forest cover</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">climate</div>
+        
+        <div class="bar"><span style="width: 94%"></span></div>
+        <div class="bar-val">94</div>
+      </div>
+      <div class="evidence">2952 GDD (base 10C)</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">solar</div>
+        
+        <div class="bar"><span style="width: 50%"></span></div>
+        <div class="bar-val">50</div>
+      </div>
+      <div class="evidence">4.53 kWh/m2/day GHI</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">wind</div>
+        
+        <div class="bar"><span style="width: 18%"></span></div>
+        <div class="bar-val">18</div>
+      </div>
+      <div class="evidence">4.42 m/s at 50 m</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">resilience</div>
+        
+        <div class="bar"><span style="width: 75%"></span></div>
+        <div class="bar-val">75</div>
+      </div>
+      <div class="evidence">FEMA unmapped; SSURGO flooding occasional (-20); wildfire hazard class 2 (-5)</div>
+    
+    </div>
+
+    
+    <table>
+      <thead><tr><th>Revenue stream</th><th class="num">Gross/yr</th>
+        <th class="num">Net/yr</th><th>Basis</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>timber</td>
+          <td class="num">$15,992</td>
+          <td class="num">$13,593</td>
+          <td>102 forested acres at 0.45 MBF/acre/yr sustainable increment, $350/MBF stumpage</td>
+        </tr>
+      
+        <tr>
+          <td>row crop lease</td>
+          <td class="num">$5,613</td>
+          <td class="num">$5,332</td>
+          <td>NCCPI 0.80 supports ~$221/acre cash rent on 25 croppable acres</td>
+        </tr>
+      
+        <tr>
+          <td>hunting lease</td>
+          <td class="num">$3,372</td>
+          <td class="num">$3,035</td>
+          <td>62% cover on 165 acres supports ~$20/acre recreational lease</td>
+        </tr>
+      
+      </tbody>
+    </table>
+    
+
+    <div class="meta" style="margin-top:1rem">
+      NOI <strong>$19,748/yr</strong> after
+      $2,212 carrying cost &middot;
+      cap rate <strong>12.5%</strong> &middot;
+      10-yr NPV $54,919 &middot; IRR 12.6% &middot;
+        payback 8 yrs
+    </div>
+
+    
+    <div class="flags"><ul>
+      <li>SSURGO records occasional flooding</li>
+    </ul></div>
+    
+  </div>
+  
+  <div class="card">
+    <div class="card-head">
+      <h3>2. Presque Isle, ME
+        &mdash; $88,000</h3>
+      <div class="score">76.9</div>
+    </div>
+    <div class="meta">
+      150.0 acres at
+      $587/acre &middot;
+      natural capital 57/100
+      (confidence 90%)<br>Spruce-fir and mixed growth, former potato ground on the south end.
+    </div>
+
+    <div class="bars">
+    
+      <div class="bar-row">
+        <div class="bar-label">water</div>
+        
+        <div class="bar"><span style="width: 86%"></span></div>
+        <div class="bar-val">86</div>
+      </div>
+      <div class="evidence">1128 mm/yr precipitation; Aroostook River within 220 m; 9.3 cm soil water storage</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">soil</div>
+        
+        <div class="bar"><span style="width: 53%"></span></div>
+        <div class="bar-val">53</div>
+      </div>
+      <div class="evidence">NCCPI 0.42; 12% mean slope; Stetson gravelly loam, 8 to 15 percent slopes; Well drained</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">timber</div>
+        
+        <div class="bar"><span style="width: 58%"></span></div>
+        <div class="bar-val">58</div>
+      </div>
+      <div class="evidence">35% forest cover</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">climate</div>
+        
+        <div class="bar"><span style="width: 23%"></span></div>
+        <div class="bar-val">23</div>
+      </div>
+      <div class="evidence">794 GDD (base 10C)</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">solar</div>
+        
+        <div class="bar"><span style="width: 14%"></span></div>
+        <div class="bar-val">14</div>
+      </div>
+      <div class="evidence">3.47 kWh/m2/day GHI</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">wind</div>
+        
+        <div class="bar"><span style="width: 27%"></span></div>
+        <div class="bar-val">27</div>
+      </div>
+      <div class="evidence">5.09 m/s at 50 m</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">resilience</div>
+        
+        <div class="bar"><span style="width: 95%"></span></div>
+        <div class="bar-val">95</div>
+      </div>
+      <div class="evidence">FEMA unmapped; SSURGO flooding none; wildfire hazard class 2 (-5)</div>
+    
+    </div>
+
+    
+    <table>
+      <thead><tr><th>Revenue stream</th><th class="num">Gross/yr</th>
+        <th class="num">Net/yr</th><th>Basis</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>row crop lease</td>
+          <td class="num">$5,280</td>
+          <td class="num">$5,016</td>
+          <td>NCCPI 0.42 supports ~$114/acre cash rent on 46 croppable acres</td>
+        </tr>
+      
+        <tr>
+          <td>timber</td>
+          <td class="num">$5,387</td>
+          <td class="num">$4,579</td>
+          <td>52 forested acres at 0.30 MBF/acre/yr sustainable increment, $350/MBF stumpage</td>
+        </tr>
+      
+        <tr>
+          <td>hunting lease</td>
+          <td class="num">$2,554</td>
+          <td class="num">$2,299</td>
+          <td>35% cover on 150 acres supports ~$17/acre recreational lease</td>
+        </tr>
+      
+      </tbody>
+    </table>
+    
+
+    <div class="meta" style="margin-top:1rem">
+      NOI <strong>$10,662/yr</strong> after
+      $1,232 carrying cost &middot;
+      cap rate <strong>12.1%</strong> &middot;
+      10-yr NPV $28,325 &middot; IRR 12.3% &middot;
+        payback 8 yrs
+    </div>
+
+    
+  </div>
+  
+  <div class="card">
+    <div class="card-head">
+      <h3>3. Dodge City, KS
+        &mdash; $232,000</h3>
+      <div class="score">75.0</div>
+    </div>
+    <div class="meta">
+      155.0 acres at
+      $1,497/acre &middot;
+      natural capital 70/100
+      (confidence 90%)<br>Level dryland wheat ground, strong wind regime, irrigation well permit history.
+    </div>
+
+    <div class="bars">
+    
+      <div class="bar-row">
+        <div class="bar-label">water</div>
+        
+        <div class="bar"><span style="width: 70%"></span></div>
+        <div class="bar-val">70</div>
+      </div>
+      <div class="evidence">626 mm/yr precipitation; perennial water within 224 m; 15.3 cm soil water storage</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">soil</div>
+        
+        <div class="bar"><span style="width: 75%"></span></div>
+        <div class="bar-val">75</div>
+      </div>
+      <div class="evidence">NCCPI 0.57; 1% mean slope; Farnum and Funmar loams, 0 to 1 percent slopes; Well drained</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">timber</div>
+        
+        <div class="bar"><span style="width: 26%"></span></div>
+        <div class="bar-val">26</div>
+      </div>
+      <div class="evidence">0% forest cover</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">climate</div>
+        
+        <div class="bar"><span style="width: 80%"></span></div>
+        <div class="bar-val">80</div>
+      </div>
+      <div class="evidence">2385 GDD (base 10C)</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">solar</div>
+        
+        <div class="bar"><span style="width: 66%"></span></div>
+        <div class="bar-val">66</div>
+      </div>
+      <div class="evidence">4.96 kWh/m2/day GHI</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">wind</div>
+        
+        <div class="bar"><span style="width: 81%"></span></div>
+        <div class="bar-val">81</div>
+      </div>
+      <div class="evidence">7.35 m/s at 50 m</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">resilience</div>
+        
+        <div class="bar"><span style="width: 95%"></span></div>
+        <div class="bar-val">95</div>
+      </div>
+      <div class="evidence">FEMA flood zone X (minimal risk); wildfire hazard class 2 (-5)</div>
+    
+    </div>
+
+    
+    <table>
+      <thead><tr><th>Revenue stream</th><th class="num">Gross/yr</th>
+        <th class="num">Net/yr</th><th>Basis</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>row crop lease</td>
+          <td class="num">$24,191</td>
+          <td class="num">$22,981</td>
+          <td>NCCPI 0.57 supports ~$156/acre cash rent on 155 croppable acres</td>
+        </tr>
+      
+        <tr>
+          <td>wind lease <span class="spec">speculative</span></td>
+          <td class="num">$1,280</td>
+          <td class="num">$1,280</td>
+          <td>7.35 m/s at 50 m supports ~2 turbine site(s) at $8,000/yr royalty, 8% probability</td>
+        </tr>
+      
+      </tbody>
+    </table>
+    
+
+    <div class="meta" style="margin-top:1rem">
+      NOI <strong>$21,013/yr</strong> after
+      $3,248 carrying cost &middot;
+      cap rate <strong>9.1%</strong> &middot;
+        excluding speculative
+        $19,733/yr
+        (8.5%) &middot;
+      10-yr NPV $27,071 &middot; IRR 9.5% &middot;
+        payback 11 yrs
+    </div>
+
+    
+  </div>
+  
+  <div class="card">
+    <div class="card-head">
+      <h3>4. L&#39;Anse, MI
+        &mdash; $72,500</h3>
+      <div class="score">72.3</div>
+    </div>
+    <div class="meta">
+      80.0 acres at
+      $906/acre &middot;
+      natural capital 58/100
+      (confidence 90%)<br>Northern hardwood and pine, two ponds, heavy snowfall region, sugar maple potential.
+    </div>
+
+    <div class="bars">
+    
+      <div class="bar-row">
+        <div class="bar-label">water</div>
+        
+        <div class="bar"><span style="width: 75%"></span></div>
+        <div class="bar-val">75</div>
+      </div>
+      <div class="evidence">883 mm/yr precipitation; Taylor Creek within 600 m; 9.4 cm soil water storage</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">soil</div>
+        
+        <div class="bar"><span style="width: 51%"></span></div>
+        <div class="bar-val">51</div>
+      </div>
+      <div class="evidence">NCCPI 0.31; 5% mean slope; Munising-Yalmer loamy sands, dissected, 1 to 8 percent slopes; Moderately well drained</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">timber</div>
+        
+        <div class="bar"><span style="width: 82%"></span></div>
+        <div class="bar-val">82</div>
+      </div>
+      <div class="evidence">88% forest cover</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">climate</div>
+        
+        <div class="bar"><span style="width: 25%"></span></div>
+        <div class="bar-val">25</div>
+      </div>
+      <div class="evidence">852 GDD (base 10C)</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">solar</div>
+        
+        <div class="bar"><span style="width: 17%"></span></div>
+        <div class="bar-val">17</div>
+      </div>
+      <div class="evidence">3.56 kWh/m2/day GHI</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">wind</div>
+        
+        <div class="bar"><span style="width: 24%"></span></div>
+        <div class="bar-val">24</div>
+      </div>
+      <div class="evidence">4.96 m/s at 50 m</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">resilience</div>
+        
+        <div class="bar"><span style="width: 95%"></span></div>
+        <div class="bar-val">95</div>
+      </div>
+      <div class="evidence">FEMA flood zone X (minimal risk); wildfire hazard class 2 (-5)</div>
+    
+    </div>
+
+    
+    <table>
+      <thead><tr><th>Revenue stream</th><th class="num">Gross/yr</th>
+        <th class="num">Net/yr</th><th>Basis</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>timber</td>
+          <td class="num">$6,376</td>
+          <td class="num">$5,419</td>
+          <td>71 forested acres at 0.26 MBF/acre/yr sustainable increment, $350/MBF stumpage</td>
+        </tr>
+      
+        <tr>
+          <td>hunting lease</td>
+          <td class="num">$1,760</td>
+          <td class="num">$1,584</td>
+          <td>88% cover on 80 acres supports ~$22/acre recreational lease</td>
+        </tr>
+      
+      </tbody>
+    </table>
+    
+
+    <div class="meta" style="margin-top:1rem">
+      NOI <strong>$5,988/yr</strong> after
+      $1,015 carrying cost &middot;
+      cap rate <strong>8.3%</strong> &middot;
+      10-yr NPV $4,579 &middot; IRR 8.8% &middot;
+        payback 12 yrs
+    </div>
+
+    
+  </div>
+  
+  <div class="card">
+    <div class="card-head">
+      <h3>5. Dekalb, MS
+        &mdash; $134,000</h3>
+      <div class="score">68.4</div>
+    </div>
+    <div class="meta">
+      110.0 acres at
+      $1,218/acre &middot;
+      natural capital 68/100
+      (confidence 90%)<br>Pine plantation with hardwood bottoms, creek, excellent deer and turkey habitat.
+    </div>
+
+    <div class="bars">
+    
+      <div class="bar-row">
+        <div class="bar-label">water</div>
+        
+        <div class="bar"><span style="width: 92%"></span></div>
+        <div class="bar-val">92</div>
+      </div>
+      <div class="evidence">1441 mm/yr precipitation; perennial water within 200 m; 12.4 cm soil water storage</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">soil</div>
+        
+        <div class="bar"><span style="width: 32%"></span></div>
+        <div class="bar-val">32</div>
+      </div>
+      <div class="evidence">NCCPI 0.16; 23% mean slope; Smithdale fine sandy loam, 17 to 35 percent slopes, severely eroded; Well drained</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">timber</div>
+        
+        <div class="bar"><span style="width: 79%"></span></div>
+        <div class="bar-val">79</div>
+      </div>
+      <div class="evidence">46% forest cover</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">climate</div>
+        
+        <div class="bar"><span style="width: 95%"></span></div>
+        <div class="bar-val">95</div>
+      </div>
+      <div class="evidence">3032 GDD (base 10C)</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">solar</div>
+        
+        <div class="bar"><span style="width: 52%"></span></div>
+        <div class="bar-val">52</div>
+      </div>
+      <div class="evidence">4.58 kWh/m2/day GHI</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">wind</div>
+        
+        <div class="bar"><span style="width: 14%"></span></div>
+        <div class="bar-val">14</div>
+      </div>
+      <div class="evidence">4.09 m/s at 50 m</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">resilience</div>
+        
+        <div class="bar"><span style="width: 95%"></span></div>
+        <div class="bar-val">95</div>
+      </div>
+      <div class="evidence">FEMA flood zone X (minimal risk); wildfire hazard class 2 (-5)</div>
+    
+    </div>
+
+    
+    <table>
+      <thead><tr><th>Revenue stream</th><th class="num">Gross/yr</th>
+        <th class="num">Net/yr</th><th>Basis</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>timber</td>
+          <td class="num">$7,996</td>
+          <td class="num">$6,797</td>
+          <td>51 forested acres at 0.45 MBF/acre/yr sustainable increment, $350/MBF stumpage</td>
+        </tr>
+      
+        <tr>
+          <td>hunting lease</td>
+          <td class="num">$2,034</td>
+          <td class="num">$1,830</td>
+          <td>46% cover on 110 acres supports ~$18/acre recreational lease</td>
+        </tr>
+      
+        <tr>
+          <td>grazing</td>
+          <td class="num">$1,462</td>
+          <td class="num">$1,170</td>
+          <td>1441 mm/yr supports ~1.20 AUM/acre on 51 grazeable acres at $24/AUM</td>
+        </tr>
+      
+      </tbody>
+    </table>
+    
+
+    <div class="meta" style="margin-top:1rem">
+      NOI <strong>$7,921/yr</strong> after
+      $1,876 carrying cost &middot;
+      cap rate <strong>5.9%</strong> &middot;
+      10-yr NPV $-12,656 &middot; IRR 6.8% &middot;
+        payback 17 yrs
+    </div>
+
+    
+  </div>
+  
+  <div class="card">
+    <div class="card-head">
+      <h3>6. Piketon, OH
+        &mdash; $124,000</h3>
+      <div class="score">67.7</div>
+    </div>
+    <div class="meta">
+      71.0 acres at
+      $1,746/acre &middot;
+      natural capital 66/100
+      (confidence 90%)<br>Appalachian hardwood, mature white oak, gas royalty history in the area.
+    </div>
+
+    <div class="bars">
+    
+      <div class="bar-row">
+        <div class="bar-label">water</div>
+        
+        <div class="bar"><span style="width: 90%"></span></div>
+        <div class="bar-val">90</div>
+      </div>
+      <div class="evidence">1062 mm/yr precipitation; Scioto River within 200 m; 20.6 cm soil water storage</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">soil</div>
+        
+        <div class="bar"><span style="width: 90%"></span></div>
+        <div class="bar-val">90</div>
+      </div>
+      <div class="evidence">NCCPI 0.78; 1% mean slope; Genesee silt loam, occasionally flooded; Well drained</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">timber</div>
+        
+        <div class="bar"><span style="width: 72%"></span></div>
+        <div class="bar-val">72</div>
+      </div>
+      <div class="evidence">46% forest cover</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">climate</div>
+        
+        <div class="bar"><span style="width: 68%"></span></div>
+        <div class="bar-val">68</div>
+      </div>
+      <div class="evidence">1947 GDD (base 10C)</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">solar</div>
+        
+        <div class="bar"><span style="width: 30%"></span></div>
+        <div class="bar-val">30</div>
+      </div>
+      <div class="evidence">3.99 kWh/m2/day GHI</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">wind</div>
+        
+        <div class="bar"><span style="width: 19%"></span></div>
+        <div class="bar-val">19</div>
+      </div>
+      <div class="evidence">4.56 m/s at 50 m</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">resilience</div>
+        
+        <div class="bar"><span style="width: 50%"></span></div>
+        <div class="bar-val">50</div>
+      </div>
+      <div class="evidence">FEMA flood zone AE (-45); wildfire hazard class 2 (-5)</div>
+    
+    </div>
+
+    
+    <table>
+      <thead><tr><th>Revenue stream</th><th class="num">Gross/yr</th>
+        <th class="num">Net/yr</th><th>Basis</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>row crop lease</td>
+          <td class="num">$5,865</td>
+          <td class="num">$5,572</td>
+          <td>NCCPI 0.78 supports ~$215/acre cash rent on 27 croppable acres</td>
+        </tr>
+      
+        <tr>
+          <td>timber</td>
+          <td class="num">$4,502</td>
+          <td class="num">$3,827</td>
+          <td>33 forested acres at 0.39 MBF/acre/yr sustainable increment, $350/MBF stumpage</td>
+        </tr>
+      
+        <tr>
+          <td>hunting lease</td>
+          <td class="num">$1,313</td>
+          <td class="num">$1,181</td>
+          <td>46% cover on 71 acres supports ~$18/acre recreational lease</td>
+        </tr>
+      
+      </tbody>
+    </table>
+    
+
+    <div class="meta" style="margin-top:1rem">
+      NOI <strong>$8,844/yr</strong> after
+      $1,736 carrying cost &middot;
+      cap rate <strong>7.1%</strong> &middot;
+      10-yr NPV $-1,551 &middot; IRR 7.8% &middot;
+        payback 14 yrs
+    </div>
+
+    
+    <div class="flags"><ul>
+      <li>in FEMA special flood hazard area (zone AE)</li><li>SSURGO records occasional flooding</li>
+    </ul></div>
+    
+  </div>
+  
+  <div class="card">
+    <div class="card-head">
+      <h3>7. Hurley, WI
+        &mdash; $119,000</h3>
+      <div class="score">64.4</div>
+    </div>
+    <div class="meta">
+      120.0 acres at
+      $992/acre &middot;
+      natural capital 59/100
+      (confidence 90%)<br>Large forested block with river frontage, established logging roads.
+    </div>
+
+    <div class="bars">
+    
+      <div class="bar-row">
+        <div class="bar-label">water</div>
+        
+        <div class="bar"><span style="width: 78%"></span></div>
+        <div class="bar-val">78</div>
+      </div>
+      <div class="evidence">908 mm/yr precipitation; Lake One Creek within 600 m; 12.7 cm soil water storage</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">soil</div>
+        
+        <div class="bar"><span style="width: 56%"></span></div>
+        <div class="bar-val">56</div>
+      </div>
+      <div class="evidence">NCCPI 0.33; 2% mean slope; Tula-Wormet-Gogebic complex, 0 to 6 percent slopes, very stony; Somewhat poorly drained</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">timber</div>
+        
+        <div class="bar"><span style="width: 73%"></span></div>
+        <div class="bar-val">73</div>
+      </div>
+      <div class="evidence">62% forest cover</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">climate</div>
+        
+        <div class="bar"><span style="width: 25%"></span></div>
+        <div class="bar-val">25</div>
+      </div>
+      <div class="evidence">852 GDD (base 10C)</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">solar</div>
+        
+        <div class="bar"><span style="width: 17%"></span></div>
+        <div class="bar-val">17</div>
+      </div>
+      <div class="evidence">3.57 kWh/m2/day GHI</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">wind</div>
+        
+        <div class="bar"><span style="width: 32%"></span></div>
+        <div class="bar-val">32</div>
+      </div>
+      <div class="evidence">5.28 m/s at 50 m</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">resilience</div>
+        
+        <div class="bar"><span style="width: 95%"></span></div>
+        <div class="bar-val">95</div>
+      </div>
+      <div class="evidence">FEMA flood zone X (minimal risk); wildfire hazard class 2 (-5)</div>
+    
+    </div>
+
+    
+    <table>
+      <thead><tr><th>Revenue stream</th><th class="num">Gross/yr</th>
+        <th class="num">Net/yr</th><th>Basis</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>timber</td>
+          <td class="num">$6,785</td>
+          <td class="num">$5,767</td>
+          <td>74 forested acres at 0.26 MBF/acre/yr sustainable increment, $350/MBF stumpage</td>
+        </tr>
+      
+        <tr>
+          <td>hunting lease</td>
+          <td class="num">$2,452</td>
+          <td class="num">$2,207</td>
+          <td>62% cover on 120 acres supports ~$20/acre recreational lease</td>
+        </tr>
+      
+        <tr>
+          <td>grazing</td>
+          <td class="num">$266</td>
+          <td class="num">$213</td>
+          <td>908 mm/yr supports ~1.20 AUM/acre on 9 grazeable acres at $24/AUM</td>
+        </tr>
+      
+      </tbody>
+    </table>
+    
+
+    <div class="meta" style="margin-top:1rem">
+      NOI <strong>$6,521/yr</strong> after
+      $1,666 carrying cost &middot;
+      cap rate <strong>5.5%</strong> &middot;
+      10-yr NPV $-14,684 &middot; IRR 6.4% &middot;
+        payback 18 yrs
+    </div>
+
+    
+  </div>
+  
+  <div class="card">
+    <div class="card-head">
+      <h3>8. Goldendale, WA
+        &mdash; $198,000</h3>
+      <div class="score">64.0</div>
+    </div>
+    <div class="meta">
+      140.0 acres at
+      $1,414/acre &middot;
+      natural capital 56/100
+      (confidence 90%)<br>Open plateau ground, existing wind development in the area, dryland hay.
+    </div>
+
+    <div class="bars">
+    
+      <div class="bar-row">
+        <div class="bar-label">water</div>
+        
+        <div class="bar"><span style="width: 64%"></span></div>
+        <div class="bar-val">64</div>
+      </div>
+      <div class="evidence">515 mm/yr precipitation; perennial water within 212 m; 17.6 cm soil water storage</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">soil</div>
+        
+        <div class="bar"><span style="width: 78%"></span></div>
+        <div class="bar-val">78</div>
+      </div>
+      <div class="evidence">NCCPI 0.63; 5% mean slope; Gunn loam, 2 to 8 percent slopes; Well drained</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">timber</div>
+        
+        <div class="bar"><span style="width: 24%"></span></div>
+        <div class="bar-val">24</div>
+      </div>
+      <div class="evidence">8% forest cover</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">climate</div>
+        
+        <div class="bar"><span style="width: 32%"></span></div>
+        <div class="bar-val">32</div>
+      </div>
+      <div class="evidence">1006 GDD (base 10C)</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">solar</div>
+        
+        <div class="bar"><span style="width: 38%"></span></div>
+        <div class="bar-val">38</div>
+      </div>
+      <div class="evidence">4.21 kWh/m2/day GHI</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">wind</div>
+        
+        <div class="bar"><span style="width: 36%"></span></div>
+        <div class="bar-val">36</div>
+      </div>
+      <div class="evidence">5.45 m/s at 50 m</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">resilience</div>
+        
+        <div class="bar"><span style="width: 85%"></span></div>
+        <div class="bar-val">85</div>
+      </div>
+      <div class="evidence">FEMA flood zone X (minimal risk); wildfire hazard class 3 (-15)</div>
+    
+    </div>
+
+    
+    <table>
+      <thead><tr><th>Revenue stream</th><th class="num">Gross/yr</th>
+        <th class="num">Net/yr</th><th>Basis</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>row crop lease</td>
+          <td class="num">$16,739</td>
+          <td class="num">$15,902</td>
+          <td>NCCPI 0.63 supports ~$173/acre cash rent on 97 croppable acres</td>
+        </tr>
+      
+      </tbody>
+    </table>
+    
+
+    <div class="meta" style="margin-top:1rem">
+      NOI <strong>$13,130/yr</strong> after
+      $2,772 carrying cost &middot;
+      cap rate <strong>6.6%</strong> &middot;
+      10-yr NPV $-9,133 &middot; IRR 7.4% &middot;
+        payback 15 yrs
+    </div>
+
+    
+  </div>
+  
+  <div class="card">
+    <div class="card-head">
+      <h3>9. Baxley, GA
+        &mdash; $189,000</h3>
+      <div class="score">61.3</div>
+    </div>
+    <div class="meta">
+      94.0 acres at
+      $2,011/acre &middot;
+      natural capital 72/100
+      (confidence 90%)<br>Planted loblolly pine, 14 years old, county road frontage, mill within 30 miles.
+    </div>
+
+    <div class="bars">
+    
+      <div class="bar-row">
+        <div class="bar-label">water</div>
+        
+        <div class="bar"><span style="width: 82%"></span></div>
+        <div class="bar-val">82</div>
+      </div>
+      <div class="evidence">1148 mm/yr precipitation; perennial water within 600 m; 8.0 cm soil water storage</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">soil</div>
+        
+        <div class="bar"><span style="width: 40%"></span></div>
+        <div class="bar-val">40</div>
+      </div>
+      <div class="evidence">NCCPI 0.13; 1% mean slope; Surrency loamy sand; Very poorly drained</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">timber</div>
+        
+        <div class="bar"><span style="width: 94%"></span></div>
+        <div class="bar-val">94</div>
+      </div>
+      <div class="evidence">81% forest cover</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">climate</div>
+        
+        <div class="bar"><span style="width: 96%"></span></div>
+        <div class="bar-val">96</div>
+      </div>
+      <div class="evidence">3381 GDD (base 10C)</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">solar</div>
+        
+        <div class="bar"><span style="width: 57%"></span></div>
+        <div class="bar-val">57</div>
+      </div>
+      <div class="evidence">4.73 kWh/m2/day GHI</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">wind</div>
+        
+        <div class="bar"><span style="width: 31%"></span></div>
+        <div class="bar-val">31</div>
+      </div>
+      <div class="evidence">5.27 m/s at 50 m</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">resilience</div>
+        
+        <div class="bar"><span style="width: 95%"></span></div>
+        <div class="bar-val">95</div>
+      </div>
+      <div class="evidence">FEMA flood zone X (minimal risk); wildfire hazard class 2 (-5)</div>
+    
+    </div>
+
+    
+    <table>
+      <thead><tr><th>Revenue stream</th><th class="num">Gross/yr</th>
+        <th class="num">Net/yr</th><th>Basis</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>timber</td>
+          <td class="num">$11,958</td>
+          <td class="num">$10,164</td>
+          <td>76 forested acres at 0.45 MBF/acre/yr sustainable increment, $350/MBF stumpage</td>
+        </tr>
+      
+        <tr>
+          <td>hunting lease</td>
+          <td class="num">$2,068</td>
+          <td class="num">$1,861</td>
+          <td>81% cover on 94 acres supports ~$22/acre recreational lease</td>
+        </tr>
+      
+      </tbody>
+    </table>
+    
+
+    <div class="meta" style="margin-top:1rem">
+      NOI <strong>$9,379/yr</strong> after
+      $2,646 carrying cost &middot;
+      cap rate <strong>5.0%</strong> &middot;
+      10-yr NPV $-29,878 &middot; IRR 5.9% &middot;
+        payback 20 yrs
+    </div>
+
+    
+  </div>
+  
+  <div class="card">
+    <div class="card-head">
+      <h3>10. Jasper, AR
+        &mdash; $96,000</h3>
+      <div class="score">57.3</div>
+    </div>
+    <div class="meta">
+      48.5 acres at
+      $1,979/acre &middot;
+      natural capital 61/100
+      (confidence 90%)<br>Ozark hill country, oak-hickory cover, seasonal drainage, off-grid access.
+    </div>
+
+    <div class="bars">
+    
+      <div class="bar-row">
+        <div class="bar-label">water</div>
+        
+        <div class="bar"><span style="width: 84%"></span></div>
+        <div class="bar-val">84</div>
+      </div>
+      <div class="evidence">1186 mm/yr precipitation; perennial water within 600 m; 8.6 cm soil water storage</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">soil</div>
+        
+        <div class="bar"><span style="width: 15%"></span></div>
+        <div class="bar-val">15</div>
+      </div>
+      <div class="evidence">NCCPI 0.09; 50% mean slope; Nella-Steprock-Mountainburg very stony loams, 40 to 60 percent slopes; Well drained</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">timber</div>
+        
+        <div class="bar"><span style="width: 93%"></span></div>
+        <div class="bar-val">93</div>
+      </div>
+      <div class="evidence">85% forest cover</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">climate</div>
+        
+        <div class="bar"><span style="width: 77%"></span></div>
+        <div class="bar-val">77</div>
+      </div>
+      <div class="evidence">2262 GDD (base 10C)</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">solar</div>
+        
+        <div class="bar"><span style="width: 45%"></span></div>
+        <div class="bar-val">45</div>
+      </div>
+      <div class="evidence">4.40 kWh/m2/day GHI</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">wind</div>
+        
+        <div class="bar"><span style="width: 17%"></span></div>
+        <div class="bar-val">17</div>
+      </div>
+      <div class="evidence">4.35 m/s at 50 m</div>
+    
+      <div class="bar-row">
+        <div class="bar-label">resilience</div>
+        
+        <div class="bar"><span style="width: 85%"></span></div>
+        <div class="bar-val">85</div>
+      </div>
+      <div class="evidence">FEMA unmapped; SSURGO flooding none; wildfire hazard class 3 (-15)</div>
+    
+    </div>
+
+    
+    <table>
+      <thead><tr><th>Revenue stream</th><th class="num">Gross/yr</th>
+        <th class="num">Net/yr</th><th>Basis</th></tr></thead>
+      <tbody>
+      
+        <tr>
+          <td>timber</td>
+          <td class="num">$6,156</td>
+          <td class="num">$5,233</td>
+          <td>41 forested acres at 0.43 MBF/acre/yr sustainable increment, $350/MBF stumpage</td>
+        </tr>
+      
+        <tr>
+          <td>hunting lease</td>
+          <td class="num">$1,067</td>
+          <td class="num">$960</td>
+          <td>85% cover on 48 acres supports ~$22/acre recreational lease</td>
+        </tr>
+      
+        <tr>
+          <td>recreation <span class="spec">speculative</span></td>
+          <td class="num">$441</td>
+          <td class="num">$199</td>
+          <td>scenery score 84/100 supports agritourism or glamping at 9% probability; travel-market access unverified</td>
+        </tr>
+      
+      </tbody>
+    </table>
+    
+
+    <div class="meta" style="margin-top:1rem">
+      NOI <strong>$5,048/yr</strong> after
+      $1,344 carrying cost &middot;
+      cap rate <strong>5.3%</strong> &middot;
+        excluding speculative
+        $4,849/yr
+        (5.1%) &middot;
+      10-yr NPV $-13,273 &middot; IRR 6.2% &middot;
+        payback 19 yrs
+    </div>
+
+    
+    <div class="flags"><ul>
+      <li>steep terrain (50% mean slope)</li>
+    </ul></div>
+    
+  </div>
+  
+  
+
+  <h2>Method and caveats</h2>
+  <div class="method">
+    <p><strong>Data sources.</strong> Soil productivity (NCCPI), available water
+    storage and slope from USDA NRCS SSURGO. Precipitation, temperature, growing
+    degree days, solar irradiance and 50 m wind speed from NASA POWER
+    climatology. Land cover from NLCD 2021. Surface water from the USGS National
+    Hydrography Dataset. Flood zones from FEMA NFHL. Elevation from USGS 3DEP.</p>
+    <p><strong>Wildfire hazard is modelled, not measured.</strong> The USFS
+    Wildfire Hazard Potential service refuses unauthenticated requests, so hazard
+    class is derived from fuel type, aridity and slope.</p>
+    <p><strong>Revenue figures are modelled, not quoted.</strong> Lease rates,
+    stumpage and carbon prices are national approximations from
+    <code>config/scoring.yaml</code>. Streams marked speculative depend on a
+    third party acting and are probability-weighted.</p>
+    <p><strong>Not visible to this screen:</strong> legal access and easements,
+    mineral and water rights severance, title, zoning and permitted use, wetland
+    delineation, utilities, and true parcel boundaries.</p>
+    <p>A screening tool for building a shortlist. Not an appraisal, not
+    investment advice.</p>
+    
+  </div>
+</div>
+</body>
+</html>

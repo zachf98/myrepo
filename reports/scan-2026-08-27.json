@@ -1,0 +1,2471 @@
+{
+  "generated_at": "2026-08-27T18:31:36.213007Z",
+  "listings_considered": 24,
+  "listings_enriched": 24,
+  "opportunities": [
+    {
+      "listing": {
+        "listing_id": "FX-AR-0020",
+        "source": "fixtures",
+        "price": 158000.0,
+        "acres": 165.0,
+        "address": "De Queen area",
+        "city": "De Queen",
+        "state": "AR",
+        "zip_code": "71832",
+        "latitude": 33.902,
+        "longitude": -94.201,
+        "property_type": "Land",
+        "url": null,
+        "listed_on": null,
+        "description": "Pine and mixed hardwood, multiple drainages, poultry and timber region.",
+        "raw": {}
+      },
+      "environment": {
+        "precipitation_mm": {
+          "value": 1332.1125,
+          "unit": "mm/yr",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "mean_temp_c": {
+          "value": 17.12,
+          "unit": "C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "growing_degree_days": {
+          "value": 2952.18,
+          "unit": "GDD base 10C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": "from monthly mean temperatures, base 10C"
+        },
+        "solar_ghi": {
+          "value": 4.5259,
+          "unit": "kWh/m2/day",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "wind_ws50m": {
+          "value": 4.42,
+          "unit": "m/s",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "nccpi": {
+          "value": 0.804,
+          "unit": "index 0-1",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "component-weighted over 1 components"
+        },
+        "water_storage_cm": {
+          "value": 20.24,
+          "unit": "cm",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "available water storage, 0-100cm"
+        },
+        "slope_pct": {
+          "value": 1.85,
+          "unit": "%",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": null
+        },
+        "forest_cover_pct": {
+          "value": 61.53846153846154,
+          "unit": "%",
+          "source": "NLCD 2021",
+          "quality": "measured",
+          "note": "13 sample points across parcel footprint"
+        },
+        "water_distance_m": {
+          "value": 230.5,
+          "unit": "m",
+          "source": "USGS NHD",
+          "quality": "modeled",
+          "note": "perennial water found within 461m"
+        },
+        "flood_zone": null,
+        "flood_zone_source": "FEMA NFHL (unmapped)",
+        "wildfire_hazard_class": 2,
+        "elevation_m": {
+          "value": 88.444000244,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": null
+        },
+        "town_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "grid_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "soil_flood_frequency": "Occasional",
+        "soil_description": "Sardis silt loam, 0 to 3 percent slopes, occasionally flooded; Somewhat poorly drained",
+        "land_cover": {
+          "woody_wetlands": 46.15384615384615,
+          "deciduous_forest": 30.76923076923077,
+          "pasture_hay": 15.384615384615385,
+          "mixed_forest": 7.6923076923076925
+        },
+        "nearest_water_name": "Johns Branch",
+        "relief_m": {
+          "value": 11.131607055999993,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": "range across 5 samples"
+        },
+        "failed_enrichers": []
+      },
+      "natural_capital": {
+        "total": 78.62487059722223,
+        "subscores": [
+          {
+            "name": "water",
+            "score": 95.53325694444445,
+            "weight": 0.22,
+            "drivers": [
+              "1332 mm/yr precipitation",
+              "Johns Branch within 230 m",
+              "20.2 cm soil water storage"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "soil",
+            "score": 90.8148125,
+            "weight": 0.2,
+            "drivers": [
+              "NCCPI 0.80",
+              "2% mean slope",
+              "Sardis silt loam, 0 to 3 percent slopes, occasionally flooded; Somewhat poorly drained"
+            ],
+            "confidence": 1.0
+          },
+          {
+            "name": "timber",
+            "score": 87.90455053418803,
+            "weight": 0.13,
+            "drivers": [
+              "62% forest cover"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "climate",
+            "score": 93.80449999999999,
+            "weight": 0.1,
+            "drivers": [
+              "2952 GDD (base 10C)"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "solar",
+            "score": 49.721250000000005,
+            "weight": 0.12,
+            "drivers": [
+              "4.53 kWh/m2/day GHI"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "wind",
+            "score": 17.75,
+            "weight": 0.08,
+            "drivers": [
+              "4.42 m/s at 50 m"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "resilience",
+            "score": 75.0,
+            "weight": 0.15,
+            "drivers": [
+              "FEMA unmapped; SSURGO flooding occasional (-20)",
+              "wildfire hazard class 2 (-5)"
+            ],
+            "confidence": 0.85
+          }
+        ],
+        "confidence": 0.898
+      },
+      "business": {
+        "streams": [
+          {
+            "name": "timber",
+            "annual_gross": 15992.30769230769,
+            "annual_net": 13593.461538461535,
+            "rationale": "102 forested acres at 0.45 MBF/acre/yr sustainable increment, $350/MBF stumpage",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "row_crop_lease",
+            "annual_gross": 5612.538461538463,
+            "annual_net": 5331.91153846154,
+            "rationale": "NCCPI 0.80 supports ~$221/acre cash rent on 25 croppable acres",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "hunting_lease",
+            "annual_gross": 3371.7115384615386,
+            "annual_net": 3034.540384615385,
+            "rationale": "62% cover on 165 acres supports ~$20/acre recreational lease",
+            "probability": 1.0,
+            "speculative": false
+          }
+        ],
+        "annual_gross_revenue": 24976.55769230769,
+        "annual_operating_expense": 3016.6442307692305,
+        "annual_carrying_cost": 2211.9999999999995,
+        "net_operating_income": 19747.91346153846,
+        "contracted_noi": 19747.91346153846,
+        "cap_rate": 0.12498679406037001,
+        "contracted_cap_rate": 0.12498679406037001,
+        "payback_years": 8.000845269436937,
+        "npv": 54919.27455730188,
+        "irr": 0.1261087348460251,
+        "score": 95.831132343395
+      },
+      "price_efficiency_score": 91.5,
+      "composite_score": 85.21,
+      "rank": 1,
+      "flags": [
+        "SSURGO records occasional flooding"
+      ]
+    },
+    {
+      "listing": {
+        "listing_id": "FX-ME-0014",
+        "source": "fixtures",
+        "price": 88000.0,
+        "acres": 150.0,
+        "address": "Presque Isle outskirts",
+        "city": "Presque Isle",
+        "state": "ME",
+        "zip_code": "04769",
+        "latitude": 46.702,
+        "longitude": -68.003,
+        "property_type": "Land",
+        "url": null,
+        "listed_on": null,
+        "description": "Spruce-fir and mixed growth, former potato ground on the south end.",
+        "raw": {}
+      },
+      "environment": {
+        "precipitation_mm": {
+          "value": 1127.5925,
+          "unit": "mm/yr",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "mean_temp_c": {
+          "value": 4.22,
+          "unit": "C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "growing_degree_days": {
+          "value": 793.51,
+          "unit": "GDD base 10C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": "from monthly mean temperatures, base 10C"
+        },
+        "solar_ghi": {
+          "value": 3.4685,
+          "unit": "kWh/m2/day",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "wind_ws50m": {
+          "value": 5.09,
+          "unit": "m/s",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "nccpi": {
+          "value": 0.41600000000000004,
+          "unit": "index 0-1",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "component-weighted over 1 components"
+        },
+        "water_storage_cm": {
+          "value": 9.28,
+          "unit": "cm",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "available water storage, 0-100cm"
+        },
+        "slope_pct": {
+          "value": 12.0,
+          "unit": "%",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": null
+        },
+        "forest_cover_pct": {
+          "value": 34.61538461538461,
+          "unit": "%",
+          "source": "NLCD 2021",
+          "quality": "measured",
+          "note": "13 sample points across parcel footprint"
+        },
+        "water_distance_m": {
+          "value": 220.0,
+          "unit": "m",
+          "source": "USGS NHD",
+          "quality": "modeled",
+          "note": "perennial water found within 440m"
+        },
+        "flood_zone": null,
+        "flood_zone_source": "FEMA NFHL (unmapped)",
+        "wildfire_hazard_class": 2,
+        "elevation_m": {
+          "value": 124.025688171,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": null
+        },
+        "town_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "grid_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "soil_flood_frequency": "None",
+        "soil_description": "Stetson gravelly loam, 8 to 15 percent slopes; Well drained",
+        "land_cover": {
+          "deciduous_forest": 23.076923076923077,
+          "pasture_hay": 23.076923076923077,
+          "developed_high": 15.384615384615385,
+          "evergreen_forest": 7.6923076923076925,
+          "developed_open": 7.6923076923076925,
+          "woody_wetlands": 7.6923076923076925,
+          "open_water": 7.6923076923076925,
+          "cultivated_crops": 7.6923076923076925
+        },
+        "nearest_water_name": "Aroostook River",
+        "relief_m": {
+          "value": 39.913764954,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": "range across 5 samples"
+        },
+        "failed_enrichers": []
+      },
+      "natural_capital": {
+        "total": 57.32070579464286,
+        "subscores": [
+          {
+            "name": "water",
+            "score": 85.53022232142858,
+            "weight": 0.22,
+            "drivers": [
+              "1128 mm/yr precipitation",
+              "Aroostook River within 220 m",
+              "9.3 cm soil water storage"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "soil",
+            "score": 53.197142857142865,
+            "weight": 0.2,
+            "drivers": [
+              "NCCPI 0.42",
+              "12% mean slope",
+              "Stetson gravelly loam, 8 to 15 percent slopes; Well drained"
+            ],
+            "confidence": 1.0
+          },
+          {
+            "name": "timber",
+            "score": 57.708679326923075,
+            "weight": 0.13,
+            "drivers": [
+              "35% forest cover"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "climate",
+            "score": 22.579,
+            "weight": 0.1,
+            "drivers": [
+              "794 GDD (base 10C)"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "solar",
+            "score": 14.055000000000003,
+            "weight": 0.12,
+            "drivers": [
+              "3.47 kWh/m2/day GHI"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "wind",
+            "score": 27.099999999999998,
+            "weight": 0.08,
+            "drivers": [
+              "5.09 m/s at 50 m"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "resilience",
+            "score": 95.0,
+            "weight": 0.15,
+            "drivers": [
+              "FEMA unmapped; SSURGO flooding none",
+              "wildfire hazard class 2 (-5)"
+            ],
+            "confidence": 0.85
+          }
+        ],
+        "confidence": 0.898
+      },
+      "business": {
+        "streams": [
+          {
+            "name": "timber",
+            "annual_gross": 5386.788951923077,
+            "annual_net": 4578.770609134615,
+            "rationale": "52 forested acres at 0.30 MBF/acre/yr sustainable increment, $350/MBF stumpage",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "row_crop_lease",
+            "annual_gross": 5280.0,
+            "annual_net": 5016.0,
+            "rationale": "NCCPI 0.42 supports ~$114/acre cash rent on 46 croppable acres",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "hunting_lease",
+            "annual_gross": 2554.326923076923,
+            "annual_net": 2298.8942307692305,
+            "rationale": "35% cover on 150 acres supports ~$17/acre recreational lease",
+            "probability": 1.0,
+            "speculative": false
+          }
+        ],
+        "annual_gross_revenue": 13221.115875,
+        "annual_operating_expense": 1327.4510350961536,
+        "annual_carrying_cost": 1231.9999999999998,
+        "net_operating_income": 10661.664839903846,
+        "contracted_noi": 10661.664839903846,
+        "cap_rate": 0.1211552822716346,
+        "contracted_cap_rate": 0.1211552822716346,
+        "payback_years": 8.253870415306888,
+        "npv": 28325.49185980454,
+        "irr": 0.12268342657935137,
+        "score": 95.19254704527243
+      },
+      "price_efficiency_score": 100.0,
+      "composite_score": 76.86,
+      "rank": 2,
+      "flags": []
+    },
+    {
+      "listing": {
+        "listing_id": "FX-KS-0006",
+        "source": "fixtures",
+        "price": 232000.0,
+        "acres": 155.0,
+        "address": "Rural Dodge City",
+        "city": "Dodge City",
+        "state": "KS",
+        "zip_code": "67801",
+        "latitude": 37.702,
+        "longitude": -100.004,
+        "property_type": "Farm",
+        "url": null,
+        "listed_on": null,
+        "description": "Level dryland wheat ground, strong wind regime, irrigation well permit history.",
+        "raw": {}
+      },
+      "environment": {
+        "precipitation_mm": {
+          "value": 625.89,
+          "unit": "mm/yr",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "mean_temp_c": {
+          "value": 13.93,
+          "unit": "C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "growing_degree_days": {
+          "value": 2384.95,
+          "unit": "GDD base 10C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": "from monthly mean temperatures, base 10C"
+        },
+        "solar_ghi": {
+          "value": 4.9606,
+          "unit": "kWh/m2/day",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "wind_ws50m": {
+          "value": 7.35,
+          "unit": "m/s",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "nccpi": {
+          "value": 0.56753,
+          "unit": "index 0-1",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "component-weighted over 3 components"
+        },
+        "water_storage_cm": {
+          "value": 15.33,
+          "unit": "cm",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "available water storage, 0-100cm"
+        },
+        "slope_pct": {
+          "value": 1.0,
+          "unit": "%",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": null
+        },
+        "forest_cover_pct": {
+          "value": 0.0,
+          "unit": "%",
+          "source": "NLCD 2021",
+          "quality": "measured",
+          "note": "13 sample points across parcel footprint"
+        },
+        "water_distance_m": {
+          "value": 223.5,
+          "unit": "m",
+          "source": "USGS NHD",
+          "quality": "modeled",
+          "note": "perennial water found within 447m"
+        },
+        "flood_zone": "X",
+        "flood_zone_source": "FEMA NFHL",
+        "wildfire_hazard_class": 2,
+        "elevation_m": {
+          "value": 771.038208008,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": null
+        },
+        "town_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "grid_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "soil_flood_frequency": "None",
+        "soil_description": "Farnum and Funmar loams, 0 to 1 percent slopes; Well drained",
+        "land_cover": {
+          "cultivated_crops": 92.3076923076923,
+          "grassland": 7.6923076923076925
+        },
+        "nearest_water_name": null,
+        "relief_m": {
+          "value": 6.7453613279999445,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": "range across 5 samples"
+        },
+        "failed_enrichers": []
+      },
+      "natural_capital": {
+        "total": 70.38391383928573,
+        "subscores": [
+          {
+            "name": "water",
+            "score": 69.9860625,
+            "weight": 0.22,
+            "drivers": [
+              "626 mm/yr precipitation",
+              "perennial water within 224 m",
+              "15.3 cm soil water storage"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "soil",
+            "score": 74.8801875,
+            "weight": 0.2,
+            "drivers": [
+              "NCCPI 0.57",
+              "1% mean slope",
+              "Farnum and Funmar loams, 0 to 1 percent slopes; Well drained"
+            ],
+            "confidence": 1.0
+          },
+          {
+            "name": "timber",
+            "score": 26.2329375,
+            "weight": 0.13,
+            "drivers": [
+              "0% forest cover"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "climate",
+            "score": 79.62375,
+            "weight": 0.1,
+            "drivers": [
+              "2385 GDD (base 10C)"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "solar",
+            "score": 65.73571428571431,
+            "weight": 0.12,
+            "drivers": [
+              "4.96 kWh/m2/day GHI"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "wind",
+            "score": 81.25,
+            "weight": 0.08,
+            "drivers": [
+              "7.35 m/s at 50 m"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "resilience",
+            "score": 95.0,
+            "weight": 0.15,
+            "drivers": [
+              "FEMA flood zone X (minimal risk)",
+              "wildfire hazard class 2 (-5)"
+            ],
+            "confidence": 0.85
+          }
+        ],
+        "confidence": 0.898
+      },
+      "business": {
+        "streams": [
+          {
+            "name": "row_crop_lease",
+            "annual_gross": 24190.96625,
+            "annual_net": 22981.4179375,
+            "rationale": "NCCPI 0.57 supports ~$156/acre cash rent on 155 croppable acres",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "wind_lease",
+            "annual_gross": 1280.0,
+            "annual_net": 1280.0,
+            "rationale": "7.35 m/s at 50 m supports ~2 turbine site(s) at $8,000/yr royalty, 8% probability",
+            "probability": 0.08,
+            "speculative": true
+          }
+        ],
+        "annual_gross_revenue": 25470.96625,
+        "annual_operating_expense": 1209.5483125000028,
+        "annual_carrying_cost": 3247.9999999999995,
+        "net_operating_income": 21013.4179375,
+        "contracted_noi": 19733.4179375,
+        "cap_rate": 0.09057507731681033,
+        "contracted_cap_rate": 0.08505783593749999,
+        "payback_years": 11.040564685385087,
+        "npv": 27070.902570484366,
+        "irr": 0.09542910378227137,
+        "score": 87.8919417497306
+      },
+      "price_efficiency_score": 67.9,
+      "composite_score": 75.05,
+      "rank": 3,
+      "flags": []
+    },
+    {
+      "listing": {
+        "listing_id": "FX-MI-0003",
+        "source": "fixtures",
+        "price": 72500.0,
+        "acres": 80.0,
+        "address": "Off Herman Rd, L'Anse",
+        "city": "L'Anse",
+        "state": "MI",
+        "zip_code": "49946",
+        "latitude": 46.702,
+        "longitude": -88.451,
+        "property_type": "Land",
+        "url": null,
+        "listed_on": null,
+        "description": "Northern hardwood and pine, two ponds, heavy snowfall region, sugar maple potential.",
+        "raw": {}
+      },
+      "environment": {
+        "precipitation_mm": {
+          "value": 883.4425,
+          "unit": "mm/yr",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "mean_temp_c": {
+          "value": 4.77,
+          "unit": "C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "growing_degree_days": {
+          "value": 852.2,
+          "unit": "GDD base 10C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": "from monthly mean temperatures, base 10C"
+        },
+        "solar_ghi": {
+          "value": 3.558,
+          "unit": "kWh/m2/day",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "wind_ws50m": {
+          "value": 4.96,
+          "unit": "m/s",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "nccpi": {
+          "value": 0.3061499999999999,
+          "unit": "index 0-1",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "component-weighted over 2 components"
+        },
+        "water_storage_cm": {
+          "value": 9.39,
+          "unit": "cm",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "available water storage, 0-100cm"
+        },
+        "slope_pct": {
+          "value": 5.0,
+          "unit": "%",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": null
+        },
+        "forest_cover_pct": {
+          "value": 88.46153846153845,
+          "unit": "%",
+          "source": "NLCD 2021",
+          "quality": "measured",
+          "note": "13 sample points across parcel footprint"
+        },
+        "water_distance_m": {
+          "value": 600.0,
+          "unit": "m",
+          "source": "USGS NHD",
+          "quality": "modeled",
+          "note": "perennial water found within 1200m"
+        },
+        "flood_zone": "X",
+        "flood_zone_source": "FEMA NFHL",
+        "wildfire_hazard_class": 2,
+        "elevation_m": {
+          "value": 308.089935303,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": null
+        },
+        "town_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "grid_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "soil_flood_frequency": "None",
+        "soil_description": "Munising-Yalmer loamy sands, dissected, 1 to 8 percent slopes; Moderately well drained",
+        "land_cover": {
+          "mixed_forest": 46.15384615384615,
+          "deciduous_forest": 30.76923076923077,
+          "evergreen_forest": 7.6923076923076925,
+          "woody_wetlands": 7.6923076923076925,
+          "developed_open": 7.6923076923076925
+        },
+        "nearest_water_name": "Taylor Creek",
+        "relief_m": {
+          "value": 28.989227295000035,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": "range across 5 samples"
+        },
+        "failed_enrichers": []
+      },
+      "natural_capital": {
+        "total": 58.114024479166666,
+        "subscores": [
+          {
+            "name": "water",
+            "score": 75.4632574404762,
+            "weight": 0.22,
+            "drivers": [
+              "883 mm/yr precipitation",
+              "Taylor Creek within 600 m",
+              "9.4 cm soil water storage"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "soil",
+            "score": 50.716919642857135,
+            "weight": 0.2,
+            "drivers": [
+              "NCCPI 0.31",
+              "5% mean slope",
+              "Munising-Yalmer loamy sands, dissected, 1 to 8 percent slopes; Moderately well drained"
+            ],
+            "confidence": 1.0
+          },
+          {
+            "name": "timber",
+            "score": 81.84996417124542,
+            "weight": 0.13,
+            "drivers": [
+              "88% forest cover"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "climate",
+            "score": 25.094285714285718,
+            "weight": 0.1,
+            "drivers": [
+              "852 GDD (base 10C)"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "solar",
+            "score": 16.739999999999995,
+            "weight": 0.12,
+            "drivers": [
+              "3.56 kWh/m2/day GHI"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "wind",
+            "score": 24.5,
+            "weight": 0.08,
+            "drivers": [
+              "4.96 m/s at 50 m"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "resilience",
+            "score": 95.0,
+            "weight": 0.15,
+            "drivers": [
+              "FEMA flood zone X (minimal risk)",
+              "wildfire hazard class 2 (-5)"
+            ],
+            "confidence": 0.85
+          }
+        ],
+        "confidence": 0.898
+      },
+      "business": {
+        "streams": [
+          {
+            "name": "timber",
+            "annual_gross": 6375.653197552448,
+            "annual_net": 5419.30521791958,
+            "rationale": "71 forested acres at 0.26 MBF/acre/yr sustainable increment, $350/MBF stumpage",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "hunting_lease",
+            "annual_gross": 1760.0,
+            "annual_net": 1584.0,
+            "rationale": "88% cover on 80 acres supports ~$22/acre recreational lease",
+            "probability": 1.0,
+            "speculative": false
+          }
+        ],
+        "annual_gross_revenue": 8135.653197552448,
+        "annual_operating_expense": 1132.3479796328675,
+        "annual_carrying_cost": 1014.9999999999999,
+        "net_operating_income": 5988.30521791958,
+        "contracted_noi": 5988.30521791958,
+        "cap_rate": 0.0825973133506149,
+        "contracted_cap_rate": 0.0825973133506149,
+        "payback_years": 12.106931320576125,
+        "npv": 4578.627247659649,
+        "irr": 0.08834431453988148,
+        "score": 85.0648755670766
+      },
+      "price_efficiency_score": 93.7,
+      "composite_score": 72.34,
+      "rank": 4,
+      "flags": []
+    },
+    {
+      "listing": {
+        "listing_id": "FX-MS-0009",
+        "source": "fixtures",
+        "price": 134000.0,
+        "acres": 110.0,
+        "address": "Dekalb rural tract",
+        "city": "Dekalb",
+        "state": "MS",
+        "zip_code": "39328",
+        "latitude": 32.751,
+        "longitude": -88.601,
+        "property_type": "Land",
+        "url": null,
+        "listed_on": null,
+        "description": "Pine plantation with hardwood bottoms, creek, excellent deer and turkey habitat.",
+        "raw": {}
+      },
+      "environment": {
+        "precipitation_mm": {
+          "value": 1440.71,
+          "unit": "mm/yr",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "mean_temp_c": {
+          "value": 17.67,
+          "unit": "C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "growing_degree_days": {
+          "value": 3031.51,
+          "unit": "GDD base 10C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": "from monthly mean temperatures, base 10C"
+        },
+        "solar_ghi": {
+          "value": 4.5816,
+          "unit": "kWh/m2/day",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "wind_ws50m": {
+          "value": 4.09,
+          "unit": "m/s",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "nccpi": {
+          "value": 0.15814999999999999,
+          "unit": "index 0-1",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "component-weighted over 4 components"
+        },
+        "water_storage_cm": {
+          "value": 12.37,
+          "unit": "cm",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "available water storage, 0-100cm"
+        },
+        "slope_pct": {
+          "value": 23.3,
+          "unit": "%",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": null
+        },
+        "forest_cover_pct": {
+          "value": 46.15384615384615,
+          "unit": "%",
+          "source": "NLCD 2021",
+          "quality": "measured",
+          "note": "13 sample points across parcel footprint"
+        },
+        "water_distance_m": {
+          "value": 200.0,
+          "unit": "m",
+          "source": "USGS NHD",
+          "quality": "modeled",
+          "note": "perennial water found within 400m"
+        },
+        "flood_zone": "X",
+        "flood_zone_source": "FEMA NFHL",
+        "wildfire_hazard_class": 2,
+        "elevation_m": {
+          "value": 105.569999695,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": null
+        },
+        "town_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "grid_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "soil_flood_frequency": "None",
+        "soil_description": "Smithdale fine sandy loam, 17 to 35 percent slopes, severely eroded; Well drained",
+        "land_cover": {
+          "mixed_forest": 23.076923076923077,
+          "shrub_scrub": 23.076923076923077,
+          "grassland": 23.076923076923077,
+          "evergreen_forest": 15.384615384615385,
+          "deciduous_forest": 7.6923076923076925,
+          "developed_low": 7.6923076923076925
+        },
+        "nearest_water_name": null,
+        "relief_m": {
+          "value": 31.309997558999996,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": "range across 5 samples"
+        },
+        "failed_enrichers": []
+      },
+      "natural_capital": {
+        "total": 67.77031901111111,
+        "subscores": [
+          {
+            "name": "water",
+            "score": 91.51354305555556,
+            "weight": 0.22,
+            "drivers": [
+              "1441 mm/yr precipitation",
+              "perennial water within 200 m",
+              "12.4 cm soil water storage"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "soil",
+            "score": 31.7795,
+            "weight": 0.2,
+            "drivers": [
+              "NCCPI 0.16",
+              "23% mean slope",
+              "Smithdale fine sandy loam, 17 to 35 percent slopes, severely eroded; Well drained"
+            ],
+            "confidence": 1.0
+          },
+          {
+            "name": "timber",
+            "score": 78.56720158119658,
+            "weight": 0.13,
+            "drivers": [
+              "46% forest cover"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "climate",
+            "score": 95.10503333333334,
+            "weight": 0.1,
+            "drivers": [
+              "3032 GDD (base 10C)"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "solar",
+            "score": 51.81,
+            "weight": 0.12,
+            "drivers": [
+              "4.58 kWh/m2/day GHI"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "wind",
+            "score": 13.624999999999998,
+            "weight": 0.08,
+            "drivers": [
+              "4.09 m/s at 50 m"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "resilience",
+            "score": 95.0,
+            "weight": 0.15,
+            "drivers": [
+              "FEMA flood zone X (minimal risk)",
+              "wildfire hazard class 2 (-5)"
+            ],
+            "confidence": 0.85
+          }
+        ],
+        "confidence": 0.898
+      },
+      "business": {
+        "streams": [
+          {
+            "name": "timber",
+            "annual_gross": 7996.153846153846,
+            "annual_net": 6796.730769230769,
+            "rationale": "51 forested acres at 0.45 MBF/acre/yr sustainable increment, $350/MBF stumpage",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "grazing",
+            "annual_gross": 1462.153846153846,
+            "annual_net": 1169.7230769230769,
+            "rationale": "1441 mm/yr supports ~1.20 AUM/acre on 51 grazeable acres at $24/AUM",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "hunting_lease",
+            "annual_gross": 2033.730769230769,
+            "annual_net": 1830.357692307692,
+            "rationale": "46% cover on 110 acres supports ~$18/acre recreational lease",
+            "probability": 1.0,
+            "speculative": false
+          }
+        ],
+        "annual_gross_revenue": 11492.038461538461,
+        "annual_operating_expense": 1695.2269230769234,
+        "annual_carrying_cost": 1875.9999999999998,
+        "net_operating_income": 7920.811538461538,
+        "contracted_noi": 7920.811538461538,
+        "cap_rate": 0.05911053386911595,
+        "contracted_cap_rate": 0.05911053386911595,
+        "payback_years": 16.91745843835932,
+        "npv": -12655.592860798719,
+        "irr": 0.06754996860204304,
+        "score": 69.11053386911595
+      },
+      "price_efficiency_score": 80.1,
+      "composite_score": 68.37,
+      "rank": 5,
+      "flags": []
+    },
+    {
+      "listing": {
+        "listing_id": "FX-OH-0019",
+        "source": "fixtures",
+        "price": 124000.0,
+        "acres": 71.0,
+        "address": "Piketon hill tract",
+        "city": "Piketon",
+        "state": "OH",
+        "zip_code": "45661",
+        "latitude": 39.072,
+        "longitude": -83.021,
+        "property_type": "Land",
+        "url": null,
+        "listed_on": null,
+        "description": "Appalachian hardwood, mature white oak, gas royalty history in the area.",
+        "raw": {}
+      },
+      "environment": {
+        "precipitation_mm": {
+          "value": 1062.3475,
+          "unit": "mm/yr",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "mean_temp_c": {
+          "value": 12.19,
+          "unit": "C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "growing_degree_days": {
+          "value": 1946.94,
+          "unit": "GDD base 10C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": "from monthly mean temperatures, base 10C"
+        },
+        "solar_ghi": {
+          "value": 3.9864,
+          "unit": "kWh/m2/day",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "wind_ws50m": {
+          "value": 4.56,
+          "unit": "m/s",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "nccpi": {
+          "value": 0.781,
+          "unit": "index 0-1",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "component-weighted over 1 components"
+        },
+        "water_storage_cm": {
+          "value": 20.56,
+          "unit": "cm",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "available water storage, 0-100cm"
+        },
+        "slope_pct": {
+          "value": 1.0,
+          "unit": "%",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": null
+        },
+        "forest_cover_pct": {
+          "value": 46.15384615384615,
+          "unit": "%",
+          "source": "NLCD 2021",
+          "quality": "measured",
+          "note": "13 sample points across parcel footprint"
+        },
+        "water_distance_m": {
+          "value": 200.0,
+          "unit": "m",
+          "source": "USGS NHD",
+          "quality": "modeled",
+          "note": "perennial water found within 400m"
+        },
+        "flood_zone": "AE",
+        "flood_zone_source": "FEMA NFHL",
+        "wildfire_hazard_class": 2,
+        "elevation_m": {
+          "value": 167.239501953,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": null
+        },
+        "town_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "grid_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "soil_flood_frequency": "Occasional",
+        "soil_description": "Genesee silt loam, occasionally flooded; Well drained",
+        "land_cover": {
+          "deciduous_forest": 46.15384615384615,
+          "cultivated_crops": 23.076923076923077,
+          "pasture_hay": 15.384615384615385,
+          "open_water": 15.384615384615385
+        },
+        "nearest_water_name": "Scioto River",
+        "relief_m": {
+          "value": 1.6206207270000164,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": "range across 5 samples"
+        },
+        "failed_enrichers": []
+      },
+      "natural_capital": {
+        "total": 66.4918519375,
+        "subscores": [
+          {
+            "name": "water",
+            "score": 89.54055625000001,
+            "weight": 0.22,
+            "drivers": [
+              "1062 mm/yr precipitation",
+              "Scioto River within 200 m",
+              "20.6 cm soil water storage"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "soil",
+            "score": 90.15425,
+            "weight": 0.2,
+            "drivers": [
+              "NCCPI 0.78",
+              "1% mean slope",
+              "Genesee silt loam, occasionally flooded; Well drained"
+            ],
+            "confidence": 1.0
+          },
+          {
+            "name": "timber",
+            "score": 71.92318894230769,
+            "weight": 0.13,
+            "drivers": [
+              "46% forest cover"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "climate",
+            "score": 68.01025,
+            "weight": 0.1,
+            "drivers": [
+              "1947 GDD (base 10C)"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "solar",
+            "score": 29.592000000000006,
+            "weight": 0.12,
+            "drivers": [
+              "3.99 kWh/m2/day GHI"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "wind",
+            "score": 19.499999999999996,
+            "weight": 0.08,
+            "drivers": [
+              "4.56 m/s at 50 m"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "resilience",
+            "score": 50.0,
+            "weight": 0.15,
+            "drivers": [
+              "FEMA flood zone AE (-45)",
+              "wildfire hazard class 2 (-5)"
+            ],
+            "confidence": 0.85
+          }
+        ],
+        "confidence": 0.898
+      },
+      "business": {
+        "streams": [
+          {
+            "name": "timber",
+            "annual_gross": 4501.936321835665,
+            "annual_net": 3826.645873560315,
+            "rationale": "33 forested acres at 0.39 MBF/acre/yr sustainable increment, $350/MBF stumpage",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "row_crop_lease",
+            "annual_gross": 5865.009615384615,
+            "annual_net": 5571.759134615384,
+            "rationale": "NCCPI 0.78 supports ~$215/acre cash rent on 27 croppable acres",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "hunting_lease",
+            "annual_gross": 1312.680769230769,
+            "annual_net": 1181.4126923076922,
+            "rationale": "46% cover on 71 acres supports ~$18/acre recreational lease",
+            "probability": 1.0,
+            "speculative": false
+          }
+        ],
+        "annual_gross_revenue": 11679.626706451048,
+        "annual_operating_expense": 1099.8090059676579,
+        "annual_carrying_cost": 1735.9999999999998,
+        "net_operating_income": 8843.81770048339,
+        "contracted_noi": 8843.81770048339,
+        "cap_rate": 0.07132111048776928,
+        "contracted_cap_rate": 0.07132111048776928,
+        "payback_years": 14.021094079451947,
+        "npv": -1551.3342155231976,
+        "irr": 0.07834879651309168,
+        "score": 77.54740699184619
+      },
+      "price_efficiency_score": 57.0,
+      "composite_score": 67.72,
+      "rank": 6,
+      "flags": [
+        "in FEMA special flood hazard area (zone AE)",
+        "SSURGO records occasional flooding"
+      ]
+    },
+    {
+      "listing": {
+        "listing_id": "FX-WI-0004",
+        "source": "fixtures",
+        "price": 119000.0,
+        "acres": 120.0,
+        "address": "Hwy 77 frontage, Hurley",
+        "city": "Hurley",
+        "state": "WI",
+        "zip_code": "54534",
+        "latitude": 46.301,
+        "longitude": -90.198,
+        "property_type": "Land",
+        "url": null,
+        "listed_on": null,
+        "description": "Large forested block with river frontage, established logging roads.",
+        "raw": {}
+      },
+      "environment": {
+        "precipitation_mm": {
+          "value": 908.365,
+          "unit": "mm/yr",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "mean_temp_c": {
+          "value": 5.04,
+          "unit": "C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "growing_degree_days": {
+          "value": 852.28,
+          "unit": "GDD base 10C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": "from monthly mean temperatures, base 10C"
+        },
+        "solar_ghi": {
+          "value": 3.5669,
+          "unit": "kWh/m2/day",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "wind_ws50m": {
+          "value": 5.28,
+          "unit": "m/s",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "nccpi": {
+          "value": 0.32885,
+          "unit": "index 0-1",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "component-weighted over 5 components"
+        },
+        "water_storage_cm": {
+          "value": 12.66,
+          "unit": "cm",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "available water storage, 0-100cm"
+        },
+        "slope_pct": {
+          "value": 2.15,
+          "unit": "%",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": null
+        },
+        "forest_cover_pct": {
+          "value": 61.53846153846154,
+          "unit": "%",
+          "source": "NLCD 2021",
+          "quality": "measured",
+          "note": "13 sample points across parcel footprint"
+        },
+        "water_distance_m": {
+          "value": 600.0,
+          "unit": "m",
+          "source": "USGS NHD",
+          "quality": "modeled",
+          "note": "perennial water found within 1200m"
+        },
+        "flood_zone": "X",
+        "flood_zone_source": "FEMA NFHL",
+        "wildfire_hazard_class": 2,
+        "elevation_m": {
+          "value": 503.38873291,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": null
+        },
+        "town_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "grid_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "soil_flood_frequency": "None",
+        "soil_description": "Tula-Wormet-Gogebic complex, 0 to 6 percent slopes, very stony; Somewhat poorly drained",
+        "land_cover": {
+          "woody_wetlands": 61.53846153846154,
+          "deciduous_forest": 15.384615384615385,
+          "mixed_forest": 15.384615384615385,
+          "grassland": 7.6923076923076925
+        },
+        "nearest_water_name": "Lake One Creek",
+        "relief_m": {
+          "value": 3.930480956999986,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": "range across 5 samples"
+        },
+        "failed_enrichers": []
+      },
+      "natural_capital": {
+        "total": 59.295572398809526,
+        "subscores": [
+          {
+            "name": "water",
+            "score": 78.4394125,
+            "weight": 0.22,
+            "drivers": [
+              "908 mm/yr precipitation",
+              "Lake One Creek within 600 m",
+              "12.7 cm soil water storage"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "soil",
+            "score": 56.263125,
+            "weight": 0.2,
+            "drivers": [
+              "NCCPI 0.33",
+              "2% mean slope",
+              "Tula-Wormet-Gogebic complex, 0 to 6 percent slopes, very stony; Somewhat poorly drained"
+            ],
+            "confidence": 1.0
+          },
+          {
+            "name": "timber",
+            "score": 72.79229656593407,
+            "weight": 0.13,
+            "drivers": [
+              "62% forest cover"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "climate",
+            "score": 25.097714285714286,
+            "weight": 0.1,
+            "drivers": [
+              "852 GDD (base 10C)"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "solar",
+            "score": 17.006999999999998,
+            "weight": 0.12,
+            "drivers": [
+              "3.57 kWh/m2/day GHI"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "wind",
+            "score": 31.53333333333334,
+            "weight": 0.08,
+            "drivers": [
+              "5.28 m/s at 50 m"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "resilience",
+            "score": 95.0,
+            "weight": 0.15,
+            "drivers": [
+              "FEMA flood zone X (minimal risk)",
+              "wildfire hazard class 2 (-5)"
+            ],
+            "confidence": 0.85
+          }
+        ],
+        "confidence": 0.898
+      },
+      "business": {
+        "streams": [
+          {
+            "name": "timber",
+            "annual_gross": 6784.799714685315,
+            "annual_net": 5767.079757482517,
+            "rationale": "74 forested acres at 0.26 MBF/acre/yr sustainable increment, $350/MBF stumpage",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "grazing",
+            "annual_gross": 265.84615384615387,
+            "annual_net": 212.67692307692312,
+            "rationale": "908 mm/yr supports ~1.20 AUM/acre on 9 grazeable acres at $24/AUM",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "hunting_lease",
+            "annual_gross": 2452.153846153846,
+            "annual_net": 2206.9384615384615,
+            "rationale": "62% cover on 120 acres supports ~$20/acre recreational lease",
+            "probability": 1.0,
+            "speculative": false
+          }
+        ],
+        "annual_gross_revenue": 9502.799714685316,
+        "annual_operating_expense": 1316.1045725874137,
+        "annual_carrying_cost": 1665.9999999999998,
+        "net_operating_income": 6520.695142097902,
+        "contracted_noi": 6520.695142097902,
+        "cap_rate": 0.05479575749662103,
+        "contracted_cap_rate": 0.05479575749662103,
+        "payback_years": 18.249588028081643,
+        "npv": -14684.269598814777,
+        "irr": 0.0637403594640773,
+        "score": 64.79575749662104
+      },
+      "price_efficiency_score": 90.0,
+      "composite_score": 64.42,
+      "rank": 7,
+      "flags": []
+    },
+    {
+      "listing": {
+        "listing_id": "FX-WA-0011",
+        "source": "fixtures",
+        "price": 198000.0,
+        "acres": 140.0,
+        "address": "Goldendale plateau",
+        "city": "Goldendale",
+        "state": "WA",
+        "zip_code": "98620",
+        "latitude": 45.852,
+        "longitude": -120.703,
+        "property_type": "Land",
+        "url": null,
+        "listed_on": null,
+        "description": "Open plateau ground, existing wind development in the area, dryland hay.",
+        "raw": {}
+      },
+      "environment": {
+        "precipitation_mm": {
+          "value": 514.7725,
+          "unit": "mm/yr",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "mean_temp_c": {
+          "value": 8.48,
+          "unit": "C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "growing_degree_days": {
+          "value": 1006.4,
+          "unit": "GDD base 10C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": "from monthly mean temperatures, base 10C"
+        },
+        "solar_ghi": {
+          "value": 4.205,
+          "unit": "kWh/m2/day",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "wind_ws50m": {
+          "value": 5.45,
+          "unit": "m/s",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "nccpi": {
+          "value": 0.628,
+          "unit": "index 0-1",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "component-weighted over 1 components"
+        },
+        "water_storage_cm": {
+          "value": 17.61,
+          "unit": "cm",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "available water storage, 0-100cm"
+        },
+        "slope_pct": {
+          "value": 5.0,
+          "unit": "%",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": null
+        },
+        "forest_cover_pct": {
+          "value": 7.6923076923076925,
+          "unit": "%",
+          "source": "NLCD 2021",
+          "quality": "measured",
+          "note": "13 sample points across parcel footprint"
+        },
+        "water_distance_m": {
+          "value": 212.5,
+          "unit": "m",
+          "source": "USGS NHD",
+          "quality": "modeled",
+          "note": "perennial water found within 425m"
+        },
+        "flood_zone": "X",
+        "flood_zone_source": "FEMA NFHL",
+        "wildfire_hazard_class": 3,
+        "elevation_m": {
+          "value": 718.372070312,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": null
+        },
+        "town_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "grid_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "soil_flood_frequency": "None",
+        "soil_description": "Gunn loam, 2 to 8 percent slopes; Well drained",
+        "land_cover": {
+          "grassland": 69.23076923076923,
+          "shrub_scrub": 23.076923076923077,
+          "evergreen_forest": 7.6923076923076925
+        },
+        "nearest_water_name": null,
+        "relief_m": {
+          "value": 36.66156005899995,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": "range across 5 samples"
+        },
+        "failed_enrichers": []
+      },
+      "natural_capital": {
+        "total": 56.15188212857143,
+        "subscores": [
+          {
+            "name": "water",
+            "score": 64.3421725,
+            "weight": 0.22,
+            "drivers": [
+              "515 mm/yr precipitation",
+              "perennial water within 212 m",
+              "17.6 cm soil water storage"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "soil",
+            "score": 78.2025,
+            "weight": 0.2,
+            "drivers": [
+              "NCCPI 0.63",
+              "5% mean slope",
+              "Gunn loam, 2 to 8 percent slopes; Well drained"
+            ],
+            "confidence": 1.0
+          },
+          {
+            "name": "timber",
+            "score": 23.640911263736264,
+            "weight": 0.13,
+            "drivers": [
+              "8% forest cover"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "climate",
+            "score": 31.70285714285714,
+            "weight": 0.1,
+            "drivers": [
+              "1006 GDD (base 10C)"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "solar",
+            "score": 37.68750000000001,
+            "weight": 0.12,
+            "drivers": [
+              "4.21 kWh/m2/day GHI"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "wind",
+            "score": 35.5,
+            "weight": 0.08,
+            "drivers": [
+              "5.45 m/s at 50 m"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "resilience",
+            "score": 85.0,
+            "weight": 0.15,
+            "drivers": [
+              "FEMA flood zone X (minimal risk)",
+              "wildfire hazard class 3 (-15)"
+            ],
+            "confidence": 0.85
+          }
+        ],
+        "confidence": 0.898
+      },
+      "business": {
+        "streams": [
+          {
+            "name": "row_crop_lease",
+            "annual_gross": 16738.615384615383,
+            "annual_net": 15901.684615384613,
+            "rationale": "NCCPI 0.63 supports ~$173/acre cash rent on 97 croppable acres",
+            "probability": 1.0,
+            "speculative": false
+          }
+        ],
+        "annual_gross_revenue": 16738.615384615383,
+        "annual_operating_expense": 836.9307692307702,
+        "annual_carrying_cost": 2771.9999999999995,
+        "net_operating_income": 13129.684615384613,
+        "contracted_noi": 13129.684615384613,
+        "cap_rate": 0.06631153846153845,
+        "contracted_cap_rate": 0.06631153846153845,
+        "payback_years": 15.080331767298883,
+        "npv": -9132.828382750125,
+        "irr": 0.07391524652732642,
+        "score": 74.2076923076923
+      },
+      "price_efficiency_score": 71.5,
+      "composite_score": 64.01,
+      "rank": 8,
+      "flags": []
+    },
+    {
+      "listing": {
+        "listing_id": "FX-GA-0008",
+        "source": "fixtures",
+        "price": 189000.0,
+        "acres": 94.0,
+        "address": "Baxley area tract",
+        "city": "Baxley",
+        "state": "GA",
+        "zip_code": "31513",
+        "latitude": 31.752,
+        "longitude": -82.301,
+        "property_type": "Land",
+        "url": null,
+        "listed_on": null,
+        "description": "Planted loblolly pine, 14 years old, county road frontage, mill within 30 miles.",
+        "raw": {}
+      },
+      "environment": {
+        "precipitation_mm": {
+          "value": 1147.915,
+          "unit": "mm/yr",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "mean_temp_c": {
+          "value": 19.13,
+          "unit": "C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "growing_degree_days": {
+          "value": 3381.0775,
+          "unit": "GDD base 10C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": "from monthly mean temperatures, base 10C"
+        },
+        "solar_ghi": {
+          "value": 4.7302,
+          "unit": "kWh/m2/day",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "wind_ws50m": {
+          "value": 5.27,
+          "unit": "m/s",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "nccpi": {
+          "value": 0.126,
+          "unit": "index 0-1",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "component-weighted over 1 components"
+        },
+        "water_storage_cm": {
+          "value": 8.0,
+          "unit": "cm",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "available water storage, 0-100cm"
+        },
+        "slope_pct": {
+          "value": 1.0,
+          "unit": "%",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": null
+        },
+        "forest_cover_pct": {
+          "value": 80.76923076923077,
+          "unit": "%",
+          "source": "NLCD 2021",
+          "quality": "measured",
+          "note": "13 sample points across parcel footprint"
+        },
+        "water_distance_m": {
+          "value": 600.0,
+          "unit": "m",
+          "source": "USGS NHD",
+          "quality": "modeled",
+          "note": "perennial water found within 1200m"
+        },
+        "flood_zone": "X",
+        "flood_zone_source": "FEMA NFHL",
+        "wildfire_hazard_class": 2,
+        "elevation_m": {
+          "value": 59.439716339,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": null
+        },
+        "town_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "grid_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "soil_flood_frequency": "None",
+        "soil_description": "Surrency loamy sand; Very poorly drained",
+        "land_cover": {
+          "evergreen_forest": 61.53846153846154,
+          "woody_wetlands": 38.46153846153847
+        },
+        "nearest_water_name": null,
+        "relief_m": {
+          "value": 1.8307952879999974,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": "range across 5 samples"
+        },
+        "failed_enrichers": []
+      },
+      "natural_capital": {
+        "total": 71.58176492440477,
+        "subscores": [
+          {
+            "name": "water",
+            "score": 82.14623392857142,
+            "weight": 0.22,
+            "drivers": [
+              "1148 mm/yr precipitation",
+              "perennial water within 600 m",
+              "8.0 cm soil water storage"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "soil",
+            "score": 40.03267857142857,
+            "weight": 0.2,
+            "drivers": [
+              "NCCPI 0.13",
+              "1% mean slope",
+              "Surrency loamy sand; Very poorly drained"
+            ],
+            "confidence": 1.0
+          },
+          {
+            "name": "timber",
+            "score": 94.12409163461538,
+            "weight": 0.13,
+            "drivers": [
+              "81% forest cover"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "climate",
+            "score": 96.27025833333333,
+            "weight": 0.1,
+            "drivers": [
+              "3381 GDD (base 10C)"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "solar",
+            "score": 57.38250000000001,
+            "weight": 0.12,
+            "drivers": [
+              "4.73 kWh/m2/day GHI"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "wind",
+            "score": 31.29999999999999,
+            "weight": 0.08,
+            "drivers": [
+              "5.27 m/s at 50 m"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "resilience",
+            "score": 95.0,
+            "weight": 0.15,
+            "drivers": [
+              "FEMA flood zone X (minimal risk)",
+              "wildfire hazard class 2 (-5)"
+            ],
+            "confidence": 0.85
+          }
+        ],
+        "confidence": 0.898
+      },
+      "business": {
+        "streams": [
+          {
+            "name": "timber",
+            "annual_gross": 11957.884615384617,
+            "annual_net": 10164.201923076924,
+            "rationale": "76 forested acres at 0.45 MBF/acre/yr sustainable increment, $350/MBF stumpage",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "hunting_lease",
+            "annual_gross": 2068.0,
+            "annual_net": 1861.2,
+            "rationale": "81% cover on 94 acres supports ~$22/acre recreational lease",
+            "probability": 1.0,
+            "speculative": false
+          }
+        ],
+        "annual_gross_revenue": 14025.884615384617,
+        "annual_operating_expense": 2000.4826923076926,
+        "annual_carrying_cost": 2645.9999999999995,
+        "net_operating_income": 9379.401923076925,
+        "contracted_noi": 9379.401923076925,
+        "cap_rate": 0.04962646520146521,
+        "contracted_cap_rate": 0.04962646520146521,
+        "payback_years": 20.150538547131404,
+        "npv": -29877.799567430073,
+        "irr": 0.059180669441479976,
+        "score": 59.62646520146521
+      },
+      "price_efficiency_score": 45.5,
+      "composite_score": 61.28,
+      "rank": 9,
+      "flags": []
+    },
+    {
+      "listing": {
+        "listing_id": "FX-AR-0002",
+        "source": "fixtures",
+        "price": 96000.0,
+        "acres": 48.5,
+        "address": "County Road 12, Jasper",
+        "city": "Jasper",
+        "state": "AR",
+        "zip_code": "72641",
+        "latitude": 36.004,
+        "longitude": -93.221,
+        "property_type": "Land",
+        "url": null,
+        "listed_on": null,
+        "description": "Ozark hill country, oak-hickory cover, seasonal drainage, off-grid access.",
+        "raw": {}
+      },
+      "environment": {
+        "precipitation_mm": {
+          "value": 1185.75,
+          "unit": "mm/yr",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "mean_temp_c": {
+          "value": 14.07,
+          "unit": "C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "growing_degree_days": {
+          "value": 2262.2799999999997,
+          "unit": "GDD base 10C",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": "from monthly mean temperatures, base 10C"
+        },
+        "solar_ghi": {
+          "value": 4.3992,
+          "unit": "kWh/m2/day",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "wind_ws50m": {
+          "value": 4.35,
+          "unit": "m/s",
+          "source": "NASA POWER climatology",
+          "quality": "modeled",
+          "note": null
+        },
+        "nccpi": {
+          "value": 0.09088372093023256,
+          "unit": "index 0-1",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "component-weighted over 3 components"
+        },
+        "water_storage_cm": {
+          "value": 8.64,
+          "unit": "cm",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": "available water storage, 0-100cm"
+        },
+        "slope_pct": {
+          "value": 50.0,
+          "unit": "%",
+          "source": "USDA NRCS SSURGO",
+          "quality": "measured",
+          "note": null
+        },
+        "forest_cover_pct": {
+          "value": 84.61538461538461,
+          "unit": "%",
+          "source": "NLCD 2021",
+          "quality": "measured",
+          "note": "13 sample points across parcel footprint"
+        },
+        "water_distance_m": {
+          "value": 600.0,
+          "unit": "m",
+          "source": "USGS NHD",
+          "quality": "modeled",
+          "note": "perennial water found within 1200m"
+        },
+        "flood_zone": null,
+        "flood_zone_source": "FEMA NFHL (unmapped)",
+        "wildfire_hazard_class": 3,
+        "elevation_m": {
+          "value": 558.729370117,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": null
+        },
+        "town_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "grid_distance_km": {
+          "value": null,
+          "unit": "km",
+          "source": "",
+          "quality": "missing",
+          "note": null
+        },
+        "soil_flood_frequency": "None",
+        "soil_description": "Nella-Steprock-Mountainburg very stony loams, 40 to 60 percent slopes; Well drained",
+        "land_cover": {
+          "deciduous_forest": 69.23076923076923,
+          "evergreen_forest": 7.6923076923076925,
+          "mixed_forest": 7.6923076923076925,
+          "grassland": 7.6923076923076925,
+          "developed_open": 7.6923076923076925
+        },
+        "nearest_water_name": null,
+        "relief_m": {
+          "value": 129.83413696299993,
+          "unit": "m",
+          "source": "USGS 3DEP",
+          "quality": "measured",
+          "note": "range across 5 samples"
+        },
+        "failed_enrichers": []
+      },
+      "natural_capital": {
+        "total": 60.65061368023256,
+        "subscores": [
+          {
+            "name": "water",
+            "score": 83.598125,
+            "weight": 0.22,
+            "drivers": [
+              "1186 mm/yr precipitation",
+              "perennial water within 600 m",
+              "8.6 cm soil water storage"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "soil",
+            "score": 15.368604651162793,
+            "weight": 0.2,
+            "drivers": [
+              "NCCPI 0.09",
+              "50% mean slope",
+              "Nella-Steprock-Mountainburg very stony loams, 40 to 60 percent slopes; Well drained"
+            ],
+            "confidence": 1.0
+          },
+          {
+            "name": "timber",
+            "score": 92.5631173076923,
+            "weight": 0.13,
+            "drivers": [
+              "85% forest cover"
+            ],
+            "confidence": 0.9
+          },
+          {
+            "name": "climate",
+            "score": 76.55699999999999,
+            "weight": 0.1,
+            "drivers": [
+              "2262 GDD (base 10C)"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "solar",
+            "score": 44.97000000000002,
+            "weight": 0.12,
+            "drivers": [
+              "4.40 kWh/m2/day GHI"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "wind",
+            "score": 16.874999999999996,
+            "weight": 0.08,
+            "drivers": [
+              "4.35 m/s at 50 m"
+            ],
+            "confidence": 0.85
+          },
+          {
+            "name": "resilience",
+            "score": 85.0,
+            "weight": 0.15,
+            "drivers": [
+              "FEMA unmapped; SSURGO flooding none",
+              "wildfire hazard class 3 (-15)"
+            ],
+            "confidence": 0.85
+          }
+        ],
+        "confidence": 0.898
+      },
+      "business": {
+        "streams": [
+          {
+            "name": "timber",
+            "annual_gross": 6156.254305384616,
+            "annual_net": 5232.816159576923,
+            "rationale": "41 forested acres at 0.43 MBF/acre/yr sustainable increment, $350/MBF stumpage",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "hunting_lease",
+            "annual_gross": 1067.0,
+            "annual_net": 960.3000000000001,
+            "rationale": "85% cover on 48 acres supports ~$22/acre recreational lease",
+            "probability": 1.0,
+            "speculative": false
+          },
+          {
+            "name": "recreation",
+            "annual_gross": 441.23770712530296,
+            "annual_net": 198.5569682063863,
+            "rationale": "scenery score 84/100 supports agritourism or glamping at 9% probability; travel-market access unverified",
+            "probability": 0.09,
+            "speculative": true
+          }
+        ],
+        "annual_gross_revenue": 7664.492012509919,
+        "annual_operating_expense": 1272.8188847266092,
+        "annual_carrying_cost": 1343.9999999999998,
+        "net_operating_income": 5047.67312778331,
+        "contracted_noi": 4849.116159576924,
+        "cap_rate": 0.05257992841440948,
+        "contracted_cap_rate": 0.05051162666225962,
+        "payback_years": 19.018664158659277,
+        "npv": -13273.499234614363,
+        "irr": 0.061785249743161366,
+        "score": 61.23553227551207
+      },
+      "price_efficiency_score": 46.8,
+      "composite_score": 57.31,
+      "rank": 10,
+      "flags": [
+        "steep terrain (50% mean slope)"
+      ]
+    }
+  ],
+  "sources_used": [
+    "fixtures"
+  ],
+  "warnings": []
+}
